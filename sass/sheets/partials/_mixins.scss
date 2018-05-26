@@ -1,0 +1,77 @@
+// corner rounding
+@mixin round($radius){
+    border-radius: $radius;
+    -webkit-border-radius: $radius;
+    -moz-border-radius: $radius;
+}
+
+@mixin round-top($radius){
+    border-top-right-radius: $radius;
+    border-top-left-radius: $radius;
+    -webkit-border-top-right-radius: $radius;
+    -webkit-border-top-left-radius: $radius;
+    -moz-border-top-right-radius: $radius;
+    -moz-border-top-left-radius: $radius;
+}
+
+// flexbox mixins
+@mixin flexbox{
+    display: flex;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+}
+
+///
+@mixin box-sizing{
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box; 
+}
+
+@mixin center{
+    margin-right: auto;
+    margin-left: auto;
+}
+
+@mixin fullscreen{
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+@mixin list-shadow{
+    box-shadow: 0px 5px 15px 0px rgba(50, 50, 50, 0.06);
+}
+
+//////////////////////
+// media breakpoints
+/////////////////////
+@mixin phone-portrait{
+    @media (min-width: #{$phone-portrait-min}) and 
+    (max-width:#{$phone-portrait-max}){
+        @content;
+    }
+}
+
+@mixin phone-landscape{
+    @media (min-width: #{$phone-land-min}) and 
+    (max-width:#{$phone-land-max}){
+        @content;
+    }
+}
+
+@mixin tablet{
+    @media (min-width: #{$tab-land-min}) and 
+    (max-width:#{$tab-land-max}){
+        @content;
+    }
+}
+
+@mixin desktop{
+    @media (min-width: #{$desktop-min}){
+        @content;
+    }
+}

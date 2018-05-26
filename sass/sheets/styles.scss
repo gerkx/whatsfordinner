@@ -1,0 +1,90 @@
+// @import "compass";
+@import "partials/variables";
+@import "partials/normalize";
+@import "partials/mixins";
+@import "partials/base";
+
+html{
+    @include fullscreen;
+}
+
+body{
+    @include fullscreen;
+    background: $mint;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 16px;
+}
+
+#header{
+    height: 65px;
+}
+
+.container{
+    @include center;
+    width: 94%;
+    height: 100%
+}
+
+#food-item-list{
+    @include round-top(7px);
+    background: $ice;
+    height: 100%
+}
+
+.food-item{
+    @include flexbox;
+    @include list-shadow;
+    align-items: center;
+    font-weight: 700;
+    padding: 5px;
+    height: 40px;
+}
+
+.food.icon{ 
+    @include round(50%);
+    height: 30px;
+    width: 30px;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 1.4em;
+    font-weight: 700;
+    &.meat{
+        color:$ice;
+        background:$meat;
+        border: 2px solid $meat;
+    }
+    &.produce{
+        color:$produce;
+        // opacity:0.25;
+        border: 2px solid $produce;
+    }
+}
+
+.food.name{
+    padding-left: 10px;
+    font-size: 1.33em;
+    font-weight: 400;
+    &.meat{
+        color: $meat;
+    }
+    &.produce{
+        color: $produce;
+        // opacity: 0.25;
+        // text-decoration: line-through;
+    }
+}
+
+.beep{
+    &.boop{
+        color: purple;
+    }
+}
+
+.food{
+    &.ol{
+        &.meat{
+            color: $meat;
+            border: 1px solid $meat;
+        }
+    }
+}

@@ -53,7 +53,7 @@ body{
     border-bottom: 1px solid transparent;
     /* border-radius: 10px; */
     /* box-sizing: border-box; */
-    box-shadow: 0px 5px 15px 0px rgba(50, 50, 50, 0.08);
+    box-shadow: 0px 5px 15px 0px rgba(50, 50, 50, 0.06);
 }
 
 .food-item:hover{
@@ -68,25 +68,37 @@ body{
     width: 30px;
     text-align: center;
     vertical-align: middle;
-    font-size: 1.35em;
+    font-size: 1.4em;
+    font-weight: 700;
 }
 
 .food.name{
     padding-left: 10px;
     font-size: 1.33em;
-    font-weight: 700;
+    font-weight: 400;
     color: #E18223;
 }
 
 .food.orange.ol{
     color: #E18223;
-    border: 2px solid #E18223;
+    border: 1px solid #E18223;
 }
 
 .food.orange.ol:hover{
     color: #ffffff;
     border: 2px solid #E18223;
     background: #E18223
+}
+
+.food.pink.ol{
+    color: #AB0769;
+    border: 1px solid #AB0769;
+}
+
+.food.pink.ol:hover{
+    color: #ffffff;
+    border: 2px solid #AB0769;
+    background: #AB0769;
 }
 
 /* .white{
