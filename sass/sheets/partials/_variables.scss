@@ -1,6 +1,8 @@
+// colors
 $mint: #05D0A8;
-$mint-dark: #22302D;
-$ice: #F7F7F7;
+$mint-dark: #10977C;
+$ice: #f7f7f7;
+$cloud: #ddd;
 $slate: #3A3A3A;
 $meat: #7C1347;
 $dairy: #0F727C;
@@ -11,7 +13,7 @@ $sundries: #DD5ED1;
 $packaged: #272C82;
 
 
-
+// media breakpoints
 $phone-portrait-min: 320px;
 $phone-portrait-max: 480px;
 $phone-land-min: $phone-portrait-max + 1;
@@ -20,3 +22,6 @@ $tab-land-min: $phone-land-max + 1;
 $tab-land-max: 1024px;
 $desktop-min: $tab-land-max + 1;
 
+// dimensions
+$list-item-height: 40px;
+$edit-icon-size: 25px;

@@ -11,7 +11,7 @@ html{
 body{
     @include fullscreen;
     background: $mint;
-    font-family: 'Source Sans Pro', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     font-size: 16px;
 }
 
@@ -25,66 +25,168 @@ body{
     height: 100%
 }
 
-#food-item-list{
-    @include round-top(7px);
-    background: $ice;
-    height: 100%
-}
-
-.food-item{
-    @include flexbox;
-    @include list-shadow;
+.food{
     align-items: center;
-    font-weight: 700;
-    padding: 5px;
-    height: 40px;
+    &.list{
+        @include round-top(7px);
+        background: $ice;
+        height: 100%;
+    }
+    &.item{
+        @include list-shadow;
+    }
+    &.display{
+        @include flexbox;
+        padding: 5px;
+        height: $list-item-height;
+    }
+    &.edit{
+        // height:150px;
+        background: $ice;
+    }
+    &.icon{ 
+        @include round(50%);
+        height: 30px;
+        width: 30px;
+        text-align: center;
+        vertical-align: middle;
+        font-size: 1.4em;
+        font-weight: 700;
+        &.svg{
+            width: $edit-icon-size;
+            height: $edit-icon-size;
+            opacity: 0.25;
+            margin-right: 15px;
+            fill: $mint;
+            
+        }
+        &.meat{
+            color:$meat;
+            // background:$meat; 
+            border: 2px solid $meat;
+        }
+        &.produce{
+            color:$produce;
+            // opacity:0.25;
+            border: 2px solid $produce;
+        }
+    }
+   
 }
 
-.food.icon{ 
-    @include round(50%);
-    height: 30px;
-    width: 30px;
-    text-align: center;
-    vertical-align: middle;
-    font-size: 1.4em;
-    font-weight: 700;
-    &.meat{
-        color:$ice;
-        background:$meat;
-        border: 2px solid $meat;
-    }
-    &.produce{
-        color:$produce;
-        // opacity:0.25;
-        border: 2px solid $produce;
-    }
-}
-
-.food.name{
-    padding-left: 10px;
+.text-input{
+    font-family: 'Montserrat', sans-serif;
+    @include round(15px);
+    background:transparent;
+    padding:5px 0 5px 10px;
+    margin: 0 15px 0 5px;
     font-size: 1.33em;
-    font-weight: 400;
-    &.meat{
-        color: $meat;
+    font-weight: 500;
+    border:none;
+    &.title{
+        width:25px;
+        flex-grow:1;
     }
     &.produce{
         color: $produce;
-        // opacity: 0.25;
-        // text-decoration: line-through;
+    }    
+    &.active{
+        background: #fff;
+        color: $slate;
+    }
+    &:focus{
+        @include focus; 
     }
 }
 
-.beep{
-    &.boop{
-        color: purple;
-    }
+.food-details{
+    display: flex;
+    padding: 5px 10px;
 }
 
-.food{
-    &.ol{
-        &.meat{
-            color: $meat;
-            border: 1px solid $meat;
+.detail{
+    font-size: 1.2em;
+    font-weight: 400;
+    color: $slate;
+    padding:5px;
+}
+
+.button{
+    padding: 5px 10px;
+    @include round(15px);
+    font-size: 1.15em;
+    font-weight: 400;
+    &.mint{
+        background: $mint;
+        color: $ice;
+        &:hover{
+            background: $mint-dark;
+        }
+        &.drop{
+            @include round(0);
+            @include round-top(15px);
+            background: $mint-dark;
         }
     }
+    
 }
+
+.dropdown{
+    
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    &.item{
+        padding: 5px 10px;
+        margin: 0;
+        background: #fff;
+        line-height: 1.5em;
+        &.select{
+            @include focus;
+        }
+        &.end{
+            @include round-bottom(15px);
+        }
+        &:hover{
+            @include focus;
+        }
+    }
+    
+}
+
+.dropdown-select{
+    
+}
+
+// .food.icon{ 
+//     @include round(50%);
+//     height: 30px;
+//     width: 30px;
+//     text-align: center;
+//     vertical-align: middle;
+//     font-size: 1.4em;
+//     font-weight: 700;
+//     &.meat{
+//         color:$meat;
+//         // background:$meat; 
+//         border: 2px solid $meat;
+//     }
+//     &.produce{
+//         color:$produce;
+//         // opacity:0.25;
+//         border: 2px solid $produce;
+//     }
+// }
+
+
+// .icon{
+//     &.edit{
+//         width: $edit-icon-size;
+//         height: $edit-icon-size;
+//         opacity: 0.25;
+//         margin-right: 15px;
+//         fill: $mint;
+        
+//     }
+// }
+

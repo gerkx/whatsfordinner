@@ -15,7 +15,7 @@ body {
   margin: 0;
   padding: 0;
   background: #05D0A8;
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 16px; }
 
 #header {
@@ -27,60 +27,133 @@ body {
   width: 94%;
   height: 100%; }
 
-#food-item-list {
-  border-top-right-radius: 7px;
-  border-top-left-radius: 7px;
-  -webkit-border-top-right-radius: 7px;
-  -webkit-border-top-left-radius: 7px;
-  -moz-border-top-right-radius: 7px;
-  -moz-border-top-left-radius: 7px;
-  background: #F7F7F7;
-  height: 100%; }
+.food {
+  align-items: center; }
+  .food.list {
+    border-top-right-radius: 7px;
+    border-top-left-radius: 7px;
+    -webkit-border-top-right-radius: 7px;
+    -webkit-border-top-left-radius: 7px;
+    -moz-border-top-right-radius: 7px;
+    -moz-border-top-left-radius: 7px;
+    background: #f7f7f7;
+    height: 100%; }
+  .food.item {
+    box-shadow: 0px 5px 15px 0px rgba(50, 50, 50, 0.06); }
+  .food.display {
+    display: flex;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    padding: 5px;
+    height: 40px; }
+  .food.edit {
+    background: #f7f7f7; }
+  .food.icon {
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 1.4em;
+    font-weight: 700; }
+    .food.icon.svg {
+      width: 25px;
+      height: 25px;
+      opacity: 0.25;
+      margin-right: 15px;
+      fill: #05D0A8; }
+    .food.icon.meat {
+      color: #7C1347;
+      border: 2px solid #7C1347; }
+    .food.icon.produce {
+      color: #407F08;
+      border: 2px solid #407F08; }
 
-.food-item {
-  display: flex;
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  box-shadow: 0px 5px 15px 0px rgba(50, 50, 50, 0.06);
-  align-items: center;
-  font-weight: 700;
-  padding: 5px;
-  height: 40px; }
-
-.food.icon {
-  border-radius: 50%;
-  -webkit-border-radius: 50%;
-  -moz-border-radius: 50%;
-  height: 30px;
-  width: 30px;
-  text-align: center;
-  vertical-align: middle;
-  font-size: 1.4em;
-  font-weight: 700; }
-  .food.icon.meat {
-    color: #F7F7F7;
-    background: #7C1347;
-    border: 2px solid #7C1347; }
-  .food.icon.produce {
-    color: #407F08;
-    border: 2px solid #407F08; }
-
-.food.name {
-  padding-left: 10px;
+.text-input {
+  font-family: 'Montserrat', sans-serif;
+  border-radius: 15px;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  background: transparent;
+  padding: 5px 0 5px 10px;
+  margin: 0 15px 0 5px;
   font-size: 1.33em;
-  font-weight: 400; }
-  .food.name.meat {
-    color: #7C1347; }
-  .food.name.produce {
+  font-weight: 500;
+  border: none; }
+  .text-input.title {
+    width: 25px;
+    flex-grow: 1; }
+  .text-input.produce {
     color: #407F08; }
+  .text-input.active {
+    background: #fff;
+    color: #3A3A3A; }
+  .text-input:focus {
+    color: #fff;
+    background: #05D0A8;
+    outline: none; }
 
-.beep.boop {
-  color: purple; }
+.food-details {
+  display: flex;
+  padding: 5px 10px; }
 
-.food.ol.meat {
-  color: #7C1347;
-  border: 1px solid #7C1347; }
+.detail {
+  font-size: 1.2em;
+  font-weight: 400;
+  color: #3A3A3A;
+  padding: 5px; }
+
+.button {
+  padding: 5px 10px;
+  border-radius: 15px;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  font-size: 1.15em;
+  font-weight: 400; }
+  .button.mint {
+    background: #05D0A8;
+    color: #f7f7f7; }
+    .button.mint:hover {
+      background: #10977C; }
+    .button.mint.drop {
+      border-radius: 0;
+      -webkit-border-radius: 0;
+      -moz-border-radius: 0;
+      border-top-right-radius: 15px;
+      border-top-left-radius: 15px;
+      -webkit-border-top-right-radius: 15px;
+      -webkit-border-top-left-radius: 15px;
+      -moz-border-top-right-radius: 15px;
+      -moz-border-top-left-radius: 15px;
+      background: #10977C; }
+
+.dropdown {
+  list-style: none;
+  margin: 0;
+  padding: 0; }
+  .dropdown.item {
+    padding: 5px 10px;
+    margin: 0;
+    background: #fff;
+    line-height: 1.5em; }
+    .dropdown.item.select {
+      color: #fff;
+      background: #05D0A8;
+      outline: none; }
+    .dropdown.item.end {
+      border-bottom-right-radius: 15px;
+      border-bottom-left-radius: 15px;
+      -webkit-border-bottom-right-radius: 15px;
+      -webkit-border-bottom-left-radius: 15px;
+      -moz-border-bottom-right-radius: 15px;
+      -moz-border-bottom-left-radius: 15px; }
+    .dropdown.item:hover {
+      color: #fff;
+      background: #05D0A8;
+      outline: none; }
 
 /*# sourceMappingURL=styles.css.map */

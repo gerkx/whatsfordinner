@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700" rel="stylesheet">
     <link rel="stylesheet" href="../css/styles.css">
     <title>List Items</title>
 </head>
@@ -13,15 +13,68 @@
         <div id="header">
             
         </div>
-        <div id="food-item-list">
-            <div class="food-item">
-                <div class="food icon meat">C</div>
-                <div class="food name meat">Chicken Breasts</div> 
+        <div class="food list">
+            <div class="food item">
+                <div class="food item display">
+                    <div class="food icon meat">C</div>
+                    <div class="food name meat">Chicken Breasts</div>
+                    <div class="food svg icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="">
+                            <title>Edit list item</title>
+                            <path d="M318.4,85.4l104.2,104.7L158.9,455L54.8,350.4L318.4,85.4z M501.6,60.2l-46.5-46.7c-17.9-18-47-18-65-0.2
+                                c-0.1,0.1-0.1,0.1-0.2,0.2l-44.5,44.7l104.1,104.7l51.9-52.2C515.5,96.8,515.5,74.2,501.6,60.2z M0.3,497.5
+                                c-1.4,6.4,2.6,12.8,9,14.2c1.8,0.4,3.6,0.4,5.4,0l116.1-28.3L26.6,378.7L0.3,497.5z"/>
+                        </svg>                            
+                    </div>
+                </div>
             </div>
-            <div class="food-item">
-                    <div class="food icon produce">B</div>
-                    <div class="food name produce">Bananas</div> 
+            <div class="food item">
+                    <div class="food item display">
+                            <div class="food icon produce">B</div>
+                            <div class="food name produce">Bananas</div>
+                            <div class="edit icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="">
+                                    <title>Edit list item</title>
+                                    <path d="M318.4,85.4l104.2,104.7L158.9,455L54.8,350.4L318.4,85.4z M501.6,60.2l-46.5-46.7c-17.9-18-47-18-65-0.2
+                                        c-0.1,0.1-0.1,0.1-0.2,0.2l-44.5,44.7l104.1,104.7l51.9-52.2C515.5,96.8,515.5,74.2,501.6,60.2z M0.3,497.5
+                                        c-1.4,6.4,2.6,12.8,9,14.2c1.8,0.4,3.6,0.4,5.4,0l116.1-28.3L26.6,378.7L0.3,497.5z"/>
+                                </svg>                            
+                            </div>
+                    </div>
+                    
             </div>
+            <section class="food item">
+                <div class="food display">
+                    <div class="food icon produce">L</div>
+                    <input type="text" name="" value="Lettuce" class="text-input title produce">
+                    <div class="food svg icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="">
+                            <title>Edit list item</title>
+                            <path d="M318.4,85.4l104.2,104.7L158.9,455L54.8,350.4L318.4,85.4z M501.6,60.2l-46.5-46.7c-17.9-18-47-18-65-0.2
+                                c-0.1,0.1-0.1,0.1-0.2,0.2l-44.5,44.7l104.1,104.7l51.9-52.2C515.5,96.8,515.5,74.2,501.6,60.2z M0.3,497.5
+                                c-1.4,6.4,2.6,12.8,9,14.2c1.8,0.4,3.6,0.4,5.4,0l116.1-28.3L26.6,378.7L0.3,497.5z"/>
+                        </svg>                            
+                    </div>
+                </div>
+                <section class="food edit">
+                    <div class="food-details">
+                        <span class="detail">Category:</span>
+                        <div class="detail">
+                            <span class="mint button drop">Produce</span>
+                            <ul class="dropdown">
+                                <li class="dropdown item">Meat</li>
+                                <li class="dropdown item">Dairy</li>
+                                <li class="dropdown item">Frozen</li>
+                                <li class="dropdown item select">Sundries</li>
+                                <li class="dropdown item">Packaged</li>
+                                <li class="dropdown item end">Bakery</li>
+                            </ul>
+                        </div>
+                         
+                    </div>
+                    <div class="button">Save</div>
+                </section>
+            </section>
             
             <div class="food-item">Food Item</div>
             <div class="food-item">Food Item</div>
