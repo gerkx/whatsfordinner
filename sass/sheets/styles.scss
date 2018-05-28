@@ -10,7 +10,7 @@ html{
 
 body{
     @include fullscreen;
-    background: $mint;
+    background: $slate;
     font-family: 'Montserrat', sans-serif;
     font-size: 16px;
 }
@@ -33,12 +33,19 @@ body{
         height: 100%;
     }
     &.item{
-        @include list-shadow;
+        @include shadow(0.75);
     }
     &.display{
+        
         @include flexbox;
         padding: 5px;
         height: $list-item-height;
+        &.produce{
+            background: $produce;
+        }
+        &.edit{
+            background: $ice;
+        }
     }
     &.edit{
         // height:150px;
@@ -57,7 +64,7 @@ body{
             height: $edit-icon-size;
             opacity: 0.25;
             margin-right: 15px;
-            fill: $mint;
+            fill: $ice;
             
         }
         &.meat{
@@ -66,6 +73,7 @@ body{
             border: 2px solid $meat;
         }
         &.produce{
+            background:$ice;
             color:$produce;
             // opacity:0.25;
             border: 2px solid $produce;
@@ -76,26 +84,27 @@ body{
 
 .text-input{
     font-family: 'Montserrat', sans-serif;
+    font-size: 1.33em;
+    font-weight: 500;
+    color: $ice;
     @include round(15px);
     background:transparent;
     padding:5px 0 5px 10px;
-    margin: 0 15px 0 5px;
-    font-size: 1.33em;
-    font-weight: 500;
+    margin: 0 15px 0 5px;    
     border:none;
+    outline: none;
     &.title{
         width:25px;
         flex-grow:1;
-    }
-    &.produce{
-        color: $produce;
-    }    
-    &.active{
+    }   
+    &.edit{
         background: #fff;
         color: $slate;
+        @include shadow(0.15);
     }
     &:focus{
-        @include focus; 
+        background: $slate;
+        color: $ice; 
     }
 }
 
@@ -122,20 +131,30 @@ body{
         &:hover{
             background: $mint-dark;
         }
-        &.drop{
-            @include round(0);
-            @include round-top(15px);
-            background: $mint-dark;
+    }
+    &.grey{
+        background: $cloud;
+        color: $ice;
+        &:hover{
+            background: $slate;
         }
+    }
+    &.drop{
+        @include round(0);
+        @include round-top(15px);
+
     }
     
 }
 
 .dropdown{
-    
     list-style: none;
     margin: 0;
     padding: 0;
+    &.list{
+        @include round-bottom(15px);
+        @include shadow(0.2);
+    }
     &.item{
         padding: 5px 10px;
         margin: 0;
@@ -151,12 +170,12 @@ body{
             @include focus;
         }
     }
+    &.hide{
+        display: none;
+    }
     
 }
 
-.dropdown-select{
-    
-}
 
 // .food.icon{ 
 //     @include round(50%);
