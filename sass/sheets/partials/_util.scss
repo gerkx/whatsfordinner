@@ -1,0 +1,53 @@
+//////////////////////
+// margin/padding gen
+/////////////////////
+$nudge: (2:2, 3:3, 5:5, 7:7, 10:10, 15:15, 20:20, 25:25);
+@each $inc, $amt in $nudge{
+    .m-r-#{$inc}
+    {
+        margin-right: #{$amt}px;
+    };
+    .m-l-#{$inc}
+    {
+        margin-left: #{$amt}px;
+    };
+    .m-t-#{$inc}{
+        margin-top: #{$amt}px;
+    };
+    .m-b-#{$inc}{
+        margin-bottom: #{$amt}px;
+    }
+    .m-#{$inc}{
+        margin: #{$amt}px;
+    };
+    .p-r-#{$inc}
+    {
+        padding-right: #{$amt}px;
+    };
+    .p-l-#{$inc}
+    {
+        padding-left: #{$amt}px;
+    };
+    .p-t-#{$inc}{
+        padding-top: #{$amt}px;
+    };
+    .p-b-#{$inc}{
+        padding-bottom: #{$amt}px;
+    }
+    .p-#{$inc}{
+        padding: #{$amt}px;
+    };
+}
+
+/////////////////
+// flexbox utils
+/////////////////
+.flex--ai-ctr{
+    align-items: center;
+}
+
+////
+
+.hide{
+    display: none;
+}

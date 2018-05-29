@@ -3,6 +3,10 @@
 @import "partials/normalize";
 @import "partials/mixins";
 @import "partials/base";
+@import "partials/util";
+@import "partials/list";
+@import "partials/buttons";
+@import "partials/inputs";
 @import "partials/overlay";
 
 html{
@@ -31,117 +35,9 @@ body{
     z-index: 0;
 }
 
-.food{
+.food-list{
     align-items: center;
-    &.list{
-        // @include round-top(7px);
-        // background: $ice;
-        height: 100%;
-    }
-    &.item{
-        @include shadow(0.75);
-    }
-    &.display{
-        
-        @include flexbox;
-        padding: 5px;
-        height: $list-item-height;
-        &.produce{
-            background: $produce;
-        }
-        &.bakery{
-            background: $bakery;
-        }
-        &.meat{
-            background: $meat;
-        }
-        &.edit{
-            background: $ice;
-
-        }
-        &.first{
-            @include round-top(8px);
-        }
-    }
-    &.edit{
-        // height:150px;
-        background: $ice;
-    }
-    &.icon{ 
-        @include round(50%);
-        height: 30px;
-        width: 30px;
-        text-align: center;
-        vertical-align: middle;
-        font-size: 1.4em;
-        font-weight: 700;
-        background: $ice;
-        
-        &.meat{
-            color:$meat;
-            // background:$meat; 
-            border: 2px solid $meat;
-        }
-        &.produce{
-            // background:$ice;
-            color:$produce;
-            // opacity:0.25;
-            border: 2px solid $produce;
-        }
-        &.bakery{
-            // background:$ice;
-            color:$bakery;
-            // opacity:0.25;
-            border: 2px solid $bakery;
-        }
-        
-    }
-    &.done{
-        opacity:0.33;
-    }
-}
-
-.text-input{
-    font-family: 'Montserrat', sans-serif;
-    font-size: 1.33em;
-    font-weight: 500;
-    
-    @include round(15px);
-    background:transparent;
-    padding:5px 0 5px 10px;
-    margin: 0 15px 0 5px;    
-    border:none;
-    outline: none;
-    &.title{
-        width:25px;
-        flex-grow:1;
-        color: $ice;
-        &.done{
-            text-decoration: line-through;
-            opacity: 0.5;
-        }
-    }   
-    &.edit{
-        background: #fff;
-        color: $slate;
-        @include shadow(0.15);
-        &:focus{
-            background: $slate;
-            color: $ice; 
-        }
-        &.error{
-            color: #fff;
-            background:$danger;
-        }
-    
-    }
-    &.boop{
-        color: $ice;
-        
-    
-    
-    }
-    
+    height: 100%;
 }
 
 .food-details{
@@ -166,111 +62,8 @@ body{
     align-items: center;
 }
 
-
-.button{
-    cursor: pointer;
-    padding: 5px 10px;
-    @include round(15px);
-    font-size: 1.15em;
-    font-weight: 400;
-    &.mint{
-        background: $mint;
-        color: $ice;
-        &:hover{
-            background: $mint-dark;
-        }
-    }
-    &.produce{
-        background: $produce;
-        color: $ice;
-        &:hover{
-            background: $produce-hover;
-        }
-    }
-    &.grey{
-        background: $cloud;
-        color: $ice;
-        &:hover{
-            background: $slate;
-        }
-    }
-    &.drop{
-        width:100px;
-    }
-    &.down{
-        @include round(0);
-        @include round-top(15px);
-    }
-}
-
-.svg{
-    // background: transparent;
-    width: $edit-icon-size;
-    height: $edit-icon-size;
-    opacity: 0.25;
-    margin-right: 15px;
-    &.ice{
-        fill:$ice;
-    }
-    &.slate{
-        fill: $slate;
-    }
-    &.right{
-        margin-right: 0px;
-    }
-    &.done{
-        opacity:1.0;
-    }
-    &:hover{
-        opacity:0.5;
-    }
-    
-}
-.trash-icon{
-    cursor: pointer;
-    fill: $slate-light;
-    width:20px;
-    opacity:0.5;
-    padding: 10px 10px 5px 10px;
-    &:hover{
-        opacity:1.0;
-        fill: $danger;
-    }
-}
-
-.dropdown{
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    &.list{
-        @include round-bottom(15px);
-        @include shadow(0.2);
-        width:120px;
-    }
-    &.item{
-        padding: 5px 10px;
-        margin: 0;
-        background: #fff;
-        line-height: 1.5em;
-        &.select{
-            color: #fff;
-            background:$mint-dark;
-        }
-        &.end{
-            @include round-bottom(15px);
-        }
-        &:hover{
-            @include focus;
-        }
-    }
-}
-
 .error-mssg{
     background:$ice;
     color: $danger;
     padding-left: 50px;
-}
-
-.hide{
-    display: none;
 }

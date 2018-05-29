@@ -1,0 +1,39 @@
+.txtbox{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.33em;
+    font-weight: 500;
+
+    border:none;
+    outline: none;
+
+    padding:5px 0 5px 10px;
+    margin: 0 15px 0 5px;
+
+    @include round(15px);
+    background:transparent;
+}
+
+.txtbox__title{
+    flex-grow: 1;
+    width: 25px;
+    color: map-get($colors, ice);
+}
+
+.txtbox--error{
+    background: map-get($colors, danger);
+    color: #fff;
+}
+
+.txtbox--edit{
+    @include shadow(0.15);
+    background: #fff;
+    color: map-get($colors, slate);
+    &:focus{
+        background: map-get($colors, slate);
+        color: map-get($colors, ice);
+    }
+}
+
+.txtbox--done{
+    text-decoration: line-through;
+}

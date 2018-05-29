@@ -1,0 +1,101 @@
+.btn{
+    @include round(15px);
+    cursor: pointer;
+    padding: 5px 10px;
+    font-size: 1.15em;
+    font-weight: 400;
+}
+
+@each $clr, $val in $colors{
+    .btn--#{$clr}{
+        background: $val;
+        color: map-get($colors, ice);
+    }
+}
+
+
+////////////////
+// dropdown menu
+////////////////
+
+.btn--drop{
+    width:100px;
+}
+
+.btn--drop-open{
+    @include round(0);
+    @include round-top(15px);
+}
+
+.drop-ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    @include round-bottom(15px);
+    @include shadow(0.2);
+    width:120px;
+}
+
+.drop-li{
+    padding: 5px 10px;
+    margin: 0;
+    background: #fff;
+    line-height: 1.5em;
+}
+
+.drop-li--active{
+    background: map-get($colors, mint);
+    color: #fff;
+}
+
+///////////////
+// icon buttons
+///////////////
+.ico{
+    opacity: 0.25;
+    &:hover{
+        opacity: 0.5;
+    }
+}
+
+.ico--xs{
+    width:18px;
+}
+
+.ico--sm{
+    width:25px;
+}
+
+.ico--solid{
+    opacity:1.0;
+}
+
+@each $clr, $val in $colors{
+    .ico--#{$clr}{
+        fill: $val;
+    }
+}
+
+
+////////////
+// round btn
+////////////
+.rnd{
+    @include shadow(0.25);
+    @include round(50%);
+    background: $slate-light;
+    // margin-right: 5px;
+    &:hover{
+        background: $add;
+    }
+}
+
+.rnd--big{
+    width: 60px;
+    // height: 60px;
+}
+
+
+
+
+
