@@ -23,9 +23,9 @@ body{
     font-size: 16px;
 }
 
-#header{
-    height: 65px;
-}
+// #header{
+//     height: 100px;
+// }
 
 .container{
     @include center;
@@ -66,4 +66,48 @@ body{
     background:$ice;
     color: $danger;
     padding-left: 50px;
+}
+
+.search-filter-bar{
+    @include flexbox;
+    @include center;
+    align-items: flex-end;
+    width: 95%;
+}
+.search-box{
+    @include flexbox;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 33%;
+}
+
+.filter-bar{
+    color: map-get($colors, ice);
+}
+
+.filter-sort{
+    @include flexbox;
+    align-items: center;
+    justify-content: flex-start;
+    color: map-get($colors, cloud);
+}
+.filter-sort-btns{
+    @include flexbox;
+    align-items: center;
+    justify-content: flex-end;
+    color: map-get($colors, cloud);
+}
+
+.filter-show{
+    @include flexbox;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    color: map-get($colors, cloud);
+}
+
+.nav-mobile{
+    @include flexbox;
+    justify-content: space-between;
 }
