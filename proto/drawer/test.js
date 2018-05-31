@@ -1,47 +1,77 @@
 var red = document.querySelector(".red");
 var show = document.querySelector(".show");
 
-var Storage = {
-  set: function(key, value) {
-      localStorage[key] = JSON.stringify(value);
-  },
-  get: function(key) {
-      return localStorage[key] ? JSON.parse(localStorage[key]) : null;
+// var Storage = {
+//   set: function(key, value) {
+//       localStorage[key] = JSON.stringify(value);
+//   },
+//   get: function(key) {
+//       return localStorage[key] ? JSON.parse(localStorage[key]) : null;
+//   }
+// };
+// // Storage.set("open", false);
+
+
+// if(Storage.get("open") == true){
+//   show.classList.remove("hide");
+// }else{
+//   show.classList.add("hide");
+// }
+// var stats = new SessStorage("status");
+// var redList = red.classList;
+
+// if(redList.contains("boing")){
+//   console.log("boop");
+// }else{
+//   console.log("no boing")
+// }
+
+// stats.set(true);
+// console.log("now its true", stats.get());
+
+
+// if(!stats.get()){
+//   console.log("nope");
+// }else{console.log("yep")}
+
+// stats.remove();
+// console.log("is it removed?", stats.get());
+// if(!stats.get()){
+//   console.log("now now");
+// }
+
+
+red.addEventListener("click", function(){
+  var nxt = this.nextElementSibling;
+  var nxtClass = nxt.classList;
+  var nxtChild = nxt.firstElementChild;
+  var max = nxtChild.offsetHeight + "px";
+  var drawer = slide;
+
+  if(nxtClass.contains("show")){
+    drawer.close(nxt,max);
+    nxtClass.remove("show");
+  }else{
+    drawer.open(nxt, max);
+    nxtClass.add("show");
   }
-};
-// Storage.set("open", false);
 
 
-if(Storage.get("open") == true){
-  show.classList.remove("hide");
-}else{
-  show.classList.add("hide");
-}
-
-
-  red.addEventListener("click", function(){
-    var nxt = this.nextElementSibling;
-    var nxtChild = nxt.firstElementChild;
-    var max = nxtChild.offsetHeight + "px";
-    var drawer = slide;
-
-    if(Storage.get("open") == false){
-      Storage.set("open", true);
-      
-      drawer.open(nxt, max);
-      
-    }else{
-      drawer.close(nxt,max);
-      Storage.set("open", false);
-      
-    }
-
-  
-        
+  // if(stats.get() == "false"){
+  //   console.log("boop", stats.get());
+  //   drawer.open(nxt, max);
+  //   stats.set("true");
+  // stats.set(true);
+  // console.log("... ", stats.get());
     
-
     
-  });
+  // }else{
+  //   console.log("else", stats.get());
+  //   drawer.close(nxt,max);
+  //   stats.set("false");
+  // }
+
+});
 
   var slide = {
     open: function(obj, size){

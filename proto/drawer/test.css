@@ -38,3 +38,12 @@
    max-height: auto; */
     /* transition: all 5.0s ease-in-out; */
 
+.hidden{
+  display: none;
+  height: 0;
+}
+
+.shown{
+  display: block;
+  height:auto;
+}
