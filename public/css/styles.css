@@ -1,8 +1,3 @@
-/* multi
-line
-comment 
-*/
-/*! loud comment */
 .m-r-2 {
   margin-right: 2px; }
 
@@ -739,6 +734,82 @@ comment
   width: 100%;
   height: 100%; }
 
+.cal-view {
+  display: flex;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  width: 100%;
+  height: 75px;
+  margin: 0;
+  padding: 0;
+  -webkit-overflow-scrolling: touch; }
+
+.cal-day {
+  flex: 0 0 auto;
+  border-right: 1px solid #5a5a5a;
+  box-sizing: border-box;
+  width: 75px;
+  height: 100%;
+  position: relative;
+  margin: 0;
+  padding: 0; }
+
+.cal-slot {
+  background: #B2B2B2;
+  opacity: 0.33;
+  height: 33.33%;
+  width: 100%;
+  box-sizing: border-box; }
+
+.cal-slot--full {
+  opacity: 1.0;
+  background: #05D0A8; }
+
+.cal__date {
+  z-index: 1;
+  padding: 4px;
+  color: white;
+  position: absolute;
+  margin-left: 3px;
+  font-size: 1.45em;
+  font-weight: 700;
+  line-height: 0.75em;
+  text-shadow: 2px 5px 8px rgba(0, 0, 0, 0.15); }
+
+.cal__day {
+  font-size: .6em;
+  font-weight: 400;
+  text-transform: uppercase;
+  margin: 0;
+  padding: 0; }
+
+.summary-view {
+  background: #f7f7f7;
+  width: 100%;
+  flex-grow: 1;
+  margin: 0;
+  padding: 0; }
+
+.meal-header {
+  width: 50px;
+  background: magenta;
+  box-sizing: border-box; }
+
+.meal-header--name {
+  height: 20%;
+  width: 100%;
+  font-size: 1.25em;
+  background: blue;
+  opacity: .50;
+  color: greenyellow;
+  writing-mode: vertical-lr;
+  text-orientation: sideways;
+  text-align: center; }
+
 html {
   width: 100%;
   height: 100%;
@@ -763,6 +834,24 @@ body {
   height: 100%;
   position: relative;
   z-index: 0; }
+
+.container-flex {
+  margin-right: auto;
+  margin-left: auto;
+  display: flex;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  flex-direction: column;
+  width: 94%;
+  height: 100%;
+  position: relative; }
+
+.header {
+  width: 100%; }
 
 .food-list {
   align-items: center;

@@ -8,6 +8,7 @@
 @import "partials/buttons";
 @import "partials/inputs";
 @import "partials/overlay";
+@import "partials/schedule";
 
 html{
     @include fullscreen;
@@ -33,6 +34,21 @@ body{
     height: 100%;
     position: relative;
     z-index: 0;
+}
+
+.container-flex{
+    @include center;
+    @include flexbox;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    flex-direction: column;
+    width: 94%;
+    height: 100%;
+    position: relative;
+}
+
+.header{
+    width: 100%;
 }
 
 .food-list{

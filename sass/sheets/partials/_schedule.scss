@@ -1,0 +1,91 @@
+///////////////
+// cal view //
+//////////////
+
+.cal-view{
+    @include flexbox;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    width: 100%;
+    height: 75px;
+    margin: 0;
+    padding: 0;
+    -webkit-overflow-scrolling: touch;
+}
+
+.cal-day{
+    flex: 0 0 auto;
+    border-right: 1px solid map-get($colors, metal);
+    box-sizing: border-box;
+    width: 75px;
+    height: 100%;
+    position: relative;
+    margin: 0;
+    padding: 0;
+}
+
+.cal-slot{
+    background: map-get($colors, cloud);
+    opacity:0.33;
+    height: 33.33%;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.cal-slot--full{
+    opacity: 1.0;
+    background: map-get($colors, mint);
+}
+
+.cal__date{
+    z-index: 1;
+    padding: 4px;
+    color: white;
+    position: absolute;
+    margin-left: 3px;
+    font-size: 1.45em;
+    font-weight: 700;
+    line-height: 0.75em;
+    @include txt-shadow(0.15);
+    
+}
+
+.cal__day{
+    font-size: .6em;
+    font-weight: 400;
+    text-transform: uppercase;
+    margin: 0;
+    padding: 0;   
+}
+
+
+/////////////////
+// day summary //
+/////////////////
+
+.summary-view{
+    background: map-get($colors, ice);
+    width: 100%;
+    flex-grow: 1;
+    margin: 0;
+    padding: 0;
+}
+
+.meal-header{
+    width: 50px;
+    background: magenta;
+    box-sizing: border-box;
+}
+
+.meal-header--name{
+    height: 20%;
+    width: 100%;
+    font-size: 1.25em;
+    
+    background: blue;
+    opacity: .50;   
+    color: greenyellow;
+    writing-mode: vertical-lr;
+    text-orientation: sideways;
+    text-align: center;
+}
