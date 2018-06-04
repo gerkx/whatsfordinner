@@ -12,8 +12,11 @@
 
 html{
     @include fullscreen;
+    @include box-sizing;
 }
 
+ 
+  
 body{
     @include fullscreen;
     // background: $slate;
