@@ -178,6 +178,7 @@
     align-items: center;
     // flex-direction: column;
     // border-bottom: 0px;
+    // max-height: 25%;
 }
 
 .meal-slot--round{
@@ -186,11 +187,22 @@
     background: map-get($colors, mint);
     width: 30px;
     height: 30px;
+    // display: block;
+    // width: 20%;
+    // height: auto;
 }
 
 .meal-slot__plus{
     padding: 2px;
     fill: $ice;
+    // display: block;
+    // width: 70%;
+    // height: auto;
+}
+
+.meal-slot--add-max{
+    max-height: 40px;
+    min-height: 25px;
 }
 
 .sum__date{
@@ -198,3 +210,37 @@
     font-size: 30px;
 }
 
+/////////////////////
+// edit menu style //
+/////////////////////
+
+.sched-overlay{
+    position: fixed;
+    // width: 100%;
+    // height: 100%;
+    // left: 0;
+    // top: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 20;
+    // margin: 15px;
+    @include flexbox;
+    justify-content: center;
+    align-items: center;
+}
+
+.sched-update{
+    height: 65%;
+    width: 85%;
+    background: map-get($colors, ice);
+    @include round(10px);
+    margin-top: 15%;
+    @include shadow(0.25);
+}
+
+.doop{
+    @include flexbox;
+    justify-content: flex-end;
+}
