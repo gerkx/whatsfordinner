@@ -73,11 +73,14 @@ body{
 
 .button-row{
     @include flexbox;
+    width: 80%;
     font-size: 1.2em;
     font-weight: 400;
-    padding: 10px;
+    // padding: 15px 25px;
+    // margin: 8px 20px;
+    margin: 20px 0 5px 0;
     flex-direction: row-reverse;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
 }
 

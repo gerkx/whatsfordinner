@@ -5,11 +5,12 @@ var today = new Date();
 var prevDate = new Date("Jun 07 2018");
 
 var field = document.getElementById("datepicker")
-field.innerHTML = prevDate.toDateString();
+field.innerHTML = today.toDateString().split(" ", 3).join(" ");
 
 var picker = new Pikaday({
     field: field,
-    trigger: document.getElementById('datepicker-button'),
+    trigger: field,
+    // trigger: document.getElementById('datepicker-button'),
     firstDay: 1,
     minDate: today,
     maxDate: new Date(today.getTime() + 28 * 24 * 60 * 60 * 1000),
@@ -19,8 +20,11 @@ var picker = new Pikaday({
     ],
     onSelect: function(date){
         prevDate = picker;
+        var noYear = (prevDate.toString()).split(" ", 3).join(" ");
+
+        console.log(noYear);
         console.log("boop: ", prevDate.toString());
-        field.innerHTML = prevDate;
+        field.innerHTML = noYear;
     }
 });
 

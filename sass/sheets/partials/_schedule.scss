@@ -68,7 +68,8 @@
     justify-content: flex-start;   
     background: map-get($colors, metal);
     width: 100%;
-    // flex-grow: 1;
+    // flex-grow: 0;
+    // flex-shrink: 1;
     flex: 1;
 
 }
@@ -85,9 +86,10 @@
 }
 
 
-.sum--div{
+.sum-div{
     width: 100%;
-    flex: 1;
+    // min-height: ;
+    // flex: 1 1 auto;
 }
     
 .sum-day--div{
@@ -138,8 +140,8 @@
 
 .sum-meal--border{
     // background: map-get($colors, metal);
-    border-top: 1px solid map-get($colors, cloud);
-    border-bottom: 1px solid map-get($colors, cloud);
+    border-top: 10px solid map-get($colors, slate);
+    border-bottom: 10px solid map-get($colors, slate);
 }
 
 .sum-meal{
@@ -148,19 +150,54 @@
 }
 
 .meal-slot{
-    // width: 100%;
-    flex: 1;
-    background: map-get($colors, mint);
-    
-    color: map-get($colors, slate);
+    flex: 1 0 auto;
+    // color: map-get($colors, slate);
     @include flexbox;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
+    
+    min-height: 40px;
 }
 
-.meal-slot--border{
-    border-bottom: 1px solid map-get($colors, ice);
+.sched-edit{
+    width: 100%;
+    @include flexbox;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    // padding: 5px;
+    // flex: 1 0 auto;
+    // border-bottom: 1px solid map-get($colors, cloud);
+
+    font-size: 1.25em;
+    color: map-get($colors, metal);
+    // background: orange;
+
 }
+
+.datetime{
+    @include flexbox;
+    align-items: baseline;
+}
+
+.meal-slot--mint{
+    border-bottom: 1px solid map-get($colors, ice);
+    background: map-get($colors, mint);
+}
+
+.meal-slot--ice{
+    background: map-get($colors, ice);
+}
+
+.meal-slot--edit{
+    border-bottom: 1px solid map-get($colors, cloud);
+
+    padding: 10px 0;
+    // @include shadow(0.75);
+}
+
+
 
 .meal-slot__recipe{
     text-align: center;
@@ -169,17 +206,9 @@
     color: map-get($colors, ice);
 }
 
-.meal-slot--add{
-    width: 100%;
-    flex: 1;
-    background: map-get($colors, ice);
-    @include flexbox;
-    justify-content: center;
-    align-items: center;
-    // flex-direction: column;
-    // border-bottom: 0px;
-    // max-height: 25%;
-}
+////////////
+/// temp ///
+////////////
 
 .meal-slot--round{
     @include shadow(0.15);
@@ -200,10 +229,7 @@
     // height: auto;
 }
 
-.meal-slot--add-max{
-    max-height: 40px;
-    min-height: 25px;
-}
+
 
 .sum__date{
     color: map-get($colors, metal);
@@ -243,4 +269,15 @@
 .doop{
     @include flexbox;
     justify-content: flex-end;
+}
+
+.sched-box{
+    @include center;
+    
+    // background: purple;
+    color: map-get($colors, meat);
+    &:focus{
+        background: purple;
+        color: white;
+    }
 }

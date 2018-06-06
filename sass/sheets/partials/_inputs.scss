@@ -1,4 +1,4 @@
-.txtbox{
+.txtbox-backup{
     font-family: 'Montserrat', sans-serif;
     font-size: 1.33em;
     font-weight: 500;
@@ -10,6 +10,38 @@
 
     @include round(15px);
     background:transparent;
+}
+
+.txtbox{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.33em;
+    font-weight: 500;
+    text-transform: capitalize;
+    border:none;
+    outline: none;
+    background:transparent;
+    padding: 5px;
+    @include round(3px);
+    // &:focus{
+    //     background: map-get($colors, mint);
+    //     color: map-get($colors, ice);
+    //     @include shadow(0.20);
+    // }
+}
+
+.txtbox--sched{
+    text-align: center;
+    color: map-get($colors, ice);
+}
+
+.txtbox--edit{
+    @include shadow(0.15);
+    background: map-get($colors, mint);
+    color: map-get($colors, ice);
+    &:focus{
+        background: map-get($colors, slate);
+        color: map-get($colors, ice);
+    }
 }
 
 
@@ -41,15 +73,7 @@
     color: #fff;
 }
 
-.txtbox--edit{
-    @include shadow(0.15);
-    background: #fff;
-    color: map-get($colors, slate);
-    &:focus{
-        background: map-get($colors, slate);
-        color: map-get($colors, ice);
-    }
-}
+
 
 .txtbox--done{
     text-decoration: line-through;

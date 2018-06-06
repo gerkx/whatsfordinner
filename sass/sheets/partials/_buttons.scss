@@ -1,5 +1,5 @@
 .btn{
-    @include round(15px);
+    @include round(7px);
     cursor: pointer;
     padding: 5px 10px;
     font-size: 1.15em;
@@ -7,11 +7,18 @@
 }
 
 .btn-sm{
-    @include round(15px);
+    @include round(7px);
     cursor: pointer;
-    padding: 3px 6px;
+    padding: 3px 8px;
     font-size: 1.0em;
     font-weight: 400;
+}
+
+.btn-ol--mint{
+    box-sizing: border-box;
+    border: 2px solid map-get($colors, mint);
+    color: map-get($colors, mint);
+    background: map-get($colors, ice);
 }
 
 @each $clr, $val in $colors{
