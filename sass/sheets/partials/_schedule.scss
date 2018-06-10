@@ -86,11 +86,7 @@
 }
 
 
-.sum-div{
-    width: 100%;
-    // min-height: ;
-    // flex: 1 1 auto;
-}
+
     
 .sum-day--div{
     width: 100%;
@@ -114,6 +110,7 @@
     @include flexbox;
     flex-wrap: nowrap;
     overflow-x: auto;
+    
     // width: 100%;
     // margin: 0;
     // padding: 0;
@@ -136,6 +133,8 @@
     background: map-get($colors, ice);
     @include flexbox;
     flex-direction: column;
+    overflow-y: auto;
+    flex-wrap: nowrap;
 }
 
 .sum-meal--border{
@@ -144,10 +143,18 @@
     border-bottom: 10px solid map-get($colors, slate);
 }
 
+.sum-div{
+    width: 100%;
+    // min-height: ;
+    // flex: 1 1 auto;
+}
+
 .sum-meal{
     @include flexbox;
     flex-direction: column;
 }
+
+
 
 .meal-slot{
     flex: 1 0 auto;
