@@ -62,3 +62,13 @@ $nudge: (2:2, 3:3, 5:5, 7:7, 10:10, 15:15, 20:20, 25:25);
         color: map-get($colors, #{$clr});
     }
 }
+
+///////////////
+// svg fills //
+///////////////
+
+@each $clr, $val in $colors{
+    .fill--#{$clr}{
+        fill: map-get($colors, #{$clr});
+    }    
+}

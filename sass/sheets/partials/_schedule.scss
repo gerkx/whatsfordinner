@@ -44,8 +44,11 @@
     font-size: 1.45em;
     font-weight: 700;
     line-height: 0.75em;
-    @include txt-shadow(0.15);
-    
+    @include txt-shadow(0.15);   
+}
+
+.sum__date{
+    font-size: 2.0em;
 }
 
 .cal__day{
@@ -68,55 +71,15 @@
     justify-content: flex-start;   
     background: map-get($colors, metal);
     width: 100%;
-    // flex-grow: 0;
-    // flex-shrink: 1;
     flex: 1;
-
-}
-
-.sum-hd{
-    height: 100%;
-    width: 25px;
-    // background: green;
-
-
-    @include flexbox;
-    flex-direction: column;
-    // flex-grow: 1;
-}
-
-
-
-    
-.sum-day--div{
-    width: 100%;
-    height: 33.333%;
-}
-
-.sum-hd--fill{
-    background: map-get($colors, cloud);
-    color: map-get($colors, slate);
-}
-
-.sum-hd__txt{
-    writing-mode: vertical-lr;
-    text-align: center;
-    text-transform: uppercase;
-    font-weight: 500;
-    color: map-get($colors, ice);
 }
 
 .sum-view{
     @include flexbox;
     flex-wrap: nowrap;
     overflow-x: auto;
-    
-    // width: 100%;
-    // margin: 0;
-    // padding: 0;
+    width: 100%;
     -webkit-overflow-scrolling: touch;
-    // background: map-get($colors, ice);
-    background: orange;
     height: 100%;
     flex: 1 0 auto;
 }
@@ -124,7 +87,6 @@
 .sum-day{
     flex: 0 0 auto;
     border-right: 1px solid map-get($colors, slate);
-    // width: 75px;
     width: 100%;
     height: 100%;
     position: relative;
@@ -137,16 +99,9 @@
     flex-wrap: nowrap;
 }
 
-.sum-meal--border{
-    // background: map-get($colors, metal);
-    border-top: 10px solid map-get($colors, slate);
-    border-bottom: 10px solid map-get($colors, slate);
-}
 
 .sum-div{
     width: 100%;
-    // min-height: ;
-    // flex: 1 1 auto;
 }
 
 .sum-meal{
@@ -154,16 +109,13 @@
     flex-direction: column;
 }
 
-
-
 .meal-slot{
     flex: 1 0 auto;
-    // color: map-get($colors, slate);
     @include flexbox;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    
+    margin: 0;
     min-height: 40px;
 }
 
@@ -173,17 +125,11 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    // padding: 5px;
-    // flex: 1 0 auto;
-    // border-bottom: 1px solid map-get($colors, cloud);
-
     font-size: 1.25em;
     color: map-get($colors, metal);
-    // background: orange;
-
 }
 
-.datetime{
+.sched-datetime{
     @include flexbox;
     align-items: baseline;
 }
@@ -199,49 +145,59 @@
 
 .meal-slot--edit{
     border-bottom: 1px solid map-get($colors, cloud);
-
     padding: 10px 0;
-    // @include shadow(0.75);
 }
 
-
-
-.meal-slot__recipe{
-    text-align: center;
-    font-size: 1.33em;
-    text-transform: capitalize;
+.recipe-slot{
+    width: 100%;
+    position: relative;
+    @include flexbox;
+    flex-direction: row-reverse;
+    // justify-content: center;
+    align-items: center;
     color: map-get($colors, ice);
 }
 
-////////////
-/// temp ///
-////////////
+.recipe-title{
+    cursor: pointer;
+    font-size: 1.33em;
+    font-weight: 500;
+    text-transform: capitalize;
+    padding: 5px;
+    width: 100%;
+    text-align: center;
+    background: map-get($colors, mint);
+    &:hover{
+        background: map-get($colors, mint-hover);
+    } 
+}
 
-.meal-slot--round{
+.recipe-icon{
+    position: absolute;
+    opacity: 0.5;
+    padding: 5px 15px;
+    cursor: pointer;
+
+    &:hover{
+        opacity: 0.85;
+    }
+}
+
+.meal-add{
     @include shadow(0.15);
     @include round(50%);
-    background: map-get($colors, mint);
     width: 30px;
     height: 30px;
-    // display: block;
-    // width: 20%;
-    // height: auto;
 }
 
-.meal-slot__plus{
-    padding: 2px;
-    fill: $ice;
-    // display: block;
-    // width: 70%;
-    // height: auto;
+.meal-break{
+    height: 15px;
+    width: 100%;
+    background: map-get($colors, slate);
 }
 
 
 
-.sum__date{
-    color: map-get($colors, metal);
-    font-size: 30px;
-}
 
 /////////////////////
 // edit menu style //
