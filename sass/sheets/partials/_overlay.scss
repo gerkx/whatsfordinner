@@ -49,4 +49,97 @@
 
 }
 
+///////////////////
+// recipe window //
+///////////////////
+
+.rec-over{
+    
+    position: relative;
+    // width: 100%;
+    // height: 100%;
+    // left: 0;
+    // top: 0;
+    // top: 0;
+    // left: 0;
+    width: 100%;
+    flex: 1;
+    // height: 100%;
+    z-index: 20;
+    // margin: 15px;
+    @include flexbox;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.rec-window{
+    position: absolute;
+    box-sizing: border-box;
+    width: 100%;
+    height: 99%;
+    background: map-get($colors, ice);
+    @include round(5px);
+    @include shadow(0.25);
+}
+
+.rec-header{
+    @include flexbox;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+
+}
+
+.rec-title{
+    flex: 1;
+    background: map-get($colors, mint);
+    color: map-get($colors, ice);
+    @include round-top-left(5px);
+    font-size: 1.33em;
+    text-transform: capitalize;
+    font-weight: 500;
+    padding: 5px;
+}
+
+.rec-desc{
+    color: map-get($colors, slate);
+}
+
+.rec__header{
+    font-weight: 500;
+    margin-left: 7px;
+    font-size: 1.15em;
+    vertical-align: bottom;
+}
+
+.rec-txt-block{
+    border: 1px solid map-get($colors, mint);
+    @include round(7px);
+    margin: 0;
+    padding: 6px;
+}
+
+// tr{
+//     background: orange;
+// }
+
+.rec-txt-block--table{
+    width: 100%;
+    // border-collapse: collapse;
+    // padding: 6px;
+    &tr{
+        background: orange;
+    }
+    
+}
+.sched-box{
+    @include center;
+    width: 100%;
+    // background: purple;
+    color: map-get($colors, meat);
+    &:focus{
+        background: purple;
+        color: white;
+    }
+}
 

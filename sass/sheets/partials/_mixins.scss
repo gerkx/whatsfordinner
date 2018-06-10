@@ -23,6 +23,12 @@
     -moz-border-bottom-left-radius: $radius;
 }
 
+@mixin round-top-left($radius){
+    border-top-left-radius: $radius;
+    -webkit-border-top-left-radius: $radius;
+    -moz-border-top-left-radius: $radius;
+}
+
 // flexbox mixins
 @mixin flexbox{
     display: flex;
