@@ -22,17 +22,13 @@
     background:transparent;
     padding: 5px;
     @include round(3px);
-    // &:focus{
-    //     background: map-get($colors, mint);
-    //     color: map-get($colors, ice);
-    //     @include shadow(0.20);
-    // }
 }
 
 .txtbox--sched{
     text-align: center;
     color: map-get($colors, ice);
 }
+
 
 .txtbox--edit{
     @include shadow(0.15);
@@ -77,4 +73,74 @@
 
 .txtbox--done{
     text-decoration: line-through;
+}
+
+.txtarea-rec{
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1em;
+    width: 100%;
+    border: 1px solid map-get($colors, mint);
+    @include round(7px);
+    margin: 0;
+    padding: 6px;
+    outline: none;
+    background: transparent;
+    resize: none;
+}
+
+.txtarea-rec--edit{
+    background: white;
+    @include shadow(0.15);
+    &:focus{
+        background: map-get($colors, mint);
+        color: white;
+    }
+}
+
+
+.txtbox--rec-title{
+    width: 100%;
+    color: map-get($colors, ice);
+    background: map-get($colors, mint);
+    @include round(0);
+    @include round-top-left(5px);
+    border: 2px solid transparent;
+    // flesx: 1;
+    // background: orange;
+}
+
+.txtbox--rec-title-edit{
+    background: white;
+    color: map-get($colors, slate);
+    @include shadow(0.15);
+    &:focus{
+        border: 2px solid map-get($colors, mint);
+    }
+}
+
+
+.txtbox-rec{
+    width: 100%;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.0em;
+    font-weight: 500;
+    // text-transform: capitalize;
+    color: map-get($colors, slate);
+    // border: none;
+    box-sizing: border-box;
+    border: 1px solid transparent;
+    @include round(5px);
+    outline: none;
+    background:transparent;
+    padding: 3px 0 3px 3px;
+}
+
+.txtbox-rec--edit{
+    background: white;
+    @include shadow(0.15);
+    &:focus{
+        border: 1px solid map-get($colors, mint);
+        // @include shadow(0.15);
+    }
 }

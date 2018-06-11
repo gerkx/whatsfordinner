@@ -29,6 +29,24 @@
     -moz-border-top-left-radius: $radius;
 }
 
+@mixin round-top-right($radius){
+    border-top-right-radius: $radius;
+    -webkit-border-top-right-radius: $radius;
+    -moz-border-top-right-radius: $radius;
+}
+
+@mixin round-bottom-right($radius){
+    border-bottom-right-radius: $radius;
+    -webkit-border-bottom-right-radius: $radius;
+    -moz-border-bottom-right-radius: $radius;
+}
+
+@mixin round-bottom-left($radius){
+    border-bottom-left-radius: $radius;
+    -webkit-border-bottom-left-radius: $radius;
+    -moz-border-bottom-left-radius: $radius;
+}
+
 // flexbox mixins
 @mixin flexbox{
     display: flex;

@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700" rel="stylesheet">
     <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="/public/css/pikaday/pikaday.css">
     <title>Overlay</title>
 </head>
 <body>
@@ -37,47 +38,115 @@
         <div class="rec-over">        
             <div class="rec-window">
                 <div class="rec-header">
-                    <div class="ico ico--slate ico--sm m-r-10 p-t-7 p-l-7">
+                    <div class="ico ico--slate ico--sm m-r-10 p-t-12">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44.4 44.4">
                             <path d="M29.3 22.2L44.1 7.4c0.4-0.4 0.4-1 0-1.4l-5.7-5.7C38.3 0.1 38 0 37.8 0s-0.5 0.1-0.7 0.3L22.2 15.1 7.4 0.3c-0.4-0.4-1-0.4-1.4 0L0.3 5.9C0.1 6.1 0 6.4 0 6.7s0.1 0.5 0.3 0.7l14.8 14.8L0.3 37.1C0.1 37.3 0 37.5 0 37.8s0.1 0.5 0.3 0.7l5.7 5.7c0.2 0.2 0.5 0.3 0.7 0.3s0.5-0.1 0.7-0.3l14.8-14.8 14.8 14.8c0.4 0.4 1 0.4 1.4 0l5.7-5.7c0.4-0.4 0.4-1 0-1.4L29.3 22.2z"/>
                         </svg>                          
                     </div>
-                    <div class="rec-title">Recipe Title</div>
+                    <div class="spacer-20"></div>
+                    <div class="rec-title">
+                        <input type="text" name="" value="Recipe #3" class="txtbox txtbox--rec-title"><!-- txtbox--rec-title-edit -->
+                    </div>
                 </div>
 
-                <div class="rec-desc m-10">
-                    <span class="rec__header">Description</span>
-                    <p class="rec-txt-block">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi ea consequatur dicta officiis accusamus sit saepe incidunt!</p>
+                <div class="rec-buttons">
+                    <!-- <div class="btn btn--mint m-l-20">Add to calendar</div> -->
+                    <section class="rec-add-btns">
+                        <div class="btn-sm btn-ol--mint m-r-5 m-t-10">Breakfast</div>
+                        <span class="m-t-10">on</span> 
+                        <div class="btn-sm btn-ol--mint m-l-5 m-t-10" id="datepicker">Wed Jun 06</div>  
+                    </section>
+                    <section class="rec-add-btns">
+                            <div class="btn-sm btn-ol--mint btn--mint m-l-10 m-t-10">Add</div>  
+                        </section>
                 </div>
 
-                <div class="rec-desc m-10">
-                        <span class="rec__header">Ingredients</span>
-                        <table class="rec-txt-block rec-txt-block--table">
-                            <thead>
-                                <tr>
-                                    <th>Amt</th>
-                                    <th>Ingredient</th>
+                <div class="rec-block">
+                    <span class="rec-block__header">Description</span>
+                    <div class="">
+                        <textarea name="recipe-desc" id="" rows="4" readonly="true" class="txtarea-rec">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi ea consequatur dicta officiis accusamus sit saepe incidunt!</textarea>
+                    </div>
+                 </div>
+
+                <div class="rec-block">
+                        <span class="rec-block__header">Ingredients</span>
+                        <table class="rec-table"><!--rec-txt-block rec-txt-block--table -->
+                            <thead class="table-head">
+                                <tr >
+                                    <th class="rec-table--padding rec-table--rnd-ul">Amt</th>
+                                    <th class="rec-table--rnd-ur">Ingredient</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>1 cup</td>
-                                    <td>Sugar and spice and nice</td>
+                                <tr class="">
+                                    <td class="rec-table--padding rec-table--amt">
+                                            <input type="text" name="" value="1 cup" class="txtbox-rec"><!--txtbox-rec--edit-->
+                                    </td>
+                                    <td class="rec-table--padding rec-table--ing">
+                                        <input type="text" name="" value="Sugar and Spice and nice" class="txtbox-rec">
+                                    </td>
                                 </tr>
                                 <tr>
-                                        <td>500 g</td>
-                                        <td>Gluten Free Flour</td>
-                                    </tr>
+                                        <td class="rec-table--padding rec-table--amt">
+                                                <input type="text" name="" value="500 g" class="txtbox-rec">
+                                        </td>
+                                        <td class="rec-table--padding rec-table--ing">
+                                            <input type="text" name="" value="Gluten Free Flour" class="txtbox-rec">
+                                        </td>
+                                </tr>
+                                <tr>
+                                        <td class="rec-table--padding rec-table--amt">
+                                                <input type="text" name="" value="2 tsp" class="txtbox-rec">
+                                        </td>
+                                        <td class="rec-table--padding rec-table--ing">
+                                            <input type="text" name="" value="Vanilla extract" class="txtbox-rec">
+                                        </td>
+                                </tr>
+                                <tr>
+                                        <td class="rec-table--padding rec-table--amt">
+                                                <input type="text" name="" value="4 cloves" class="txtbox-rec">
+                                        </td>
+                                        <td class="rec-table--padding rec-table--ing">
+                                            <input type="text" name="" value="Garlic" class="txtbox-rec">
+                                        </td>
+                                </tr>
                             </tbody>
                             
                         </table>
+                </div>
+
+                <div class="rec-block">
+                    <span class="rec-block__header">Instructions</span>
+                    <div class="">
+                        <textarea name="recipe-desc" id="" rows="14" readonly="true" class="txtarea-rec">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi ea consequatur dicta officiis accusamus sit saepe incidunt!
+
+Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi ea consequatur dicta officiis accusamus sit saepe incidunt!
+                            
+Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi ea consequatur dicta officiis accusamus sit saepe incidunt!</textarea>
                     </div>
+                </div>
+
+                <!-- <div class="rec-block">
+                    <span class="rec-block__header">Tags</span>
+                    <div class="rec-tags">
+                        <span class="rec-tag__box">boop</span>
+                        <span class="rec-tag__box">beep</span>
+                        <span class="rec-tag__box">blerp</span>
+                        <span class="rec-tag__box">boop</span>
+                        <span class="rec-tag__box">chocolate</span>
+                        <span class="rec-tag__box">dessert</span>
+                    </div>
+                    
+                </div> -->
                 
             </div>
         </div>
         
+
+        
     </div>
 
-
+    <script src="../scripts/pikaday.js"></script>
+    <script src="../scripts/listItems.js"></script>
 </body>
 </html>
