@@ -14,10 +14,36 @@
     font-weight: 400;
 }
 
+.btn-xs{
+    @include round(7px);
+    cursor: pointer;
+    padding: 2px 4px;
+    font-size: 0.85em;
+    font-weight: 400;
+}
+
+.btn-done{
+    @include round(7px);
+    cursor: pointer;
+    padding: 3px 8px;
+    font-size: 1.0em;
+    font-weight: 400;
+    color: map-get($colors, mint);
+    background: map-get($colors, ice);
+    @include shadow(0.2);
+}
+
 .btn-ol--mint{
     box-sizing: border-box;
     border: 2px solid map-get($colors, mint);
     color: map-get($colors, mint);
+    background: map-get($colors, ice);
+}
+
+.btn-ol--danger{
+    box-sizing: border-box;
+    border: 1px solid map-get($colors, danger);
+    color: map-get($colors, danger);
     background: map-get($colors, ice);
 }
 
@@ -133,4 +159,6 @@
 .btn-menu-mobile{
     fill: map-get($colors, cloud);
 }
+
+
 

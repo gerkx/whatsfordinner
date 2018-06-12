@@ -41,7 +41,7 @@ $colors: (
 
     mint-hover: #10977C,
     produce-hover: #509b0d,
-    mint-trans: rgba(5, 208, 168, 0.25),
+    mint-trans: rgba(5, 208, 168, 0.5),
 );
 
 
@@ -57,3 +57,11 @@ $desktop-min: $tab-land-max + 1;
 // dimensions
 $list-item-height: 40px;
 $edit-icon-size: 25px;
+
+
+/////////////
+// z-depth //
+/////////////
+$z-recipe: 10;
+$z-recipe-grocery: 30;
+$z-lock-layer: 15;
