@@ -160,5 +160,12 @@
     fill: map-get($colors, cloud);
 }
 
+.rmv-x{
+    stroke: map-get($colors, ice);
+    stroke-width: 6;
+    stroke-linecap: round;
+    stroke-miterlimit: 10;
+}
+
 
 

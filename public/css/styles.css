@@ -821,6 +821,12 @@
 .btn-menu-mobile {
   fill: #B2B2B2; }
 
+.rmv-x {
+  stroke: #f7f7f7;
+  stroke-width: 6;
+  stroke-linecap: round;
+  stroke-miterlimit: 10; }
+
 .txtbox-backup {
   font-family: 'Montserrat', sans-serif;
   font-size: 1.33em;
@@ -1067,7 +1073,7 @@
     color: white; }
 
 .rec-table--amt {
-  width: 25%;
+  width: 20%;
   padding-right: 5px; }
 
 .rec-table--ing {
