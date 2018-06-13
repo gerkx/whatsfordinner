@@ -4,11 +4,12 @@
 
 .li-banner{
     @include flexbox;
-    height: 40px;
+    padding: 5px;
+    // height: 40px;
 }
 
 .li--first{
-    @include round-top(10px);
+    @include round-top(7px);
 }
 
 @each $clr, $val in $colors{
