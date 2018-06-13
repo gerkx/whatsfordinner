@@ -2,4 +2,4 @@
   <circle class="fill--cloud" cx="50" cy="50" r="49"/>
   <line class="rmv-x" x1="25" y1="25" x2="75" y2="75"/>
   <line class="rmx-x" x1="25" y1="75" x2="75" y2="25"/>
-</svg
+</svg>

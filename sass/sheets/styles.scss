@@ -8,6 +8,7 @@
 @import "partials/buttons";
 @import "partials/inputs";
 @import "partials/overlay";
+@import "partials/menu";
 @import "partials/recipe";
 @import "partials/schedule";
 
@@ -20,8 +21,8 @@ html{
   
 body{
     @include fullscreen;
-    // background: $slate;
-    background: linear-gradient(45deg, $slate, $cloud);
+    background: map-get($colors, slate);
+    // background: linear-gradient(45deg, $slate, $cloud);
     background-repeat: no-repeat;
     background-attachment: fixed;
     font-family: 'Montserrat', sans-serif;

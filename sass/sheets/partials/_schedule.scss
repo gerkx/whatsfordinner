@@ -69,7 +69,7 @@
     @include center;
     flex-direction: row;
     justify-content: flex-start;   
-    background: map-get($colors, metal);
+    // background: map-get($colors, slate);
     width: 100%;
     flex: 1;
 }
@@ -92,7 +92,7 @@
     position: relative;
     margin: 0;
     padding: 0;
-    background: map-get($colors, ice);
+    // background: map-get($colors, ice);
     @include flexbox;
     flex-direction: column;
     overflow-y: auto;
@@ -102,6 +102,7 @@
 
 .sum-div{
     width: 100%;
+    // min-height: 80px;
 }
 
 .sum-meal{
@@ -109,8 +110,22 @@
     flex-direction: column;
 }
 
+.sum-meal--solo{
+    height: 100%;
+}
+
 .meal-slot{
     flex: 1 0 auto;
+    @include flexbox;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    min-height: 40px;
+}
+
+.meal-slot--berp{
+    flex: 1;
     @include flexbox;
     flex-direction: column;
     justify-content: center;
@@ -152,7 +167,7 @@
     width: 100%;
     position: relative;
     @include flexbox;
-    flex-direction: row-reverse;
+    flex-direction: row;
     // justify-content: center;
     align-items: center;
     color: map-get($colors, ice);
@@ -189,6 +204,8 @@
     width: 30px;
     height: 30px;
 }
+
+
 
 .meal-break{
     height: 15px;

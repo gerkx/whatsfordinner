@@ -115,8 +115,16 @@
     width:35px;
 }
 
+.ico--lg{
+    width: 50px;
+}
+
 .ico--xl{
     width: 85px;
+}
+
+.ico--menu{
+    width: 75%;
 }
 
 .ico--solid{
@@ -156,16 +164,26 @@
     fill: map-get($colors, cloud);
 }
 
+
 .btn-menu-mobile{
     fill: map-get($colors, cloud);
 }
 
 .rmv-x{
-    stroke: map-get($colors, ice);
+    // stroke: map-get($colors, ice);
     stroke-width: 6;
     stroke-linecap: round;
     stroke-miterlimit: 10;
 }
 
+.mini-burger{
+    stroke-width: 14;
+    stroke-linecap: round;
+    stroke-miterlimit: 10;
+}
+
+.stroke--ice{
+    stroke: map-get($colors, ice);
+}
 
 

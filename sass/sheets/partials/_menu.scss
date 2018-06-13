@@ -1,0 +1,33 @@
+.menu{
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    background: map-get($colors, mint);
+    color: map-get($colors, ice);
+    z-index: $z-menu;
+    position: absolute;
+    padding: 20px;
+    @include flexbox;
+    flex-direction: column;
+    justify-content: space-between;
+    
+}
+
+.logo-row{
+    @include flexbox;
+    justify-content: space-between;
+}
+
+.menu ul{
+    list-style: none;
+    font-size: 2em;
+    font-weight: 500;
+    line-height: 1.75em;
+    padding-left: 25px;
+}
+
+.credits{
+    // flex: 1;
+    vertical-align: bottom;
+    font-size: 1.25em;
+}
