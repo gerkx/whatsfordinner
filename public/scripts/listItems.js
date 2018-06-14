@@ -1,3 +1,5 @@
+
+
 ///////////////////////
 // date picker setup //
 ///////////////////////
@@ -5,9 +7,12 @@ var today = new Date();
 var prevDate = new Date("Jun 07 2018");
 
 var field = document.getElementById("datepicker")
-field.innerHTML = today.toDateString().split(" ", 3).join(" ");
+if(field){
+    field.innerHTML = today.toDateString().split(" ", 3).join(" ");
 
-var picker = new Pikaday({
+}
+
+let picker = new Pikaday({
     field: field,
     trigger: field,
     // trigger: document.getElementById('datepicker-button'),
@@ -29,5 +34,20 @@ var picker = new Pikaday({
 });
 
 
+
+let burgers = document.getElementsByClassName("burger");
+
+// burgers[0].innerHTML = burger("mini-burger stroke--ice");
+for(let i=0; i<burgers.length; i++){
+    burgers[i].innerHTML = svg.burger("mini-burger stroke--ice");
+}
+
+// for(let val of burgers){
+//     this.innerHTML = burger("mini-burger stroke--ice");
+// };
+
+// burgers.forEach(){
+//     this.innerHTML = burger("mini-burger stroke--ice");
+// };
 
 
