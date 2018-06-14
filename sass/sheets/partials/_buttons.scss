@@ -144,10 +144,10 @@
 .rnd{
     @include shadow(0.25);
     @include round(50%);
-    background: $slate-light;
+    background: map-get($colors, cloud);
     // margin-right: 5px;
     &:hover{
-        background: $add;
+        background: map-get($colors, mint);
     }
 }
 
@@ -185,5 +185,15 @@
 .stroke--ice{
     stroke: map-get($colors, ice);
 }
+
+.stroke--slate{
+    stroke: map-get($colors, slate);
+}
+
+.stroke--cloud{
+    stroke: map-get($colors, cloud);
+}
+
+
 
 

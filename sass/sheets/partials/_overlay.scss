@@ -18,18 +18,18 @@
 .round{
     @include shadow(0.25);
     @include round(50%);
-    background: $slate-light;
+    background: map-get($colors, cloud);
     width: 60px;
     height: 60px;
     margin-right: 5px;
     &:hover{
-        background: $add;
+        background: map-get($colors, mint);
     }
 }
 
 #plus{
     padding: 15px;
-    fill: $ice;
+    fill: map-get($colors, ice);
 }
 
 .lock{

@@ -65,32 +65,32 @@ body{
 
 .food-details{
     @include flexbox;
+    justify-content: center;
     padding: 5px 10px;
 }
 
 .detail{    
     font-size: 1.2em;
     font-weight: 400;
-    color: $slate;
+    color: map-get($colors, slate);
     padding:5px;
 }
 
 .button-row{
     @include flexbox;
-    width: 80%;
+    width: 100%;
     font-size: 1.2em;
     font-weight: 400;
-    // padding: 15px 25px;
-    // margin: 8px 20px;
-    margin: 20px 0 5px 0;
     flex-direction: row-reverse;
     justify-content: flex-start;
     align-items: center;
 }
 
+
+
 .error-mssg{
-    background:$ice;
-    color: $danger;
+    background:map-get($colors, ice);
+    color: map-get($colors, danger);
     padding-left: 50px;
 }
 

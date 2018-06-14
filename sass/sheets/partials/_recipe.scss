@@ -196,13 +196,35 @@
     @include round(10px);
     @include shadow(0.3);
     box-sizing: border-box;
-    background: map-get($colors, mint);
-    color: map-get($colors, ice);
+
     z-index: $z-recipe-grocery;
     position: absolute;
     padding: 20px;
-    
 }
+
+.rec-groc-pop-alt{
+    width: 85%;
+    // height: 88%;
+    @include round(7px);
+    @include shadow(0.3);
+    box-sizing: border-box;
+
+    z-index: $z-recipe-grocery;
+    position: absolute;
+    // padding-top: 10px;
+}
+
+.rec-groc-pop--mint{
+    background: map-get($colors, mint);
+    color: map-get($colors, ice);
+}
+
+.rec-groc-pop--ice{
+    background: map-get($colors, ice);
+    color: map-get($colors, slate);
+    // border: 2px solid map-get($colors, cloud);
+}
+
 
 .rec-groc-pop__header{
     font-size: 1.5em;
@@ -229,14 +251,21 @@
     width: 20px;
     height: 20px;
     box-sizing: border-box;
-    background: map-get($colors, ice);
-    border: 2px solid map-get($colors, cloud);
+    // background: map-get($colors, ice);
+    // border: 2px solid transparent;
     @include round(5px);
 }
 
-.list-box--chk{
-    background: map-get($colors, cloud);
+
+@each $clr, $val in $colors{
+    .list-box--border-#{$clr}{
+        border: 2px solid map-get($colors, #{$clr});
+    }
+    .list-box--chk-#{$clr}{
+        background: map-get($colors, #{$clr});
+    }  
 }
+
 
 .rec-delete{
     @include flexbox;
@@ -245,4 +274,8 @@
     margin-left: 20px;
     // margin-top: 5px;
     flex: 1
+}
+
+.popup-header{
+    @include round-top(7px);
 }

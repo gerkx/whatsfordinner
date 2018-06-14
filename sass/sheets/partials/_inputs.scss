@@ -67,8 +67,9 @@
 }
 
 .txtbox--error{
-    background: map-get($colors, danger);
-    color: #fff;
+    // background: map-get($colors, danger);
+    border: 2px solid map-get($colors, danger);
+    color: map-get($colors, danger);
 }
 
 .txtbox-rec{

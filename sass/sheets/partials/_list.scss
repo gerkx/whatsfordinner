@@ -1,5 +1,6 @@
 .li{
     @include shadow(0.60);
+    // margin: 3px 0;
 }
 
 .li-banner{
@@ -34,4 +35,23 @@
         color: $val;
         border: 2px solid $val;
     }
+}
+
+.btn-box{
+    width: 30px;
+    @include flexbox;
+    flex-direction: column;
+    justify-content: center;
+}
+
+
+
+.list-btn-row{
+    @include flexbox;
+    width: 100%;
+    font-size: 1.2em;
+    font-weight: 400;
+    flex-direction: row-reverse;
+    justify-content: flex-start;
+    align-items: center;
 }
