@@ -34,20 +34,67 @@ let picker = new Pikaday({
 });
 
 
+//hooks
+let burgerSVG = document.querySelectorAll(".burger");
+let logoSVG = document.querySelectorAll(".logoSVG");
+let menuCloseSVG = document.getElementById("menuClose");
+let trashSVG = document.querySelectorAll(".trashSVG");
+let foodCloseSVG = document.querySelectorAll(".foodCloseSVG");
+const navLogoSVG = document.getElementById("navLogoSVG");
+const navBurgerSVG = document.getElementById("navBurgerSVG");
 
-let burgers = document.getElementsByClassName("burger");
+// menuCloseSVG.innerHTML = svg.remove("rmv-x stroke--ice");
+// logoSVG.forEach(logo => logo.innerHTML = svg.logo("fill--ice"));
 
-// burgers[0].innerHTML = burger("mini-burger stroke--ice");
-for(let i=0; i<burgers.length; i++){
-    burgers[i].innerHTML = svg.burger("mini-burger stroke--ice");
+burgerSVG.forEach(burger => burger.innerHTML = svg.burger("mini-burger stroke--ice"));
+trashSVG.forEach(trash => trash.innerHTML = svg.trash("ico--slate"));
+foodCloseSVG.forEach(x => x.innerHTML = svg.remove("rmv-x stroke--slate"));
+navLogoSVG.innerHTML = svg.logo("fill--cloud");
+navBurgerSVG.innerHTML = svg.burger("mini-burger stroke--cloud");
+
+/////////////////////
+// food list stuff //
+/////////////////////
+
+let renderListItem = function(name, dept){
+    const listLI = document.createElement("li");
+    listLI.classList.add("li");
+    listLI.classList.add(`li--${dept}`);
+    listLI.innerHTML = `
+    <div class="btn-box">
+        <div class="ico ico--xs p-l-5 burger">
+            ${svg.burger("mini-burger stroke--ice")}
+        </div>
+    </div>
+    <input type="text" name="uniqueID" disabled value="${name}" class="txtbox txtbox__title">
+    `
+    return listLI;
 }
 
-// for(let val of burgers){
-//     this.innerHTML = burger("mini-burger stroke--ice");
-// };
+let renderGroceryList = function(){
+    const groceryList = document.getElementById("groceryList");
+    // const listBurgers = document.querySelectorAll("btn-box");
+    const listUL = document.createElement("ul");
+    listUL.classList.add("list");
+    groceryList.appendChild(listUL);
 
-// burgers.forEach(){
-//     this.innerHTML = burger("mini-burger stroke--ice");
-// };
+    foodItems.forEach(function(item){
+        newItem = renderListItem(item.name, item.dept);
+        groceryList.firstElementChild.appendChild(newItem);
+
+    });
+    
+    
+    let renderListBurger = function(buttonType){
+        return`
+            <div class="ico ico--xs p-l-5">
+                ${svg.burger("mini-burger stroke--ice")}
+            </div>
+        `
+    };
 
 
+}
+
+
+renderGroceryList();

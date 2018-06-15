@@ -1,13 +1,22 @@
+
+
+.list {
+    list-style: none;
+    margin: 10px 0 0 0;
+    padding: 0;
+}
+
+.list li:first-child{
+    @include round-top(7px);
+}
+
 .li{
     @include shadow(0.60);
+    @include flexbox;
+    padding: 5px;
     // margin: 3px 0;
 }
 
-.li-banner{
-    @include flexbox;
-    padding: 5px;
-    // height: 40px;
-}
 
 .li--first{
     @include round-top(7px);
@@ -16,24 +25,6 @@
 @each $clr, $val in $colors{
     .li--#{$clr}{
         background: $val;
-    }
-}
-
-.li-badge{
-    @include round(50%);
-    width: 30px;
-    height: 30px;
-    text-align: center;
-    vertical-align: middle;
-    font-size: 1.4em;
-    font-weight: 700;
-    background: map-get($colors, ice);
-}
-
-@each $clr, $val in $colors{
-    .li-badge--#{$clr}{
-        color: $val;
-        border: 2px solid $val;
     }
 }
 
@@ -55,3 +46,4 @@
     justify-content: flex-start;
     align-items: center;
 }
+
