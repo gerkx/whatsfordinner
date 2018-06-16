@@ -46,55 +46,92 @@ const navBurgerSVG = document.getElementById("navBurgerSVG");
 // menuCloseSVG.innerHTML = svg.remove("rmv-x stroke--ice");
 // logoSVG.forEach(logo => logo.innerHTML = svg.logo("fill--ice"));
 
-burgerSVG.forEach(burger => burger.innerHTML = svg.burger("mini-burger stroke--ice"));
+
 trashSVG.forEach(trash => trash.innerHTML = svg.trash("ico--slate"));
 foodCloseSVG.forEach(x => x.innerHTML = svg.remove("rmv-x stroke--slate"));
 navLogoSVG.innerHTML = svg.logo("fill--cloud");
 navBurgerSVG.innerHTML = svg.burger("mini-burger stroke--cloud");
 
+///////////////
+// Page divs //
+///////////////
+const groceryList = document.getElementById("groceryList");
+
 /////////////////////
 // food list stuff //
 /////////////////////
 
-let renderListItem = function(name, dept){
+const renderListItem = function(name, dept){
     const listLI = document.createElement("li");
     listLI.classList.add("li");
     listLI.classList.add(`li--${dept}`);
+    listLI.id = name;
     listLI.innerHTML = `
     <div class="btn-box">
-        <div class="ico ico--xs p-l-5 burger">
-            ${svg.burger("mini-burger stroke--ice")}
-        </div>
+        <div class="ico ico--xs p-l-5"></div>
     </div>
     <input type="text" name="uniqueID" disabled value="${name}" class="txtbox txtbox__title">
     `
     return listLI;
 }
 
-let renderGroceryList = function(){
-    const groceryList = document.getElementById("groceryList");
-    // const listBurgers = document.querySelectorAll("btn-box");
+const renderCheckBox = function(){
+    const checkBox = document.createElement("div");
+    checkBox.classList.add("check-box");
+    checkBox.classList.add("check-box--border-ice");
+    return checkBox
+}
+
+
+const renderGroceryList = function(parentDiv){
+    let foods = foodItems;
     const listUL = document.createElement("ul");
     listUL.classList.add("list");
-    groceryList.appendChild(listUL);
+    parentDiv.appendChild(listUL);
 
-    foodItems.forEach(function(item){
-        newItem = renderListItem(item.name, item.dept);
-        groceryList.firstElementChild.appendChild(newItem);
-
+    foods.forEach(function(item, index){
+        if(item.amt > 0){
+            newItem = renderListItem(item.name, item.dept);
+            parentDiv.firstElementChild.appendChild(newItem);
+        }
     });
+
+    let btnBox = parentDiv.querySelectorAll(".btn-box");
+    btnBox.forEach(function(item, index){
+        btnBoxChild = item.firstElementChild;
+        newBox = renderCheckBox();
+        btnBoxChild.appendChild(newBox);
+    });
+
+    const list = parentDiv.querySelector(".list");
+    list.addEventListener("click", function(event){
+        let target = event.target;
+        if(target === list){ return }
+        while(target.parentNode && target.parentNode !== list){
+            target = target.parentNode
+        }
+        const foodObj = foods.filter(obj => obj.name === target.id)[0];
+        const chkbox = target.querySelector(".check-box");
+        const title = target.querySelector(".txtbox");
+        chkbox.classList.toggle("check-box--chk-ice");
+        title.classList.toggle("txtbox--done");
+        target.classList.toggle(`li--${foodObj.dept}`);
+        target.classList.toggle("li-done");
+        if(foodObj.checked){
+            foodObj.checked=false;
+        }else{
+            foodObj.checked=true;
+        }
+
+        
+        
+    });
+
     
-    
-    let renderListBurger = function(buttonType){
-        return`
-            <div class="ico ico--xs p-l-5">
-                ${svg.burger("mini-burger stroke--ice")}
-            </div>
-        `
-    };
+
 
 
 }
 
 
-renderGroceryList();
+renderGroceryList(groceryList);

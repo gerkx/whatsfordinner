@@ -1,9 +1,13 @@
 
-
 .list {
     list-style: none;
     margin: 10px 0 0 0;
     padding: 0;
+}
+
+.li-done{
+    opacity: 0.33;
+    background: map-get($colors, cloud);
 }
 
 .list li:first-child{

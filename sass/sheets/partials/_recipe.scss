@@ -247,7 +247,7 @@
     padding: 5px;
 }
 
-.list-box{
+.check-box{
     width: 20px;
     height: 20px;
     box-sizing: border-box;
@@ -258,10 +258,10 @@
 
 
 @each $clr, $val in $colors{
-    .list-box--border-#{$clr}{
+    .check-box--border-#{$clr}{
         border: 2px solid map-get($colors, #{$clr});
     }
-    .list-box--chk-#{$clr}{
+    .check-box--chk-#{$clr}{
         background: map-get($colors, #{$clr});
     }  
 }
