@@ -39,6 +39,19 @@ let svg = {
                 </svg>
             </div>
         `
-    }
-
+    },
+    checkout: (checkout="check-out", posStroke="stroke--ice", negStroke="stroke--cloud", fill="fill--ice") => {
+        return `
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                <circle class="fill--cloud" cx="50" cy="50" r="50"/>
+                <path class="${posStroke} ${checkout}" d="M16.3 25.3h8.2c0 0 4.5 23.9 6.1 31.8 0.6 3 0.8 9.3 8.2 9.3s32.5 0 32.5 0"/>
+                <circle class="${fill}" cx="65.6" cy="77.6" r="6.9"/>
+                <circle class="${fill}" cx="38.1" cy="77.6" r="6.9"/>
+                <path class="fill--ice" d="M67 56.9H30.5l-3.4-24.7h51.4L71 54C70.4 55.7 68.8 56.9 67 56.9z"/>
+                <circle class="fill--cloud" cx="65.7" cy="33.6" r="18"/>
+                <circle class="${fill}" cx="65.7" cy="33.6" r="15"/>
+                <polyline class="${negStroke} ${checkout}" points="57.4 33.6 63.1 39.3 74.1 28.3 "/>
+            </svg>
+        `
+    },
 }

@@ -543,10 +543,6 @@
   margin: 10px 0 0 0;
   padding: 0; }
 
-.li-done {
-  opacity: 0.33;
-  background: #B2B2B2; }
-
 .list li:first-child {
   border-top-right-radius: 7px;
   border-top-left-radius: 7px;
@@ -563,6 +559,10 @@
   display: -ms-flexbox;
   display: -webkit-flex;
   padding: 5px; }
+
+.li-done {
+  opacity: 0.33;
+  background: #B2B2B2; }
 
 .li--first {
   border-top-right-radius: 7px;
@@ -938,6 +938,13 @@
 
 .stroke--cloud {
   stroke: #B2B2B2; }
+
+.check-out {
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-miterlimit: 10;
+  fill: none; }
 
 .txtbox-backup {
   font-family: 'Montserrat', sans-serif;

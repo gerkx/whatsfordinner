@@ -194,6 +194,17 @@
     stroke: map-get($colors, cloud);
 }
 
+// .stroke--cloud{
+//     stroke: map-get($colors, )
+// }
+
+.check-out{
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-miterlimit: 10;
+    fill: none;
+}
 
 
 
