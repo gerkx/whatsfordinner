@@ -1,0 +1,35 @@
+{
+  "name": "whatsfordinner",
+  "version": "1.0.0",
+  "description": "a simple meal planning app",
+  "main": "app.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gerkx/whatsfordinner.git"
+  },
+  "keywords": [
+    "meal",
+    "planning",
+    "vanilla",
+    "js",
+    "grocery",
+    "list",
+    "to",
+    "do"
+  ],
+  "author": "Patrick Gerke",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gerkx/whatsfordinner/issues"
+  },
+  "homepage": "https://github.com/gerkx/whatsfordinner#readme",
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "chai-enzyme": "^1.0.0-beta.1",
+    "mocha": "^5.2.0",
+    "sinon": "^6.0.0"
+  }
+}
