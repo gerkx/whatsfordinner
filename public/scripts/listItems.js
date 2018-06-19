@@ -90,16 +90,6 @@ const renderCheckoutButton = function(){
     return btn;
 }
 
-// const removePurchasedItemsFromDB = function(list){
-//     console.log(list)
-//     list.forEach((item, index, obj) => {
-//         if(item.amt == 0){
-//             obj.splice(index, 1);
-//         }
-//     });
-//     console.log("after: ", list)
-// }
-
 // tested
 const resetPurchasedItems = function(list){
     list.filter((obj, index) => obj.checked == true)
@@ -127,55 +117,84 @@ const findTargetParent = (event, top) => {
     return target
 }
 
+// tested
 const foodObjCheckToggle = function(obj){
     if(obj.checked){
         obj.checked=false;
     }else{
         obj.checked=true;
     }
+    return obj
+}
+
+function listCheckClassToggles(target, obj){
+    target.querySelector(".check-box")
+        .classList.toggle("check-box--chk-ice");
+    target.querySelector(".txtbox")
+        .classList.toggle("txtbox--done");
+    target.classList.toggle(`li--${obj.dept}`);
+    target.classList.toggle("li-done");
+
+    return target
+}
+
+// tested
+const renderSearchInput = placeholder => {
+    const search = document.createElement("input");
+    search.classList.add("txtbox");
+    search.classList.add("txtbox--search");
+    search.classList.add("p-l-20");
+    search.placeholder = placeholder;
+    return search
+}
+
+const renderSearchBar = () => {
+    const div = document.createElement("div");
+    div.classList.add("search-box");
+    div.appendChild(renderSearchInput("add a new item"))
+    // div.appendChild(icon)
+    return div
+
+}
+
+const renderSearchSort = () =>{
+    let search = document.querySelector(".search-filter-bar");
+    search.appendChild(renderSearchBar());
+    return search
 }
 
 let foods = foodItems;
 let groceryListItems = foods.filter(obj => obj.amt > 0);
 
-
 /////
 const renderGroceryList = function(parentDiv){
-    
+    renderSearchSort();
 
-    const listUL = document.createElement("ul");
-    listUL.classList.add("list");
-    parentDiv.appendChild(listUL);
+    parentDiv.innerHTML = '<ul class="list" />'
 
     groceryListItems.forEach(function(item, index){
         parentDiv.firstElementChild.appendChild(renderListItem(item));
     });
 
-    let btnBox = parentDiv.querySelectorAll(".btn-box")
+    parentDiv.querySelectorAll(".btn-box")
         .forEach(item => {item.firstElementChild
         .appendChild(renderCheckBox());
         });
 
-    const list = parentDiv.querySelector(".list");
-    list.addEventListener("click", function(event){
-        console.log(event)
-        let target = findTargetParent(event, list);
-        console.log(target)
-        const foodObj = groceryListItems.filter(obj => obj.id === target.id)[0];
-        target.querySelector(".check-box")
-            .classList.toggle("check-box--chk-ice");
-        target.querySelector(".txtbox")
-            .classList.toggle("txtbox--done");
-        target.classList.toggle(`li--${foodObj.dept}`);
-        target.classList.toggle("li-done");
-        foodObjCheckToggle(foodObj);
-    });
+    parentDiv.querySelector(".list")
+        .addEventListener("click", function(event){
+            let target = findTargetParent(event, this);
+            const foodObj = groceryListItems.find(obj => obj.id === target.id);
+            listCheckClassToggles(target, foodObj);
+            foodObjCheckToggle(foodObj);
+        });
+
     const checkoutBtn = document.querySelector(".checkout");
     checkoutBtn.appendChild(renderCheckoutButton());
+
     checkoutBtn.addEventListener("click", function(){
         resetPurchasedItems(groceryListItems);
         removePurchasedItemsFromDisplay(listUL);
-        // removePurchasedItemsFromDB(groceryListItems);
     });
 
     
@@ -183,3 +202,4 @@ const renderGroceryList = function(parentDiv){
 
 
 renderGroceryList(groceryList);
+
