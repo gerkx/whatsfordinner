@@ -148,19 +148,19 @@ const renderSearchInput = placeholder => {
     return search
 }
 
-const renderSearchBar = () => {
+const renderSearchBlock = () => {
     const div = document.createElement("div");
     div.classList.add("search-box");
-    div.appendChild(renderSearchInput("add a new item"))
-    // div.appendChild(icon)
+    div.appendChild(renderSearchInput("add a new item"));
+    const searchIcon = document.createElement("div");
+    div.insertAdjacentHTML("beforeend",svg.search());
     return div
-
 }
 
-const renderSearchSort = () =>{
-    let search = document.querySelector(".search-filter-bar");
-    search.appendChild(renderSearchBar());
-    return search
+const renderSearchSort = (listFilter) =>{
+    listFilter.innerHTML = '<div class="search-filter-bar m-b-5 m-t-5" />'
+    listFilter.firstElementChild.appendChild(renderSearchBlock());
+    return listFilter
 }
 
 let foods = foodItems;
@@ -168,7 +168,8 @@ let groceryListItems = foods.filter(obj => obj.amt > 0);
 
 /////
 const renderGroceryList = function(parentDiv){
-    renderSearchSort();
+    let listFilter = document.querySelector("#listFilter");
+    renderSearchSort(listFilter);
 
     parentDiv.innerHTML = '<ul class="list" />'
 

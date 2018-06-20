@@ -89,22 +89,24 @@ describe("#foodObjChekToggle", () => {
     });
 });
 
-describe("#renderSearchBar", () =>{
-    it("should create div", () => expect(renderSearchBar().nodeName).to.eql("DIV"));
+describe("#renderSearchBlock", () =>{
+    it("should create div", () => expect(renderSearchBlock().nodeName).to.eql("DIV"));
     it("should contain 'search-box' class", () =>{
-        assert.isTrue(renderSearchBar().classList.contains("search-box"));
+        assert.isTrue(renderSearchBlock().classList.contains("search-box"));
     });
     it("should have an input for a first child", () =>{
-        expect(renderSearchBar().firstElementChild.nodeName).to.eql("INPUT");
+        expect(renderSearchBlock().firstElementChild.nodeName).to.eql("INPUT");
     })
     it("should have a placeholder of 'add a new item' in the input", ()=>{
         const ref = "add a new item";
-        const result = renderSearchBar().firstElementChild.placeholder;
+        const result = renderSearchBlock().firstElementChild.placeholder;
         assert.equal(ref, result);
     });
-    // it("should have a div for a second child", () =>{
-
-    // })
+    it("should have a div for a second child", () =>{
+        const div = "DIV";
+        result = renderSearchBlock().children[1].nodeName;
+        assert.equal(div, result);
+    });
     
 });
 
@@ -114,4 +116,15 @@ describe("#renderSearchInput", () => {
         const result = renderSearchInput(val).placeholder;
         assert.equal(val, result);
     });
+});
+
+describe("#renderSearchSort", () => {
+    it("should have selector search-filter-bar", () =>{
+        const selector = "search-filter-bar";
+        let search = document.createElement("div");
+        search.id="listFilter";
+        const result = renderSearchSort(search).firstElementChild.classList;
+        expect(result.contains(selector)).to.be.true
+    });
+    
 });
