@@ -51,6 +51,11 @@ body{
     height: 100%;
     position: relative;
 }
+#listFilter, #groceryList{
+    width: 100%;
+    // position: absolute;
+    // flex:0 1 auto;
+}
 
 .header{
     width: 100%;

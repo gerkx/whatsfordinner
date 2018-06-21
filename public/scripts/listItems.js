@@ -54,6 +54,7 @@ const navBurgerSVG = document.getElementById("navBurgerSVG");
 // Page divs //
 ///////////////
 const groceryList = document.getElementById("groceryList");
+const listFilter = document.querySelector("#listFilter");
 
 /////////////////////
 // food list stuff //
@@ -157,22 +158,28 @@ const renderSearchBlock = () => {
     return div
 }
 
-const renderSearchSort = (listFilter) =>{
-    listFilter.innerHTML = '<div class="search-filter-bar m-b-5 m-t-5" />'
-    listFilter.firstElementChild.appendChild(renderSearchBlock());
-    return listFilter
-}
+
 
 let foods = foodItems;
 let groceryListItems = foods.filter(obj => obj.amt > 0);
 
-/////
-const renderGroceryList = function(parentDiv){
-    let listFilter = document.querySelector("#listFilter");
-    renderSearchSort(listFilter);
 
-    parentDiv.innerHTML = '<ul class="list" />'
+///////////////////////
+// section renderers //
+///////////////////////
 
+const renderSearchSortBlock = (listFilter) =>{
+    listFilter.innerHTML = '<div class="search-filter-bar m-b-5 m-t-5" />'
+    listFilter.firstElementChild.appendChild(renderSearchBlock());
+    let searchFilterBar = document.querySelector(".search-filter-bar");
+    searchFilterBar.insertAdjacentHTML("beforeend", svg.filter());
+    return listFilter
+}
+
+const renderGroceryListBlock = function(parentDiv){
+    const listUL = document.createElement("ul");
+    listUL.classList.add("list");
+    parentDiv.appendChild(listUL);
     groceryListItems.forEach(function(item, index){
         parentDiv.firstElementChild.appendChild(renderListItem(item));
     });
@@ -192,7 +199,6 @@ const renderGroceryList = function(parentDiv){
 
     const checkoutBtn = document.querySelector(".checkout");
     checkoutBtn.appendChild(renderCheckoutButton());
-
     checkoutBtn.addEventListener("click", function(){
         resetPurchasedItems(groceryListItems);
         removePurchasedItemsFromDisplay(listUL);
@@ -201,6 +207,5 @@ const renderGroceryList = function(parentDiv){
     
 }
 
-
-renderGroceryList(groceryList);
-
+renderSearchSortBlock(listFilter);
+renderGroceryListBlock(groceryList);

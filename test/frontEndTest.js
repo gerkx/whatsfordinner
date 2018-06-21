@@ -76,7 +76,7 @@ describe("#findTargetParent", () => {
       });
 });
 
-describe("#foodObjChekToggle", () => {
+describe("#foodObjCheckToggle", () => {
     it("should make false checks turn true", () =>{
         const startsFalse = {checked:false}
         const result = foodObjCheckToggle(startsFalse).checked;
@@ -118,13 +118,15 @@ describe("#renderSearchInput", () => {
     });
 });
 
-describe("#renderSearchSort", () => {
+describe("#renderSearchSortBlock", () => {
     it("should have selector search-filter-bar", () =>{
         const selector = "search-filter-bar";
         let search = document.createElement("div");
         search.id="listFilter";
-        const result = renderSearchSort(search).firstElementChild.classList;
+        const result = renderSearchSortBlock(search).firstElementChild.classList;
         expect(result.contains(selector)).to.be.true
     });
+
+
     
 });
