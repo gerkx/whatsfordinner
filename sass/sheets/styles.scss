@@ -33,26 +33,38 @@ body{
 //     height: 100px;
 // }
 
+// .container{
+//     @include center;
+//     width: 94%;
+//     height: 100%;
+//     position: relative;
+//     z-index: 0;
+// }
+
 .container{
     @include center;
-    width: 94%;
-    height: 100%;
-    position: relative;
-    z-index: 0;
-}
-
-.container-flex{
-    @include center;
     @include flexbox;
-    flex-wrap: wrap;
     justify-content: flex-start;
     flex-direction: column;
     width: 94%;
     height: 100%;
     position: relative;
 }
-#listFilter, #groceryList{
+
+.container--wrap{
+    flex-wrap: wrap;
+}
+
+#listFilter{
     width: 100%;
+    // position: absolute;
+    // flex:0 1 auto;
+}
+
+#groceryList{
+    width: 100%;
+    
+    overflow: auto; 
     // position: absolute;
     // flex:0 1 auto;
 }
@@ -115,12 +127,16 @@ body{
 
 .filter-bar{
     color: map-get($colors, ice);
+    margin: 0 5px;
 }
 
 .filter-sort{
     @include flexbox;
     align-items: center;
     justify-content: flex-start;
+    flex-wrap: wrap;
+    margin-bottom: 7px;
+    padding-top: 5px;
     color: map-get($colors, cloud);
 }
 .filter-sort-btns{

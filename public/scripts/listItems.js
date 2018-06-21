@@ -152,17 +152,53 @@ const renderSearchInput = placeholder => {
 const renderSearchBlock = () => {
     const div = document.createElement("div");
     div.classList.add("search-box");
-    div.appendChild(renderSearchInput("add a new item"));
+    div.appendChild(renderSearchInput("new item"));
     const searchIcon = document.createElement("div");
     div.insertAdjacentHTML("beforeend",svg.search());
     return div
 }
 
-
+const groceryItemStatus =  function(event){
+    let target = findTargetParent(event, this);
+    const foodObj = groceryListItems.find(obj => obj.id === target.id);
+    listCheckClassToggles(target, foodObj);
+    foodObjCheckToggle(foodObj);
+}
 
 let foods = foodItems;
 let groceryListItems = foods.filter(obj => obj.amt > 0);
 
+const renderFilterSection = () => {
+    let list = document.createElement("div");
+    list.classList.add("filter-sort");
+
+    return list
+}
+
+const quickie = () => {
+
+    return `
+    <div class="filter-bar">
+                <div class="filter-sort">
+                    <div class="txt--ice">Sort by:</div>
+                    <div class="btn-sm m-l-5">ABC</div>
+                    <div class="btn-sm m-l-5">Category</div>
+                    <div class="btn-sm btn--mint m-l-5">Date Added</div>
+                </div>
+                <div class="filter-show p-t-7 p-b-7">
+                    <div class="txt--ice">Show:</div>
+                    <div class="btn-sm m-l-5 m-t-3 m-b-3">All</div>
+                    <div class="btn-sm m-l-5 m-t-3 m-b-3">Meat</div>
+                    <div class="btn-sm btn--mint m-l-5 m-t-3 m-b-3">Produce</div>
+                    <div class="btn-sm  m-l-5 m-t-3 m-b-3">Dairy</div>
+                    <div class="btn-sm m-l-5 m-t-3 m-b-3">Frozen</div>
+                    <div class="btn-sm btn--mint m-l-5 m-t-3 m-b-3">Sundries</div>
+                    <div class="btn-sm btn--mint m-l-5 m-t-3 m-b-3">Canned</div>
+                    <div class="btn-sm m-l-5 m-t-3 m-b-3">Bakery</div>
+                </div>
+            </div>
+    `
+}
 
 ///////////////////////
 // section renderers //
@@ -171,10 +207,11 @@ let groceryListItems = foods.filter(obj => obj.amt > 0);
 const renderSearchSortBlock = (listFilter) =>{
     listFilter.innerHTML = '<div class="search-filter-bar m-b-5 m-t-5" />'
     listFilter.firstElementChild.appendChild(renderSearchBlock());
-    let searchFilterBar = document.querySelector(".search-filter-bar");
-    searchFilterBar.insertAdjacentHTML("beforeend", svg.filter());
+    listFilter.firstElementChild.insertAdjacentHTML("beforeend", svg.filter());
+    listFilter.insertAdjacentHTML("beforeEnd", quickie());
     return listFilter
 }
+
 
 const renderGroceryListBlock = function(parentDiv){
     const listUL = document.createElement("ul");
@@ -185,9 +222,7 @@ const renderGroceryListBlock = function(parentDiv){
     });
 
     parentDiv.querySelectorAll(".btn-box")
-        .forEach(item => {item.firstElementChild
-        .appendChild(renderCheckBox());
-        });
+        .forEach(item => item.firstElementChild.appendChild(renderCheckBox()));
 
     parentDiv.querySelector(".list")
         .addEventListener("click", function(event){
@@ -203,9 +238,10 @@ const renderGroceryListBlock = function(parentDiv){
         resetPurchasedItems(groceryListItems);
         removePurchasedItemsFromDisplay(listUL);
     });
-
     
 }
+
+
 
 renderSearchSortBlock(listFilter);
 renderGroceryListBlock(groceryList);

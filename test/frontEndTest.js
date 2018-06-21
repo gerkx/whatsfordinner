@@ -98,7 +98,7 @@ describe("#renderSearchBlock", () =>{
         expect(renderSearchBlock().firstElementChild.nodeName).to.eql("INPUT");
     })
     it("should have a placeholder of 'add a new item' in the input", ()=>{
-        const ref = "add a new item";
+        const ref = "new item";
         const result = renderSearchBlock().firstElementChild.placeholder;
         assert.equal(ref, result);
     });
@@ -127,6 +127,21 @@ describe("#renderSearchSortBlock", () => {
         expect(result.contains(selector)).to.be.true
     });
 
+});
 
-    
+
+describe("#renderFilterSection", () => {
+    let method = renderFilterSection()
+    it("should return a div", () =>{
+        const div = "DIV";
+        const result = method.nodeName;
+        expect(result).to.eql(div);
+    })
+    it("should contain class filter-bar in parent", () => {
+        const sel = "filter-sort";
+        const result = method.classList.contains(sel);
+        assert.isTrue(result);
+    });
+    it("1st child should be div");
+
 });
