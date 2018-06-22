@@ -129,9 +129,9 @@ describe("#renderSearchSortBlock", () => {
 
 });
 
-
 describe("#renderFilterSection", () => {
-    let method = renderFilterSection()
+    let arr = ["one", "two", "three"];
+    let method = renderFilterSortSection(arr)
     it("should return a div", () =>{
         const div = "DIV";
         const result = method.nodeName;
@@ -142,6 +142,39 @@ describe("#renderFilterSection", () => {
         const result = method.classList.contains(sel);
         assert.isTrue(result);
     });
-    it("1st child should be div");
-
+    it("1st child should be div", () => {
+        const div = "DIV";
+        const result = method.firstElementChild.nodeName;
+        expect(result).to.eql(div);
+    });
+    it("1st child should have class txt--ice", () => {
+        const sel = "txt--ice";
+        const result = method.firstElementChild.classList.contains(sel);
+        assert.isTrue(result);
+    });
+    it("1st child should have Sort by text", () => {
+        const text = "Sort by:";
+        const result = method.firstElementChild.textContent;
+        expect(text).to.eql(result);
+    });
+    it("should return a list of divs that match arr input", () => {
+        const result = method.lastElementChild.textContent;
+        expect(result).to.eql(arr[arr.length-1]);
+    });
+    it("the array divs should have btn-sm m-l-5 classes", () => {
+        const result = method.lastElementChild.classList.contains("btn-sm", "m-l-5");
+        assert.isTrue(result);
+    });
+    it("if 2nd argument passed the first child div will contain it", () => {
+        const txt = "boop"
+        const result = renderFilterSortSection(arr, txt).firstElementChild.textContent;
+        expect(result).to.eql(txt)
+    })
+    it("if 3rd arg passed the block css will have it as sel", () => {
+        const txt = "boop"
+        const sel = "tweedle"
+        const result = renderFilterSortSection(arr, txt, sel).classList.contains(sel);
+        assert.isTrue(result);
+    })
 });
+

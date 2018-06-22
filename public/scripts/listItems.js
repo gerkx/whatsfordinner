@@ -167,37 +167,25 @@ const groceryItemStatus =  function(event){
 
 let foods = foodItems;
 let groceryListItems = foods.filter(obj => obj.amt > 0);
+let sortCats = ["ABC", "Cat", "Date", "Popularity"];
+let showCats = ["All", "Bakery", "Dairy", "Frozen", "Meat", "Packaged", "Produce", "Sundries"];
 
-const renderFilterSection = () => {
+const renderFilterSortSection = (arr, headline="Sort by:", selector="filter-sort") => {
     let list = document.createElement("div");
-    list.classList.add("filter-sort");
-
+    list.classList.add(selector);
+    list.innerHTML = `<div class='txt--ice'>${headline}</div>`;
+    list.insertAdjacentHTML("beforeend", arr
+        .map(item => `<div class="btn-sm m-l-5">${item}</div>`)
+        .join(""));
     return list
 }
 
-const quickie = () => {
-
-    return `
-    <div class="filter-bar">
-                <div class="filter-sort">
-                    <div class="txt--ice">Sort by:</div>
-                    <div class="btn-sm m-l-5">ABC</div>
-                    <div class="btn-sm m-l-5">Category</div>
-                    <div class="btn-sm btn--mint m-l-5">Date Added</div>
-                </div>
-                <div class="filter-show p-t-7 p-b-7">
-                    <div class="txt--ice">Show:</div>
-                    <div class="btn-sm m-l-5 m-t-3 m-b-3">All</div>
-                    <div class="btn-sm m-l-5 m-t-3 m-b-3">Meat</div>
-                    <div class="btn-sm btn--mint m-l-5 m-t-3 m-b-3">Produce</div>
-                    <div class="btn-sm  m-l-5 m-t-3 m-b-3">Dairy</div>
-                    <div class="btn-sm m-l-5 m-t-3 m-b-3">Frozen</div>
-                    <div class="btn-sm btn--mint m-l-5 m-t-3 m-b-3">Sundries</div>
-                    <div class="btn-sm btn--mint m-l-5 m-t-3 m-b-3">Canned</div>
-                    <div class="btn-sm m-l-5 m-t-3 m-b-3">Bakery</div>
-                </div>
-            </div>
-    `
+const renderFiltersBlock = () => {
+    
+    return {
+        sort: renderFilterSortSection(sortCats), 
+        show: renderFilterSortSection(showCats, "Show: ", "filter-show")
+    }
 }
 
 ///////////////////////
@@ -208,7 +196,8 @@ const renderSearchSortBlock = (listFilter) =>{
     listFilter.innerHTML = '<div class="search-filter-bar m-b-5 m-t-5" />'
     listFilter.firstElementChild.appendChild(renderSearchBlock());
     listFilter.firstElementChild.insertAdjacentHTML("beforeend", svg.filter());
-    listFilter.insertAdjacentHTML("beforeEnd", quickie());
+    listFilter.appendChild(renderFiltersBlock().sort);
+    listFilter.appendChild(renderFiltersBlock().show);
     return listFilter
 }
 
