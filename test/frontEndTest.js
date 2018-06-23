@@ -178,3 +178,21 @@ describe("#renderFilterSection", () => {
     })
 });
 
+describe("#renderFiltersBlock", ()=>{
+    let func = renderFiltersBlock();
+    it("creates a div", () => {
+        const div = "DIV";
+        expect(func.nodeName).to.eql(div);
+    });
+    it("1st div should have filter-bar class", () => {
+        const txt = "filter-bar";
+        const result = func.classList.contains(txt);
+        assert.isTrue(result);
+    });
+    it("should have two divs for children", () => {
+        result = func.childElementCount;
+        expect(result).to.eql(2)
+    });
+
+});
+

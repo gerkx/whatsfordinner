@@ -181,11 +181,18 @@ const renderFilterSortSection = (arr, headline="Sort by:", selector="filter-sort
 }
 
 const renderFiltersBlock = () => {
+    let sort = renderFilterSortSection(sortCats);
+    let filter = renderFilterSortSection(showCats, "Show: ", "filter-show");
+    let markup = document.createElement("div");
+    markup.classList.add("filter-bar");
+    markup.appendChild(sort);
+    markup.appendChild(filter);
     
-    return {
-        sort: renderFilterSortSection(sortCats), 
-        show: renderFilterSortSection(showCats, "Show: ", "filter-show")
-    }
+    
+
+    
+    return markup
+    // return renderFilterSortSection(sortCats)
 }
 
 ///////////////////////
@@ -196,8 +203,8 @@ const renderSearchSortBlock = (listFilter) =>{
     listFilter.innerHTML = '<div class="search-filter-bar m-b-5 m-t-5" />'
     listFilter.firstElementChild.appendChild(renderSearchBlock());
     listFilter.firstElementChild.insertAdjacentHTML("beforeend", svg.filter());
-    listFilter.appendChild(renderFiltersBlock().sort);
-    listFilter.appendChild(renderFiltersBlock().show);
+    listFilter.appendChild(renderFiltersBlock());
+    // listFilter.appendChild(renderFiltersBlock().show);
     return listFilter
 }
 
