@@ -165,6 +165,8 @@ const groceryItemStatus =  function(event){
     foodObjCheckToggle(foodObj);
 }
 
+// let filtros = ["produce"];
+// filter(obj => filtros.indexOf(obj.dept) != -1)
 let foods = foodItems;
 let groceryListItems = foods.filter(obj => obj.amt > 0);
 let sortCats = ["ABC", "Cat", "Date", "Popularity"];
@@ -185,28 +187,89 @@ const renderFiltersBlock = () => {
     let filter = renderFilterSortSection(showCats, "Show: ", "filter-show");
     let markup = document.createElement("div");
     markup.classList.add("filter-bar");
+    markup.classList.add("hide");
     markup.appendChild(sort);
     markup.appendChild(filter);
     
-    
-
-    
     return markup
-    // return renderFilterSortSection(sortCats)
+}
+
+const blocky = () =>{
+    let block =  renderFiltersBlock();
+    let arr = block.firstElementChild.nextElementSibling;
+    console.log(arr);
+    return block
 }
 
 ///////////////////////
 // section renderers //
 ///////////////////////
 
+const listenBlock = function(event, top, bingo){
+    let arr = [];
+    arr.push(document.querySelector(".filter-block"), document.querySelector(".filter-sort"));
+    // console.log(arr[0])
+    let target = event.target;
+    console.log("t: ", target)
+    // if(target === top){ return }
+    // while(target.parentNode && target.parentNode !== top){
+    while(target.parentNode && arr.indexOf(target) == -1){
+
+        
+        target = target.parentNode
+    }
+    // // while(target.parentNode && target !== top){
+    // // while(target.parentNode && arr.includes(target)){
+    //     
+    // }
+    let boop = arr.indexOf(target);
+    // let boop = arr.findIndex(item => item == target);
+    console.log("beeple", boop)
+    
+    return arr[boop]
+}
+
 const renderSearchSortBlock = (listFilter) =>{
     listFilter.innerHTML = '<div class="search-filter-bar m-b-5 m-t-5" />'
     listFilter.firstElementChild.appendChild(renderSearchBlock());
     listFilter.firstElementChild.insertAdjacentHTML("beforeend", svg.filter());
-    listFilter.appendChild(renderFiltersBlock());
-    // listFilter.appendChild(renderFiltersBlock().show);
+    listFilter.appendChild(renderFiltersBlock())
+
+    listFilter.addEventListener("click", function(event){
+        const filterBlock = document.querySelector(".filter-bar");
+        const filterIcon = document.querySelector(".filter-block");
+        const filterSort = document.querySelector(".filter-sort");
+
+        const filterTarget = document.querySelector(".filter-block");
+        const searchFilterBar = document.querySelector(".search-filter-bar");
+        const queryTarget = document.querySelector(".filter-sort");
+
+        let target = listenBlock(event, searchFilterBar);
+        // let target = listenBlock(event, searchFilterBar);
+        
+        // let target = findTargetParent(event, filterIcon.parentNode);
+        // let target = event.target;
+        console.log("targ: ", target, "filt: ", filterIcon)
+
+        let targs = {
+            filterTarget: document.querySelector(".filter-block"),
+            boop: "boop",
+        }
+        let arr = [filterTarget, queryTarget];
+
+        // if()
+
+        if(target == filterIcon){
+            filterIcon.classList.toggle("ico--ice")
+            filterIcon.classList.toggle("ico--mint")
+            filterBlock.classList.toggle("hide");
+        }
+    });
+
     return listFilter
 }
+
+
 
 
 const renderGroceryListBlock = function(parentDiv){
@@ -240,4 +303,6 @@ const renderGroceryListBlock = function(parentDiv){
 
 
 renderSearchSortBlock(listFilter);
+
 renderGroceryListBlock(groceryList);
+// searchSort(groceryList);
