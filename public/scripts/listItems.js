@@ -194,40 +194,24 @@ const renderFiltersBlock = () => {
     return markup
 }
 
-const blocky = () =>{
-    let block =  renderFiltersBlock();
-    let arr = block.firstElementChild.nextElementSibling;
-    console.log(arr);
-    return block
+
+const listenBlock = function(event, objArr){
+    let target = event.target;
+    const objTargets = objArr.map(obj => obj.target);
+    while(target.parentNode && objTargets.indexOf(target) == -1){        
+        target = target.parentNode
+    }
+    let obj = objTargets.indexOf(target);
+    if(obj > -1){
+        return objArr[obj].callback()
+    }
+    
 }
+
 
 ///////////////////////
 // section renderers //
 ///////////////////////
-
-const listenBlock = function(event, top, bingo){
-    let arr = [];
-    arr.push(document.querySelector(".filter-block"), document.querySelector(".filter-sort"));
-    // console.log(arr[0])
-    let target = event.target;
-    console.log("t: ", target)
-    // if(target === top){ return }
-    // while(target.parentNode && target.parentNode !== top){
-    while(target.parentNode && arr.indexOf(target) == -1){
-
-        
-        target = target.parentNode
-    }
-    // // while(target.parentNode && target !== top){
-    // // while(target.parentNode && arr.includes(target)){
-    //     
-    // }
-    let boop = arr.indexOf(target);
-    // let boop = arr.findIndex(item => item == target);
-    console.log("beeple", boop)
-    
-    return arr[boop]
-}
 
 const renderSearchSortBlock = (listFilter) =>{
     listFilter.innerHTML = '<div class="search-filter-bar m-b-5 m-t-5" />'
@@ -238,32 +222,19 @@ const renderSearchSortBlock = (listFilter) =>{
     listFilter.addEventListener("click", function(event){
         const filterBlock = document.querySelector(".filter-bar");
         const filterIcon = document.querySelector(".filter-block");
-        const filterSort = document.querySelector(".filter-sort");
+        const targCallbacks = [
+            {
+                // filter button
+                target: document.querySelector(".filter-block"),
+                callback: function(){
+                    filterIcon.classList.toggle("ico--ice")
+                    filterIcon.classList.toggle("ico--mint")
+                    filterBlock.classList.toggle("hide");
+                }
+            },
+        ];
 
-        const filterTarget = document.querySelector(".filter-block");
-        const searchFilterBar = document.querySelector(".search-filter-bar");
-        const queryTarget = document.querySelector(".filter-sort");
-
-        let target = listenBlock(event, searchFilterBar);
-        // let target = listenBlock(event, searchFilterBar);
-        
-        // let target = findTargetParent(event, filterIcon.parentNode);
-        // let target = event.target;
-        console.log("targ: ", target, "filt: ", filterIcon)
-
-        let targs = {
-            filterTarget: document.querySelector(".filter-block"),
-            boop: "boop",
-        }
-        let arr = [filterTarget, queryTarget];
-
-        // if()
-
-        if(target == filterIcon){
-            filterIcon.classList.toggle("ico--ice")
-            filterIcon.classList.toggle("ico--mint")
-            filterBlock.classList.toggle("hide");
-        }
+        listenBlock(event, targCallbacks);
     });
 
     return listFilter
