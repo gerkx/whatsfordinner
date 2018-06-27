@@ -195,18 +195,39 @@ const renderFiltersBlock = () => {
 }
 
 
-const listenBlock = function(event, objArr){
+const filterClickCallbacks = (event, objArr) => {
     let target = event.target;
     const objTargets = objArr.map(obj => obj.target);
+    
     while(target.parentNode && objTargets.indexOf(target) == -1){        
         target = target.parentNode
     }
-    let obj = objTargets.indexOf(target);
-    if(obj > -1){
-        return objArr[obj].callback()
+
+    let arrIndex = objTargets.indexOf(target);
+    if(arrIndex !== -1){
+        const obj = objArr[arrIndex];
+        if(obj.callback){
+            return obj.callback()
+        }
     }
     
 }
+
+// const createFilterCallbackObjs = () => {
+//     const targCallbacks = [
+//             {
+//                 // filter button
+//                 target: document.querySelector(".filter-block"),
+//                 callback: function(){
+//                     filterIcon.classList.toggle("ico--ice")
+//                     filterIcon.classList.toggle("ico--mint")
+//                     filterBlock.classList.toggle("hide");
+//                 }
+//             },
+//         ];
+
+//     return targCallbacks
+// }
 
 
 ///////////////////////
@@ -234,7 +255,7 @@ const renderSearchSortBlock = (listFilter) =>{
             },
         ];
 
-        listenBlock(event, targCallbacks);
+        filterClickCallbacks(event, targCallbacks);
     });
 
     return listFilter
@@ -274,6 +295,8 @@ const renderGroceryListBlock = function(parentDiv){
 
 
 renderSearchSortBlock(listFilter);
+
+
 
 renderGroceryListBlock(groceryList);
 // searchSort(groceryList);

@@ -76,6 +76,43 @@ describe("#findTargetParent", () => {
       });
 });
 
+describe("#filterClickCallbacks", () => {
+    it("returns callback fn from same target index in array", () => {
+        const callback = () => "beep!!!";
+        const arr = [{target: "boop"}, {target: "beep", callback: callback}, {target: "blerp"}];
+        const child = "beep";
+        const grandchild = {parentNode: child};
+        const event = {target: grandchild};
+
+        const result = filterClickCallbacks(event, arr);
+        
+        expect(result).to.eql(callback());
+    });
+
+    it("returns undef if target isn't in objArr", () => {
+        const arr = [{target: "boop"}, {target: "beep"},{target: "blerp"}];
+        const parent = {parentNode: undefined};
+        const child = {parentNode: parent};
+        const grandchild = {parentNode: child};
+        const event = {target: grandchild};
+
+        const result = filterClickCallbacks(event, arr);
+        
+        assert.isUndefined(result);
+    });
+
+    it("returns undef if callback isn't in obj", () => {
+        const arr = [{target: "boop"}, {target: "beep"},{target: "blerp"}];
+        const child = "beep";
+        const grandchild = {parentNode: child};
+        const event = {target: grandchild};
+
+        const result = filterClickCallbacks(event, arr);
+
+        assert.isUndefined(result);
+    });
+});
+
 describe("#foodObjCheckToggle", () => {
     it("should make false checks turn true", () =>{
         const startsFalse = {checked:false}
@@ -196,3 +233,16 @@ describe("#renderFiltersBlock", ()=>{
 
 });
 
+
+
+describe("#filterButtonStateMgmt", () =>{
+    it("adds hilite if not already hilited", () =>{
+        const classes = {classList: "boop"};
+
+        const result = filterButtonStateMgmt();
+
+        assert.isTrue(result);
+    });
+});
+
+// boop.lastElementChild.firstElementChild.childNodes[0].classList
