@@ -210,24 +210,8 @@ const filterClickCallbacks = (event, objArr) => {
             return obj.callback()
         }
     }
-    
 }
 
-// const createFilterCallbackObjs = () => {
-//     const targCallbacks = [
-//             {
-//                 // filter button
-//                 target: document.querySelector(".filter-block"),
-//                 callback: function(){
-//                     filterIcon.classList.toggle("ico--ice")
-//                     filterIcon.classList.toggle("ico--mint")
-//                     filterBlock.classList.toggle("hide");
-//                 }
-//             },
-//         ];
-
-//     return targCallbacks
-// }
 
 
 ///////////////////////
