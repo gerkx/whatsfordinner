@@ -198,11 +198,9 @@ const renderFiltersBlock = () => {
 const filterClickCallbacks = (event, objArr) => {
     let target = event.target;
     const objTargets = objArr.map(obj => obj.target);
-    
     while(target.parentNode && objTargets.indexOf(target) == -1){        
         target = target.parentNode
     }
-
     let arrIndex = objTargets.indexOf(target);
     if(arrIndex !== -1){
         const obj = objArr[arrIndex];
@@ -211,6 +209,17 @@ const filterClickCallbacks = (event, objArr) => {
         }
     }
 }
+
+const createFilterSortStateSessionStorage = key => {
+    if(!window.sessionStorage[key]){
+        window.sessionStorage.setItem(key, JSON.stringify({
+            abc: true,
+        }));
+    }
+    }
+
+
+
 
 
 
