@@ -233,38 +233,71 @@ describe("#renderFiltersBlock", ()=>{
 
 });
 
+const storageMocker = function(){
+    let storage = {};
+    return {
+        setItem: function(key, val){
+            storage[key] = val.toString();
+        },
+        getItem: function(key){
+            return key in storage ? storage[key] : null;
+        },
+        removeItem: function(key){
+            delete storage[key];
+        },
+        clear: function(){
+            storage = {};
+        },
+    }
+}
+
 
 describe("#createFilterSortStateSessionStorage", function(){
     let storageMock;
     beforeEach(function(){
-        storageMock = (function(){
-            let storage = {};
-            return {
-                setItem: function(key, val){
-                    storage[key] = val.toString();
-                },
-                getItem: function(key){
-                    return key in storage ? storage[key] : null;
-                },
-                removeItem: function(key){
-                    delete storage[key];
-                },
-                clear: function(){
-                    storage = {};
-                },
-            }
-        })();
+        storageMock = storageMocker();
         Object.defineProperty(window, 'sessionStorage', {value: storageMock});
     });
     afterEach(function(){
         window.sessionStorage.removeItem("grocSortState");
     });
-       
     it("creates a non existent sesh storage obj", () => {
         window.sessionStorage.removeItem("grocSortState");
         createFilterSortStateSessionStorage("grocSortState");
-        const result = JSON.parse(window.sessionStorage.getItem("grocSortState")).abc;
-        assert.isTrue(result);
+        const result = JSON.parse(window.sessionStorage.getItem("grocSortState"));
+        assert.isTrue(result.abc);
     });
-
 });
+
+describe("#toggleSortStyle", () => {
+    let storageMock;
+    beforeEach(function(){
+        storageMock = storageMocker();
+        Object.defineProperty(window, 'sessionStorage', {value: storageMock});
+    });
+    afterEach(function(){
+        window.sessionStorage.removeItem("grocSortState");
+    });
+    it("adds style if storage is true", function() {
+        createFilterSortStateSessionStorage("grocSortState");
+        let div = {
+            id: "abc",
+            classList: {
+                list: ["boop"],
+                contains: function(str){
+                    if(this.list.indexOf(str) !== -1){
+                        return true
+                    }
+                    return false
+                },
+                add: function(item){
+                    this.list.push(item);
+                }
+            }
+        }
+        toggleSortStyle(div, "grocSortState");
+        div.classList.add("tweedle")
+        // console.log(div.classList.contains("tweedle"));
+        assert.isTrue(div.classList.contains("btn--mint"));
+    });
+})

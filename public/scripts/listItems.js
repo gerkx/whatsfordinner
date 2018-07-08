@@ -177,7 +177,7 @@ const renderFilterSortSection = (arr, headline="Sort by:", selector="filter-sort
     list.classList.add(selector);
     list.innerHTML = `<div class='txt--ice'>${headline}</div>`;
     list.insertAdjacentHTML("beforeend", arr
-        .map(item => `<div class="btn-sm m-l-5">${item}</div>`)
+        .map(item => `<div class="btn-sm m-l-5" id="${item.toLowerCase()}">${item}</div>`)
         .join(""));
     return list
 }
@@ -214,9 +214,19 @@ const createFilterSortStateSessionStorage = key => {
     if(!window.sessionStorage[key]){
         window.sessionStorage.setItem(key, JSON.stringify({
             abc: true,
+            cat: false,
+            date: false,
+            popularity: false,
         }));
     }
+}
+
+const toggleSortStyle = function(div, key){
+    const seshStore = JSON.parse(window.sessionStorage.getItem(key));
+    if(seshStore[div.id]){
+        div.classList.add("btn--mint");
     }
+}
 
 
 
@@ -228,10 +238,12 @@ const createFilterSortStateSessionStorage = key => {
 ///////////////////////
 
 const renderSearchSortBlock = (listFilter) =>{
+    createFilterSortStateSessionStorage("grocSortState");
     listFilter.innerHTML = '<div class="search-filter-bar m-b-5 m-t-5" />'
     listFilter.firstElementChild.appendChild(renderSearchBlock());
     listFilter.firstElementChild.insertAdjacentHTML("beforeend", svg.filter());
-    listFilter.appendChild(renderFiltersBlock())
+    listFilter.appendChild(renderFiltersBlock());
+    console.log(listFilter)
 
     listFilter.addEventListener("click", function(event){
         const filterBlock = document.querySelector(".filter-bar");
