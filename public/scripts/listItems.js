@@ -60,7 +60,6 @@ const listFilter = document.querySelector("#listFilter");
 // food list stuff //
 /////////////////////
 
-// tested
 const renderListItem = function(item){
     const listLI = document.createElement("li");
     listLI.classList.add("li");
@@ -75,7 +74,6 @@ const renderListItem = function(item){
     return listLI;
 }
 
-// tested
 const renderCheckBox = function(){
     const checkBox = document.createElement("div");
     checkBox.classList.add("check-box");
@@ -83,7 +81,6 @@ const renderCheckBox = function(){
     return checkBox
 }
 
-// tested
 const renderCheckoutButton = function(){
     const btn = document.createElement("div");
     btn.classList.add("round");
@@ -91,7 +88,6 @@ const renderCheckoutButton = function(){
     return btn;
 }
 
-// tested
 const resetPurchasedItems = function(list){
     list.filter((obj, index) => obj.checked == true)
         .forEach(obj => {
@@ -101,14 +97,12 @@ const resetPurchasedItems = function(list){
     return list
 }
 
-// tested
 const removePurchasedItemsFromDisplay = function(parentDiv){
     let doneItems = parentDiv.querySelectorAll(".li-done")
         .forEach(child => parentDiv.removeChild(child));
     return parentDiv
 }
 
-// tested
 const findTargetParent = (event, top) => {
     let target = event.target;
     if(target === top){ return }
@@ -118,7 +112,6 @@ const findTargetParent = (event, top) => {
     return target
 }
 
-// tested
 const foodObjCheckToggle = function(obj){
     if(obj.checked){
         obj.checked=false;
@@ -139,7 +132,6 @@ function listCheckClassToggles(target, obj){
     return target
 }
 
-// tested
 const renderSearchInput = placeholder => {
     const search = document.createElement("input");
     search.classList.add("txtbox");
@@ -169,22 +161,46 @@ const groceryItemStatus =  function(event){
 // filter(obj => filtros.indexOf(obj.dept) != -1)
 let foods = foodItems;
 let groceryListItems = foods.filter(obj => obj.amt > 0);
-let sortCats = ["ABC", "Cat", "Date", "Popularity"];
-let showCats = ["All", "Bakery", "Dairy", "Frozen", "Meat", "Packaged", "Produce", "Sundries"];
+const sortCats = ["ABC", "Cat", "Date", "Popularity"];
+const showCats = [
+                    "All", "Bakery", "Dairy", "Frozen", "Meat", 
+                    "Packaged", "Produce", "Sundries"
+                ];
 
-const renderFilterSortSection = (arr, headline="Sort by:", selector="filter-sort") => {
+const createFilterStateSessionStorage = (key, arr) => {
+    if(!window.sessionStorage[key]){
+        let obj = arr.reduce((acc, item) => {
+            acc[item] = false;
+            return acc
+        }, {});
+        obj[arr[0]] = true;
+        window.sessionStorage.setItem(key, JSON.stringify(obj));
+    }
+}
+
+const toggleSortStyle = function(div, key){
+    const seshStore = JSON.parse(window.sessionStorage.getItem(key));
+    if(seshStore[div.id]){
+        div.classList.add("btn--mint");
+    }
+}
+
+const renderFilterSortSection = (arr, title, selector) => {
+    createFilterStateSessionStorage(title, arr);
     let list = document.createElement("div");
     list.classList.add(selector);
-    list.innerHTML = `<div class='txt--ice'>${headline}</div>`;
+    list.innerHTML = `<div class='txt--ice'>${title}</div>`;
     list.insertAdjacentHTML("beforeend", arr
-        .map(item => `<div class="btn-sm m-l-5" id="${item.toLowerCase()}">${item}</div>`)
+        .map(item => `<div class="btn-sm m-l-5" id="${item}">${item}</div>`)
         .join(""));
+    let kids = Array.from(list.children);
+    kids.forEach(item => toggleSortStyle(item, title))
     return list
 }
 
 const renderFiltersBlock = () => {
-    let sort = renderFilterSortSection(sortCats);
-    let filter = renderFilterSortSection(showCats, "Show: ", "filter-show");
+    let sort = renderFilterSortSection(sortCats, "Sort by:", "filter-sort");
+    let filter = renderFilterSortSection(showCats, "Show:", "filter-show");
     let markup = document.createElement("div");
     markup.classList.add("filter-bar");
     markup.classList.add("hide");
@@ -210,23 +226,6 @@ const filterClickCallbacks = (event, objArr) => {
     }
 }
 
-const createFilterSortStateSessionStorage = key => {
-    if(!window.sessionStorage[key]){
-        window.sessionStorage.setItem(key, JSON.stringify({
-            abc: true,
-            cat: false,
-            date: false,
-            popularity: false,
-        }));
-    }
-}
-
-const toggleSortStyle = function(div, key){
-    const seshStore = JSON.parse(window.sessionStorage.getItem(key));
-    if(seshStore[div.id]){
-        div.classList.add("btn--mint");
-    }
-}
 
 
 
@@ -238,12 +237,11 @@ const toggleSortStyle = function(div, key){
 ///////////////////////
 
 const renderSearchSortBlock = (listFilter) =>{
-    createFilterSortStateSessionStorage("grocSortState");
+    // createFilterSortStateSessionStorage("grocSortState");
     listFilter.innerHTML = '<div class="search-filter-bar m-b-5 m-t-5" />'
     listFilter.firstElementChild.appendChild(renderSearchBlock());
     listFilter.firstElementChild.insertAdjacentHTML("beforeend", svg.filter());
     listFilter.appendChild(renderFiltersBlock());
-    console.log(listFilter)
 
     listFilter.addEventListener("click", function(event){
         const filterBlock = document.querySelector(".filter-bar");

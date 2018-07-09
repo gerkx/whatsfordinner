@@ -168,7 +168,7 @@ describe("#renderSearchSortBlock", () => {
 
 describe("#renderFilterSection", () => {
     let arr = ["one", "two", "three"];
-    let method = renderFilterSortSection(arr)
+    let method = renderFilterSortSection(arr, "Sort by:", "filter-sort")
     it("should return a div", () =>{
         const div = "DIV";
         const result = method.nodeName;
@@ -252,7 +252,7 @@ const storageMocker = function(){
 }
 
 
-describe("#createFilterSortStateSessionStorage", function(){
+describe("#createFilterStateSessionStorage", function(){
     let storageMock;
     beforeEach(function(){
         storageMock = storageMocker();
@@ -262,10 +262,10 @@ describe("#createFilterSortStateSessionStorage", function(){
         window.sessionStorage.removeItem("grocSortState");
     });
     it("creates a non existent sesh storage obj", () => {
-        window.sessionStorage.removeItem("grocSortState");
-        createFilterSortStateSessionStorage("grocSortState");
+        const arr = ["beep", "boop", "bleep"];
+        createFilterStateSessionStorage("grocSortState", arr);
         const result = JSON.parse(window.sessionStorage.getItem("grocSortState"));
-        assert.isTrue(result.abc);
+        assert.isTrue(result[arr[0]]);
     });
 });
 
@@ -279,11 +279,12 @@ describe("#toggleSortStyle", () => {
         window.sessionStorage.removeItem("grocSortState");
     });
     it("adds style if storage is true", function() {
-        createFilterSortStateSessionStorage("grocSortState");
+        const arr = ["beep", "boop", "bleep"];
+        createFilterStateSessionStorage("grocSortState", arr);
         let div = {
-            id: "abc",
+            id: arr[0],
             classList: {
-                list: ["boop"],
+                list: [],
                 contains: function(str){
                     if(this.list.indexOf(str) !== -1){
                         return true
@@ -296,8 +297,6 @@ describe("#toggleSortStyle", () => {
             }
         }
         toggleSortStyle(div, "grocSortState");
-        div.classList.add("tweedle")
-        // console.log(div.classList.contains("tweedle"));
         assert.isTrue(div.classList.contains("btn--mint"));
     });
 })
