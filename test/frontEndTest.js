@@ -82,57 +82,72 @@ describe("#removedPurchasedItemsFromDisplay", () => {
 });
 
 // better way of structuring tests ===>
-describe("#findTargetParent", () => {
-    it("should stop at 1st child of tree", () => {
-        // Arrange
-        const parent = { parentNode: undefined };
+// describe("#findTargetParent", () => {
+//     it("should stop at 1st child of tree", () => {
+//         // Arrange
+//         const parent = { parentNode: undefined };
+//         const child = { parentNode: parent };
+//         const grandchild = { parentNode: child };
+//         const tree = { parent }    
+//         const event = { target: grandchild };
+//         // Act
+//         const result = findTargetParent(event, tree)
+//         // Assert
+//         expect(result).to.eql(parent);
+//       });
+// });
+
+describe("#checkLineage", () => {
+    it("returns 1st child", () => {
+        const parent = {parentNode: null};
         const child = { parentNode: parent };
-        const grandchild = { parentNode: child };
-        const tree = { parent }    
+        const grandchild = { parentNode: child };   
         const event = { target: grandchild };
-        // Act
-        const result = findTargetParent(event, tree)
-        // Assert
-        expect(result).to.eql(parent);
-      });
-});
-
-describe("#filterClickCallbacks", () => {
-    it("returns callback fn from same target index in array", () => {
-        const callback = () => "beep!!!";
-        const arr = [{target: "boop"}, {target: "beep", callback: callback}, {target: "blerp"}];
-        const child = "beep";
-        const grandchild = {parentNode: child};
-        const event = {target: grandchild};
-
-        const result = filterClickCallbacks(event, arr);
-        
-        expect(result).to.eql(callback());
+        const result = checkLineage(event, parent);
+        expect(result).to.eql(child)
     });
-
-    it("returns undef if target isn't in objArr", () => {
-        const arr = [{target: "boop"}, {target: "beep"},{target: "blerp"}];
-        const parent = {parentNode: undefined};
-        const child = {parentNode: parent};
-        const grandchild = {parentNode: child};
-        const event = {target: grandchild};
-
-        const result = filterClickCallbacks(event, arr);
-        
-        assert.isUndefined(result);
+    it("returns null if not a child of parent", () => {
+        const parent = {parentNode: null};
+        const root = {parentNode: null}
+        const other = {parentNode: root};
+        const child = { parentNode: other };
+        const grandchild = { parentNode: child };   
+        const event = { target: grandchild };
+        const result = checkLineage(event, parent);
+        expect(result).to.eql(null)
     });
+})
 
-    it("returns undef if callback isn't in obj", () => {
-        const arr = [{target: "boop"}, {target: "beep"},{target: "blerp"}];
-        const child = "beep";
-        const grandchild = {parentNode: child};
-        const event = {target: grandchild};
+// describe("#filterClickCallbacks", () => {
+//     it("returns callback fn from same target index in array", () => {
+//         const callback = () => "beep!!!";
+//         const arr = [{target: "boop"}, {target: "beep", callback: callback}, {target: "blerp"}];
+//         const child = "beep";
+//         const grandchild = {parentNode: child};
+//         const event = {target: grandchild};
+//         const result = filterClickCallbacks(event, arr);
+//         expect(result).to.eql(callback());
+//     });
 
-        const result = filterClickCallbacks(event, arr);
+//     it("returns undef if target isn't in objArr", () => {
+//         const arr = [{target: "boop"}, {target: "beep"},{target: "blerp"}];
+//         const parent = {parentNode: undefined};
+//         const child = {parentNode: parent};
+//         const grandchild = {parentNode: child};
+//         const event = {target: grandchild};
+//         const result = filterClickCallbacks(event, arr);
+//         assert.isUndefined(result);
+//     });
 
-        assert.isUndefined(result);
-    });
-});
+//     it("returns undef if callback isn't in obj", () => {
+//         const arr = [{target: "boop"}, {target: "beep"},{target: "blerp"}];
+//         const child = "beep";
+//         const grandchild = {parentNode: child};
+//         const event = {target: grandchild};
+//         const result = filterClickCallbacks(event, arr);
+//         assert.isUndefined(result);
+//     });
+// });
 
 describe("#foodObjCheckToggle", () => {
     it("should make false checks turn true", () =>{

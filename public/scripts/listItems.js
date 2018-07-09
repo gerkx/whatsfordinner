@@ -103,13 +103,24 @@ const removePurchasedItemsFromDisplay = function(parentDiv){
     return parentDiv
 }
 
-const findTargetParent = (event, top) => {
+// const findTargetParent = (event, top) => {
+//     let target = event.target;
+//     if(target === top){ return }
+//     while(target.parentNode && target.parentNode !== top){
+//         target = target.parentNode
+//     }
+//     return target
+// }
+
+const checkLineage = (event, parent) => {
     let target = event.target;
-    if(target === top){ return }
-    while(target.parentNode && target.parentNode !== top){
+    while(target != null){
+        if(target.parentNode == parent){
+            return target
+        }
         target = target.parentNode
     }
-    return target
+    return null
 }
 
 const foodObjCheckToggle = function(obj){
@@ -151,7 +162,7 @@ const renderSearchBlock = () => {
 }
 
 const groceryItemStatus =  function(event){
-    let target = findTargetParent(event, this);
+    let target = checkLineage(event, this);
     const foodObj = groceryListItems.find(obj => obj.id === target.id);
     listCheckClassToggles(target, foodObj);
     foodObjCheckToggle(foodObj);
@@ -210,7 +221,6 @@ const renderFiltersBlock = () => {
 }
 
 const toggleSortState  = (target, storeKey) => {
-    console.log(target)
     let store = Array
         .from(target.parentNode.children)
         .map(div => div.id)
@@ -223,20 +233,20 @@ const toggleSortState  = (target, storeKey) => {
     window.sessionStorage.setItem(storeKey, store)
 }
 
-const filterClickCallbacks = (event, objArr) => {
-    let target = event.target;
-    const objTargets = objArr.map(obj => obj.target);
-    while(target.parentNode && objTargets.indexOf(target) == -1){        
-        target = target.parentNode
-    }
-    let arrIndex = objTargets.indexOf(target);
-    if(arrIndex !== -1){
-        const obj = objArr[arrIndex];
-        if(obj.callback){
-            return obj.callback()
-        }
-    }
-}
+// const filterClickCallbacks = (event, objArr) => {
+//     let target = event.target;
+//     const objTargets = objArr.map(obj => obj.target);
+//     while(target.parentNode && objTargets.indexOf(target) == -1){        
+//         target = target.parentNode
+//     }
+//     let arrIndex = objTargets.indexOf(target);
+//     if(arrIndex !== -1){
+//         const obj = objArr[arrIndex];
+//         if(obj.callback){
+//             return obj.callback()
+//         }
+//     }
+// }
 
 
 
@@ -257,27 +267,18 @@ const renderSearchSortBlock = (listFilter) =>{
     listFilter.addEventListener("click", function(event){
         const filterBlock = document.querySelector(".filter-bar");
         const filterIcon = document.querySelector(".filter-block");
-        const targCallbacks = [
-            {
-                // filter button
-                target: document.querySelector(".filter-block"),
-                callback: function(){
-                    filterIcon.classList.toggle("ico--ice")
-                    filterIcon.classList.toggle("ico--mint")
-                    filterBlock.classList.toggle("hide");
-                }
-            },
-            // {
-            //     // sort buttons
-            //     target: findTargetParent(event, document.querySelector(".filter-sort")),
-            //     callback: function(){
-            //         toggleSortState(this.target, "Sort by:")
-                    
-            //     }
-            // }
-        ];
+        const filterSort = document.querySelector(".filter-sort");
+    
+        const sortCats = checkLineage(event, filterSort);
+        const filterDisp = checkLineage(event, filterIcon);
+        
+        if(sortCats) toggleSortState(sortCats, "Sort by:");
+        if(filterDisp){
+            filterIcon.classList.toggle("ico--ice");
+            filterIcon.classList.toggle("ico--mint");
+            filterBlock.classList.toggle("hide");
+        }
 
-        filterClickCallbacks(event, targCallbacks);
     });
 
     return listFilter
@@ -299,7 +300,7 @@ const renderGroceryListBlock = function(parentDiv){
 
     parentDiv.querySelector(".list")
         .addEventListener("click", function(event){
-            let target = findTargetParent(event, this);
+            let target = checkLineage(event, this);
             const foodObj = groceryListItems.find(obj => obj.id === target.id);
             listCheckClassToggles(target, foodObj);
             foodObjCheckToggle(foodObj);
@@ -317,8 +318,5 @@ const renderGroceryListBlock = function(parentDiv){
 
 
 renderSearchSortBlock(listFilter);
-
-
-
 renderGroceryListBlock(groceryList);
 // searchSort(groceryList);
