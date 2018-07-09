@@ -206,10 +206,8 @@ const renderFiltersBlock = () => {
     markup.classList.add("hide");
     markup.appendChild(sort);
     markup.appendChild(filter);
-    
     return markup
 }
-
 
 const filterClickCallbacks = (event, objArr) => {
     let target = event.target;
