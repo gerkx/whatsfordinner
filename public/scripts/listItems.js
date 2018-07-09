@@ -103,15 +103,6 @@ const removePurchasedItemsFromDisplay = function(parentDiv){
     return parentDiv
 }
 
-// const findTargetParent = (event, top) => {
-//     let target = event.target;
-//     if(target === top){ return }
-//     while(target.parentNode && target.parentNode !== top){
-//         target = target.parentNode
-//     }
-//     return target
-// }
-
 const checkLineage = (event, parent) => {
     let target = event.target;
     while(target != null){
@@ -233,26 +224,6 @@ const toggleSortState  = (target, storeKey) => {
     window.sessionStorage.setItem(storeKey, store)
 }
 
-// const filterClickCallbacks = (event, objArr) => {
-//     let target = event.target;
-//     const objTargets = objArr.map(obj => obj.target);
-//     while(target.parentNode && objTargets.indexOf(target) == -1){        
-//         target = target.parentNode
-//     }
-//     let arrIndex = objTargets.indexOf(target);
-//     if(arrIndex !== -1){
-//         const obj = objArr[arrIndex];
-//         if(obj.callback){
-//             return obj.callback()
-//         }
-//     }
-// }
-
-
-
-
-
-
 
 ///////////////////////
 // section renderers //
@@ -265,20 +236,19 @@ const renderSearchSortBlock = (listFilter) =>{
     listFilter.appendChild(renderFiltersBlock());
 
     listFilter.addEventListener("click", function(event){
-        const filterBlock = document.querySelector(".filter-bar");
-        const filterIcon = document.querySelector(".filter-block");
+        const filterBar = document.querySelector(".filter-bar");
+        const filterIcon = document.querySelector(".filter-icon");
         const filterSort = document.querySelector(".filter-sort");
     
         const sortCats = checkLineage(event, filterSort);
         const filterDisp = checkLineage(event, filterIcon);
         
-        if(sortCats) toggleSortState(sortCats, "Sort by:");
+        if(sortCats) {toggleSortState(sortCats, "Sort by:");}
         if(filterDisp){
             filterIcon.classList.toggle("ico--ice");
             filterIcon.classList.toggle("ico--mint");
-            filterBlock.classList.toggle("hide");
+            filterBar.classList.toggle("hide");
         }
-
     });
 
     return listFilter

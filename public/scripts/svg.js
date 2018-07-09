@@ -65,7 +65,7 @@ let svg = {
     },
     filter: () =>{
         return `
-        <div class="ico ico--sm-med ico--ice filter-block">
+        <div class="ico ico--sm-med ico--ice filter-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                 <polygon points="22.3 0 215 315.8 215 430.1 296.9 512 296.9 315.8 489.7 0 "/>
             </svg>
