@@ -209,6 +209,20 @@ const renderFiltersBlock = () => {
     return markup
 }
 
+const toggleSortState  = (target, storeKey) => {
+    console.log(target)
+    let store = Array
+        .from(target.parentNode.children)
+        .map(div => div.id)
+        .reduce((acc, id) => {
+            acc[id] = false;
+            return acc
+        }, {});
+    store[target.id] = true;
+    store = JSON.stringify(store);
+    window.sessionStorage.setItem(storeKey, store)
+}
+
 const filterClickCallbacks = (event, objArr) => {
     let target = event.target;
     const objTargets = objArr.map(obj => obj.target);
@@ -235,7 +249,6 @@ const filterClickCallbacks = (event, objArr) => {
 ///////////////////////
 
 const renderSearchSortBlock = (listFilter) =>{
-    // createFilterSortStateSessionStorage("grocSortState");
     listFilter.innerHTML = '<div class="search-filter-bar m-b-5 m-t-5" />'
     listFilter.firstElementChild.appendChild(renderSearchBlock());
     listFilter.firstElementChild.insertAdjacentHTML("beforeend", svg.filter());
@@ -254,6 +267,14 @@ const renderSearchSortBlock = (listFilter) =>{
                     filterBlock.classList.toggle("hide");
                 }
             },
+            // {
+            //     // sort buttons
+            //     target: findTargetParent(event, document.querySelector(".filter-sort")),
+            //     callback: function(){
+            //         toggleSortState(this.target, "Sort by:")
+                    
+            //     }
+            // }
         ];
 
         filterClickCallbacks(event, targCallbacks);

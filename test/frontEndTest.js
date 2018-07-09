@@ -4,6 +4,27 @@ let spy = sinon.spy;
 let stub = sinon.stub;
 let fake = sinon.fake;
 
+
+const seshStorageMocker = function(){
+    let storage = {};
+    return {
+        setItem: function(key, val){
+            storage[key] = val.toString();
+        },
+        getItem: function(key){
+            return key in storage ? storage[key] : null;
+        },
+        removeItem: function(key){
+            delete storage[key];
+        },
+        clear: function(){
+            storage = {};
+        },
+    }
+}
+
+
+
 describe("#renderListItem", () =>{
     let obj;
     beforeEach(() => {
@@ -167,47 +188,71 @@ describe("#renderSearchSortBlock", () => {
 });
 
 describe("#renderFilterSection", () => {
-    let arr = ["one", "two", "three"];
-    let method = renderFilterSortSection(arr, "Sort by:", "filter-sort")
+    const key = "renderFilterSection";
+    let storageMock;
+    beforeEach(function(){
+        storageMock = seshStorageMocker();
+        Object.defineProperty(window, 'sessionStorage', {value: storageMock});
+        
+    });
+    afterEach(function(){
+        window.sessionStorage.removeItem(key);
+    });
+
     it("should return a div", () =>{
+        let arr = ["uno", "dos", "tres"];
+        let method = renderFilterSortSection(arr, key, "filter-sort");
         const div = "DIV";
         const result = method.nodeName;
         expect(result).to.eql(div);
     })
     it("should contain class filter-bar in parent", () => {
+        let arr = ["uno", "dos", "tres"];
+        let method = renderFilterSortSection(arr, key, "filter-sort");
         const sel = "filter-sort";
         const result = method.classList.contains(sel);
         assert.isTrue(result);
     });
     it("1st child should be div", () => {
+        let arr = ["uno", "dos", "tres"];
+        let method = renderFilterSortSection(arr, key, "filter-sort");
         const div = "DIV";
         const result = method.firstElementChild.nodeName;
         expect(result).to.eql(div);
     });
     it("1st child should have class txt--ice", () => {
+        let arr = ["uno", "dos", "tres"];
+        let method = renderFilterSortSection(arr, key, "filter-sort");
         const sel = "txt--ice";
         const result = method.firstElementChild.classList.contains(sel);
         assert.isTrue(result);
     });
     it("1st child should have Sort by text", () => {
-        const text = "Sort by:";
+        let arr = ["uno", "dos", "tres"];
+        let method = renderFilterSortSection(arr, key, "filter-sort");
         const result = method.firstElementChild.textContent;
-        expect(text).to.eql(result);
+        expect(key).to.eql(result);
     });
     it("should return a list of divs that match arr input", () => {
+        let arr = ["uno", "dos", "tres"];
+        let method = renderFilterSortSection(arr, key, "filter-sort");
         const result = method.lastElementChild.textContent;
         expect(result).to.eql(arr[arr.length-1]);
     });
     it("the array divs should have btn-sm m-l-5 classes", () => {
+        let arr = ["uno", "dos", "tres"];
+        let method = renderFilterSortSection(arr, key, "filter-sort");
         const result = method.lastElementChild.classList.contains("btn-sm", "m-l-5");
         assert.isTrue(result);
     });
     it("if 2nd argument passed the first child div will contain it", () => {
+        let arr = ["uno", "dos", "tres"];
         const txt = "boop"
         const result = renderFilterSortSection(arr, txt).firstElementChild.textContent;
         expect(result).to.eql(txt)
     })
     it("if 3rd arg passed the block css will have it as sel", () => {
+        let arr = ["uno", "dos", "tres"];
         const txt = "boop"
         const sel = "tweedle"
         const result = renderFilterSortSection(arr, txt, sel).classList.contains(sel);
@@ -233,29 +278,13 @@ describe("#renderFiltersBlock", ()=>{
 
 });
 
-const storageMocker = function(){
-    let storage = {};
-    return {
-        setItem: function(key, val){
-            storage[key] = val.toString();
-        },
-        getItem: function(key){
-            return key in storage ? storage[key] : null;
-        },
-        removeItem: function(key){
-            delete storage[key];
-        },
-        clear: function(){
-            storage = {};
-        },
-    }
-}
+
 
 
 describe("#createFilterStateSessionStorage", function(){
     let storageMock;
     beforeEach(function(){
-        storageMock = storageMocker();
+        storageMock = seshStorageMocker();
         Object.defineProperty(window, 'sessionStorage', {value: storageMock});
     });
     afterEach(function(){
@@ -270,17 +299,21 @@ describe("#createFilterStateSessionStorage", function(){
 });
 
 describe("#toggleSortStyle", () => {
+    const arr = ["beep", "boop", "bleep"];
+    const key = "sortState";
     let storageMock;
     beforeEach(function(){
-        storageMock = storageMocker();
+        storageMock = seshStorageMocker();
         Object.defineProperty(window, 'sessionStorage', {value: storageMock});
+        createFilterStateSessionStorage(key, arr);
+
     });
     afterEach(function(){
-        window.sessionStorage.removeItem("grocSortState");
+        window.sessionStorage.removeItem(key);
     });
     it("adds style if storage is true", function() {
-        const arr = ["beep", "boop", "bleep"];
-        createFilterStateSessionStorage("grocSortState", arr);
+
+
         let div = {
             id: arr[0],
             classList: {
@@ -296,7 +329,44 @@ describe("#toggleSortStyle", () => {
                 }
             }
         }
-        toggleSortStyle(div, "grocSortState");
+        toggleSortStyle(div, key);
         assert.isTrue(div.classList.contains("btn--mint"));
     });
-})
+});
+
+describe("#toggleSortState", () => {
+    const key = "sortState";
+    const arr = ["hip", "herp", "derp"];
+    const target = {
+        parentNode: {
+            children: arr.reduce((acc, item) => {
+                acc.push({id: item})
+                return acc
+            }, [])
+        },
+        id: arr[1],
+    };
+    let storageMock;
+    beforeEach(function(){
+        storageMock = seshStorageMocker();
+        Object.defineProperty(window, 'sessionStorage', {value: storageMock});
+        createFilterStateSessionStorage(key, arr);
+    });
+    afterEach(function(){
+        window.sessionStorage.removeItem(key);
+    });
+
+    it("sets clicked state to true", () => {
+        toggleSortState(target, key);
+        const result = JSON.parse(window.sessionStorage.getItem(key));
+        assert.isTrue(result[arr[1]])
+    })
+
+    it("sets unclicked states to false", () => {     
+        toggleSortState(target, key);
+        const result = JSON.parse(window.sessionStorage.getItem(key));
+        assert.isFalse(result[arr[0]])
+    
+    })
+
+});
