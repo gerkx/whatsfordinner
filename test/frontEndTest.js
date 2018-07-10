@@ -347,10 +347,6 @@ describe("#toggleSortState", () => {
 describe("#updateSortStyle", () =>{
     const key = "sortState";
     const arr = ["uno", "dos", "tres"];
-    const children = arr.map(div => classListMocker(div));
-    const parent = { children: children };
-    console.log(children)
-    // const store = { uno: true, dos: false, tres: false, };
     let storageMock;
     beforeEach(function(){
         storageMock = seshStorageMocker();
@@ -361,8 +357,54 @@ describe("#updateSortStyle", () =>{
         window.sessionStorage.removeItem(key);
     });
     it("adds btn--mint to states that are true", () => {
+        let kids = arr.map(div => classListMocker(div))
+        const parent = { children: kids };
         updateSortStyle(parent, key);
-        const result = window.sessionStorage.getItem(key);
-        
-    })
+        const result = parent.children[0].classList.contains("btn--mint");
+        assert.isTrue(result)
+    });
+    it("removes class from states that are false", () =>{
+        let kids = arr.map(div => classListMocker(div))
+        kids.forEach(kid => kid.classList.add("btn--mint"))
+        const parent = { children: kids };
+        updateSortStyle(parent, key);
+        const result = parent.children[1].classList.contains("btn--mint");
+        assert.isFalse(result)
+    });
 })
+
+describe("#toggleShowState", () => {
+    const key = "showState";
+    const arr = ["I", "see", "you"];
+    const target = {
+        parentNode: {
+            children: arr.reduce((acc, item) => {
+                acc.push({id: item})
+                return acc
+            }, [])
+        },
+        id: arr[1],
+    };
+    let storageMock;
+    beforeEach(function(){
+        storageMock = seshStorageMocker();
+        Object.defineProperty(window, 'sessionStorage', {value: storageMock});
+        createFilterStateSessionStorage(key, arr);
+    });
+    afterEach(function(){
+        window.sessionStorage.removeItem(key);
+    });
+
+    it("sets clicked state to true", () => {
+        toggleSortState(target, key);
+        const result = JSON.parse(window.sessionStorage.getItem(key));
+        assert.isTrue(result[arr[1]])
+    })
+
+    it("sets unclicked states to false", () => {     
+        toggleSortState(target, key);
+        const result = JSON.parse(window.sessionStorage.getItem(key));
+        assert.isFalse(result[arr[0]])  
+    })
+
+});

@@ -187,6 +187,18 @@ const toggleSortStyle = function(div, key){
     }
 }
 
+const updateSortStyle = function(div, key){
+    let store = JSON.parse(window.sessionStorage.getItem(key));
+    let arr = Array.from(div.parentNode.children);
+    arr.forEach(div => {
+        div.classList.remove("btn--mint");
+        if(store[div.id]){
+            div.classList.add("btn--mint")
+        }
+    });
+    return arr
+}
+
 const renderFilterSortSection = (arr, title, selector) => {
     createFilterStateSessionStorage(title, arr);
     let list = document.createElement("div");
@@ -215,7 +227,7 @@ const renderFiltersBlock = () => {
     return markup
 }
 
-const toggleSortState  = (target, storeKey) => {
+const toggleSortState = (target, storeKey) => {
     let store = Array
         .from(target.parentNode.children)
         .map(div => div.id)
@@ -227,6 +239,23 @@ const toggleSortState  = (target, storeKey) => {
     store = JSON.stringify(store);
     window.sessionStorage.setItem(storeKey, store)
 }
+
+const toggleShowState = (target, storeKey) => {
+    let store = Array
+        .from(target.parentNode.children)
+        .map(div => div.id)
+        .reduce((acc, id) => {
+            if(){
+                acc[id] = false;
+            }
+            acc[id] = false;
+            return acc
+        }, {});
+    store[target.id] = true;
+    store = JSON.stringify(store);
+    window.sessionStorage.setItem(storeKey, store)
+}
+
 
 
 ///////////////////////
@@ -241,18 +270,25 @@ const renderSearchSortBlock = (listFilter) =>{
     listFilter.addEventListener("click", function(event){
         const filterBar = document.querySelector(".filter-bar");
         const filterIcon = document.querySelector(".filter-icon");
-        const filterSort = document.querySelector(".filter-sort");
-    
-        const sortCats = checkLineage(event, filterSort);
+            
         const filterDisp = checkLineage(event, filterIcon);
-        console.log(sortCats)
-        if(sortCats) { 
-            toggleSortState(sortCats, "Sort by:"); 
-        }
         if(filterDisp){
             filterIcon.classList.toggle("ico--ice");
             filterIcon.classList.toggle("ico--mint");
             filterBar.classList.toggle("hide");
+        }
+        
+        const filterSort = document.querySelector(".filter-sort");
+        const sortCats = checkLineage(event, filterSort);
+        if(sortCats) { 
+            toggleSortState(sortCats, "Sort by:");
+            updateSortStyle(sortCats, "Sort by:");
+        }
+        const filterShow = document.querySelector(".filter-show");
+        const showCats = checkLineage(event, filterShow);
+        if(showCats) { 
+            toggleSortState(showCats, "Sort by:");
+            updateSortStyle(showCats, "Sort by:");
         }
     });
 
