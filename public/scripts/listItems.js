@@ -190,13 +190,17 @@ const toggleSortStyle = function(div, key){
 const renderFilterSortSection = (arr, title, selector) => {
     createFilterStateSessionStorage(title, arr);
     let list = document.createElement("div");
-    list.classList.add(selector);
+    list.classList.add("filter-section");
     list.innerHTML = `<div class='txt--ice'>${title}</div>`;
-    list.insertAdjacentHTML("beforeend", arr
+    let sortCats = document.createElement("div");
+    sortCats.classList.add("filter-cats");
+    sortCats.classList.add(selector);
+    sortCats.insertAdjacentHTML("beforeend", arr
         .map(item => `<div class="btn-sm m-l-5" id="${item}">${item}</div>`)
         .join(""));
-    let kids = Array.from(list.children);
-    kids.forEach(item => toggleSortStyle(item, title))
+    let kids = Array.from(sortCats.children);
+    kids.forEach(item => toggleSortStyle(item, title));
+    list.appendChild(sortCats);
     return list
 }
 
@@ -228,7 +232,6 @@ const toggleSortState  = (target, storeKey) => {
 ///////////////////////
 // section renderers //
 ///////////////////////
-
 const renderSearchSortBlock = (listFilter) =>{
     listFilter.innerHTML = '<div class="search-filter-bar m-b-5 m-t-5" />'
     listFilter.firstElementChild.appendChild(renderSearchBlock());
@@ -242,8 +245,10 @@ const renderSearchSortBlock = (listFilter) =>{
     
         const sortCats = checkLineage(event, filterSort);
         const filterDisp = checkLineage(event, filterIcon);
-        
-        if(sortCats) {toggleSortState(sortCats, "Sort by:");}
+        console.log(sortCats)
+        if(sortCats) { 
+            toggleSortState(sortCats, "Sort by:"); 
+        }
         if(filterDisp){
             filterIcon.classList.toggle("ico--ice");
             filterIcon.classList.toggle("ico--mint");

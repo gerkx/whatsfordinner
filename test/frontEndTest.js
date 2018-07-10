@@ -23,6 +23,28 @@ const seshStorageMocker = function(){
     }
 }
 
+const classListMocker = function(id) {
+    return {
+        id: id,
+        classList: {
+            list: [],
+            contains: function(str){
+                if(this.list.indexOf(str) !== -1){
+                    return true
+                }
+                return false
+            },
+            add: function(item){
+                this.list.push(item);
+            },
+            remove: function(item){
+                let idx = this.list.indexOf(item);
+                this.list.splice(idx, 1);
+            }
+        }
+    }
+}
+
 
 
 describe("#renderListItem", () =>{
@@ -81,22 +103,6 @@ describe("#removedPurchasedItemsFromDisplay", () => {
     });
 });
 
-// better way of structuring tests ===>
-// describe("#findTargetParent", () => {
-//     it("should stop at 1st child of tree", () => {
-//         // Arrange
-//         const parent = { parentNode: undefined };
-//         const child = { parentNode: parent };
-//         const grandchild = { parentNode: child };
-//         const tree = { parent }    
-//         const event = { target: grandchild };
-//         // Act
-//         const result = findTargetParent(event, tree)
-//         // Assert
-//         expect(result).to.eql(parent);
-//       });
-// });
-
 describe("#checkLineage", () => {
     it("returns 1st child", () => {
         const parent = {parentNode: null};
@@ -117,37 +123,6 @@ describe("#checkLineage", () => {
         expect(result).to.eql(null)
     });
 })
-
-// describe("#filterClickCallbacks", () => {
-//     it("returns callback fn from same target index in array", () => {
-//         const callback = () => "beep!!!";
-//         const arr = [{target: "boop"}, {target: "beep", callback: callback}, {target: "blerp"}];
-//         const child = "beep";
-//         const grandchild = {parentNode: child};
-//         const event = {target: grandchild};
-//         const result = filterClickCallbacks(event, arr);
-//         expect(result).to.eql(callback());
-//     });
-
-//     it("returns undef if target isn't in objArr", () => {
-//         const arr = [{target: "boop"}, {target: "beep"},{target: "blerp"}];
-//         const parent = {parentNode: undefined};
-//         const child = {parentNode: parent};
-//         const grandchild = {parentNode: child};
-//         const event = {target: grandchild};
-//         const result = filterClickCallbacks(event, arr);
-//         assert.isUndefined(result);
-//     });
-
-//     it("returns undef if callback isn't in obj", () => {
-//         const arr = [{target: "boop"}, {target: "beep"},{target: "blerp"}];
-//         const child = "beep";
-//         const grandchild = {parentNode: child};
-//         const event = {target: grandchild};
-//         const result = filterClickCallbacks(event, arr);
-//         assert.isUndefined(result);
-//     });
-// });
 
 describe("#foodObjCheckToggle", () => {
     it("should make false checks turn true", () =>{
@@ -223,8 +198,8 @@ describe("#renderFilterSection", () => {
     })
     it("should contain class filter-bar in parent", () => {
         let arr = ["uno", "dos", "tres"];
-        let method = renderFilterSortSection(arr, key, "filter-sort");
-        const sel = "filter-sort";
+        let method = renderFilterSortSection(arr, key, "filter-section");
+        const sel = "filter-section";
         const result = method.classList.contains(sel);
         assert.isTrue(result);
     });
@@ -232,7 +207,7 @@ describe("#renderFilterSection", () => {
         let arr = ["uno", "dos", "tres"];
         let method = renderFilterSortSection(arr, key, "filter-sort");
         const div = "DIV";
-        const result = method.firstElementChild.nodeName;
+        const result = method.lastElementChild.nodeName;
         expect(result).to.eql(div);
     });
     it("1st child should have class txt--ice", () => {
@@ -251,13 +226,13 @@ describe("#renderFilterSection", () => {
     it("should return a list of divs that match arr input", () => {
         let arr = ["uno", "dos", "tres"];
         let method = renderFilterSortSection(arr, key, "filter-sort");
-        const result = method.lastElementChild.textContent;
-        expect(result).to.eql(arr[arr.length-1]);
+        const result = Array.from(method.lastElementChild.children);
+        expect(result[arr.length-1].textContent).to.eql(arr[arr.length-1]);
     });
     it("the array divs should have btn-sm m-l-5 classes", () => {
         let arr = ["uno", "dos", "tres"];
         let method = renderFilterSortSection(arr, key, "filter-sort");
-        const result = method.lastElementChild.classList.contains("btn-sm", "m-l-5");
+        const result = method.lastElementChild.lastElementChild.classList.contains("btn-sm", "m-l-5");
         assert.isTrue(result);
     });
     it("if 2nd argument passed the first child div will contain it", () => {
@@ -270,7 +245,7 @@ describe("#renderFilterSection", () => {
         let arr = ["uno", "dos", "tres"];
         const txt = "boop"
         const sel = "tweedle"
-        const result = renderFilterSortSection(arr, txt, sel).classList.contains(sel);
+        const result = renderFilterSortSection(arr, txt, sel).lastElementChild.classList.contains(sel);
         assert.isTrue(result);
     })
 });
@@ -327,23 +302,7 @@ describe("#toggleSortStyle", () => {
         window.sessionStorage.removeItem(key);
     });
     it("adds style if storage is true", function() {
-
-
-        let div = {
-            id: arr[0],
-            classList: {
-                list: [],
-                contains: function(str){
-                    if(this.list.indexOf(str) !== -1){
-                        return true
-                    }
-                    return false
-                },
-                add: function(item){
-                    this.list.push(item);
-                }
-            }
-        }
+        let div = classListMocker(arr[0]);
         toggleSortStyle(div, key);
         assert.isTrue(div.classList.contains("btn--mint"));
     });
@@ -380,8 +339,30 @@ describe("#toggleSortState", () => {
     it("sets unclicked states to false", () => {     
         toggleSortState(target, key);
         const result = JSON.parse(window.sessionStorage.getItem(key));
-        assert.isFalse(result[arr[0]])
-    
+        assert.isFalse(result[arr[0]])  
     })
 
 });
+
+describe("#updateSortStyle", () =>{
+    const key = "sortState";
+    const arr = ["uno", "dos", "tres"];
+    const children = arr.map(div => classListMocker(div));
+    const parent = { children: children };
+    console.log(children)
+    // const store = { uno: true, dos: false, tres: false, };
+    let storageMock;
+    beforeEach(function(){
+        storageMock = seshStorageMocker();
+        Object.defineProperty(window, 'sessionStorage', {value: storageMock});
+        createFilterStateSessionStorage(key, arr);
+    });
+    afterEach(function(){
+        window.sessionStorage.removeItem(key);
+    });
+    it("adds btn--mint to states that are true", () => {
+        updateSortStyle(parent, key);
+        const result = window.sessionStorage.getItem(key);
+        
+    })
+})

@@ -652,6 +652,66 @@
   justify-content: flex-start;
   align-items: center; }
 
+.search-filter-bar {
+  display: flex;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  margin-right: auto;
+  margin-left: auto;
+  align-items: flex-end;
+  width: 95%; }
+
+.search-box {
+  display: flex;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 33%; }
+
+.filter-bar {
+  color: #f7f7f7;
+  margin: 0 5px; }
+
+.filter-section {
+  display: flex;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  flex: 1 1 auto;
+  width: 100%;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  margin-bottom: 7px;
+  padding-top: 5px;
+  color: #B2B2B2; }
+
+.filter-sort-btns {
+  display: flex;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  align-items: center;
+  justify-content: flex-end;
+  color: #B2B2B2; }
+
+.filter-cats {
+  display: flex;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  flex-wrap: wrap;
+  justify-content: center; }
+
 .btn {
   border-radius: 7px;
   -webkit-border-radius: 7px;
@@ -1827,66 +1887,6 @@ body {
   background: #f7f7f7;
   color: #D44216;
   padding-left: 50px; }
-
-.search-filter-bar {
-  display: flex;
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  margin-right: auto;
-  margin-left: auto;
-  align-items: flex-end;
-  width: 95%; }
-
-.search-box {
-  display: flex;
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 33%; }
-
-.filter-bar {
-  color: #f7f7f7;
-  margin: 0 5px; }
-
-.filter-sort {
-  display: flex;
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  align-items: center;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-  margin-bottom: 7px;
-  padding-top: 5px;
-  color: #B2B2B2; }
-
-.filter-sort-btns {
-  display: flex;
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  align-items: center;
-  justify-content: flex-end;
-  color: #B2B2B2; }
-
-.filter-show {
-  display: flex;
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  color: #B2B2B2; }
 
 .nav-mobile {
   display: flex;
