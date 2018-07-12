@@ -241,17 +241,23 @@ const toggleSortState = (target, storeKey) => {
 }
 
 const toggleShowState = (target, storeKey) => {
+    const prevState = JSON.parse(window.sessionStorage
+        .getItem(storeKey))
     let store = Array
         .from(target.parentNode.children)
         .map(div => div.id)
         .reduce((acc, id) => {
-            if(){
+            if(target.id === "All" || prevState.All === true){
                 acc[id] = false;
+                acc[target.id] = true;
+                return acc
             }
-            acc[id] = false;
+
+            prevState[id] ? acc[id] = true : acc[id] = false;
+            !prevState[target.id] ? acc[target.id] = true : acc[target.id] = false;
+            
             return acc
         }, {});
-    store[target.id] = true;
     store = JSON.stringify(store);
     window.sessionStorage.setItem(storeKey, store)
 }
@@ -287,8 +293,8 @@ const renderSearchSortBlock = (listFilter) =>{
         const filterShow = document.querySelector(".filter-show");
         const showCats = checkLineage(event, filterShow);
         if(showCats) { 
-            toggleSortState(showCats, "Sort by:");
-            updateSortStyle(showCats, "Sort by:");
+            toggleShowState(showCats, "Show:");
+            updateSortStyle(showCats, "Show:");
         }
     });
 

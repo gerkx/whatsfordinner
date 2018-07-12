@@ -358,24 +358,24 @@ describe("#updateSortStyle", () =>{
     });
     it("adds btn--mint to states that are true", () => {
         let kids = arr.map(div => classListMocker(div))
-        const parent = { children: kids };
-        updateSortStyle(parent, key);
-        const result = parent.children[0].classList.contains("btn--mint");
+        const div = { parentNode: { children: kids } };
+        updateSortStyle(div, key);
+        const result = div.parentNode.children[0].classList.contains("btn--mint");
         assert.isTrue(result)
     });
     it("removes class from states that are false", () =>{
         let kids = arr.map(div => classListMocker(div))
         kids.forEach(kid => kid.classList.add("btn--mint"))
-        const parent = { children: kids };
-        updateSortStyle(parent, key);
-        const result = parent.children[1].classList.contains("btn--mint");
+        const div = { parentNode: { children: kids } };
+        updateSortStyle(div, key);
+        const result = div.parentNode.children[1].classList.contains("btn--mint");
         assert.isFalse(result)
     });
 })
 
 describe("#toggleShowState", () => {
     const key = "showState";
-    const arr = ["I", "see", "you"];
+    const arr = ["All", "Dogs", "Cats"];
     const target = {
         parentNode: {
             children: arr.reduce((acc, item) => {
@@ -383,8 +383,9 @@ describe("#toggleShowState", () => {
                 return acc
             }, [])
         },
-        id: arr[1],
+        id: arr[0],
     };
+    // console.log(target.id)
     let storageMock;
     beforeEach(function(){
         storageMock = seshStorageMocker();
@@ -394,17 +395,37 @@ describe("#toggleShowState", () => {
     afterEach(function(){
         window.sessionStorage.removeItem(key);
     });
-
-    it("sets clicked state to true", () => {
-        toggleSortState(target, key);
+    it("sets other cats to false with All click", () => {
+        toggleShowState(target, key)
+        const result = JSON.parse(window.sessionStorage.getItem(key))
+        assert.isFalse(result[arr[1]]);
+    });
+    it("sets All to true when clicked", () => {
+        toggleShowState(target, key)
+        const result = JSON.parse(window.sessionStorage.getItem(key))
+        assert.isTrue(result[arr[0]]);
+    });
+    it("sets all other cats false other than target if all was prev", () => {
+        let dogTarg = target;
+        dogTarg.id = arr[1];
+        toggleShowState(dogTarg, key);
         const result = JSON.parse(window.sessionStorage.getItem(key));
-        assert.isTrue(result[arr[1]])
-    })
-
-    it("sets unclicked states to false", () => {     
-        toggleSortState(target, key);
+        assert.isFalse(result[arr[0]]);
+        assert.isFalse(result[arr[2]]);
+        assert.isTrue(result[arr[1]]);
+    });
+    it("preserves other states if All not prev", () => {
+        let newStore = JSON.parse(window.sessionStorage.getItem(key));
+        newStore.All = false;
+        newStore.Dogs = true;
+        window.sessionStorage.setItem(key, JSON.stringify(newStore));
+        let catTarg = target;
+        catTarg.id = arr[2];
+        toggleShowState(catTarg, key);
         const result = JSON.parse(window.sessionStorage.getItem(key));
-        assert.isFalse(result[arr[0]])  
+        assert.isTrue(result[arr[1]]);
+        assert.isTrue(result[arr[2]]);
+        assert.isFalse(result[arr[0]]);
     })
 
 });
