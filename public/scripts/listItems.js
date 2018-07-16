@@ -1,36 +1,13 @@
+let foods = foodItems;
+let groceryListItems = foods.filter(obj => obj.amt > 0);
+const sortCats = ["ABC", "Cat", "Date", "Popularity"];
+const showCats = [
+                    "All", "bakery", "dairy", "frozen", "meat", 
+                    "packaged", "produce", "sundries"
+                ];
+const grocSortKey = "Sort by:";
+const grocDispKey = "Show:";
 
-
-// ///////////////////////
-// // date picker setup //
-// ///////////////////////
-// var today = new Date();
-// var prevDate = new Date("Jun 07 2018");
-
-// var field = document.getElementById("datepicker")
-// if(field){
-//     field.innerHTML = today.toDateString().split(" ", 3).join(" ");
-
-// }
-
-// let picker = new Pikaday({
-//     field: field,
-//     trigger: field,
-//     firstDay: 1,
-//     minDate: today,
-//     maxDate: new Date(today.getTime() + 28 * 24 * 60 * 60 * 1000),
-//     yearRange: [
-//         today.getFullYear(), 
-//         new Date(today.getFullYear() + 1)
-//     ],
-//     onSelect: function(date){
-//         prevDate = picker;
-//         var noYear = (prevDate.toString()).split(" ", 3).join(" ");
-
-//         console.log(noYear);
-//         console.log("boop: ", prevDate.toString());
-//         field.innerHTML = noYear;
-//     }
-// });
 
 //hooks
 let burgerSVG = document.querySelectorAll(".burger");
@@ -89,7 +66,7 @@ const renderCheckoutButton = function(){
 }
 
 const resetPurchasedItems = function(list){
-    list.filter((obj, index) => obj.checked == true)
+    list.filter(obj => obj.checked == true)
         .forEach(obj => {
             obj.amt = 0; 
             obj.checked = false;
@@ -98,9 +75,8 @@ const resetPurchasedItems = function(list){
 }
 
 const removePurchasedItemsFromDisplay = function(parentDiv){
-    let doneItems = parentDiv.querySelectorAll(".li-done")
+    return parentDiv.querySelectorAll(".li-done")
         .forEach(child => parentDiv.removeChild(child));
-    return parentDiv
 }
 
 const checkLineage = (event, parent) => {
@@ -126,7 +102,6 @@ function listCheckClassToggles(target, obj){
         .classList.toggle("txtbox--done");
     target.classList.toggle(`li--${obj.dept}`);
     target.classList.toggle("li-done");
-
     return target
 }
 
@@ -153,16 +128,6 @@ const groceryItemStatus =  function(event){
     listCheckClassToggles(target, foodObj);
     foodObjCheckToggle(foodObj);
 }
-
-// let filtros = ["produce"];
-// filter(obj => filtros.indexOf(obj.dept) != -1)
-let foods = foodItems;
-let groceryListItems = foods.filter(obj => obj.amt > 0);
-const sortCats = ["ABC", "Cat", "Date", "Popularity"];
-const showCats = [
-                    "All", "Bakery", "Dairy", "Frozen", "Meat", 
-                    "Packaged", "Produce", "Sundries"
-                ];
 
 const createFilterStateSessionStorage = (key, arr) => {
     if(!window.sessionStorage[key]){
@@ -194,8 +159,9 @@ const updateSortStyle = function(div, key){
     return arr
 }
 
-const renderFilterSortSection = (arr, title, selector) => {
-    createFilterStateSessionStorage(title, arr);
+const renderFilterSortSection = (arr, title, selector, page) => {
+    let key = page.toLowerCase() + title.charAt(0).toUpperCase() + title.substr(1);
+    createFilterStateSessionStorage(key, arr);
     let list = document.createElement("div");
     list.classList.add("filter-section");
     list.innerHTML = `<div class='txt--ice'>${title}</div>`;
@@ -206,14 +172,14 @@ const renderFilterSortSection = (arr, title, selector) => {
         .map(item => `<div class="btn-sm m-l-5" id="${item}">${item}</div>`)
         .join(""));
     let kids = Array.from(sortCats.children);
-    kids.forEach(item => toggleSortStyle(item, title));
+    kids.forEach(item => toggleSortStyle(item, key));
     list.appendChild(sortCats);
     return list
 }
 
-const renderFiltersBlock = () => {
-    let sort = renderFilterSortSection(sortCats, "Sort by:", "filter-sort");
-    let filter = renderFilterSortSection(showCats, "Show:", "filter-show");
+const renderFiltersBlock = (page) => {
+    let sort = renderFilterSortSection(sortCats, "Sort by:", "filter-sort", page);
+    let filter = renderFilterSortSection(showCats, "Show:", "filter-show", page);
     let markup = document.createElement("div");
     markup.classList.add("filter-bar");
     markup.classList.add("hide");
@@ -247,10 +213,8 @@ const toggleShowState = (target, storeKey) => {
                 acc[target.id] = true;
                 return acc
             }
-
             prevState[id] ? acc[id] = true : acc[id] = false;
             !prevState[target.id] ? acc[target.id] = true : acc[target.id] = false;
-            
             return acc
         }, {});
     store = JSON.stringify(store);
@@ -269,11 +233,12 @@ const showSelectedCats = (list, key) => {
 ///////////////////////
 // section renderers //
 ///////////////////////
-const renderSearchSortBlock = (listFilter) =>{
+const renderSearchSortBlock = (listFilter, page) =>{
+    let lcPage = page.toLowerCase();
     listFilter.innerHTML = '<div class="search-filter-bar m-b-5 m-t-5" />'
     listFilter.firstElementChild.appendChild(renderSearchBlock());
     listFilter.firstElementChild.insertAdjacentHTML("beforeend", svg.filter());
-    listFilter.appendChild(renderFiltersBlock());
+    listFilter.appendChild(renderFiltersBlock(page));
 
     listFilter.addEventListener("click", function(event){
         const filterBar = document.querySelector(".filter-bar");
@@ -289,28 +254,27 @@ const renderSearchSortBlock = (listFilter) =>{
         const filterSort = document.querySelector(".filter-sort");
         const sortCats = checkLineage(event, filterSort);
         if(sortCats) { 
-            toggleSortState(sortCats, "Sort by:");
-            updateSortStyle(sortCats, "Sort by:");
+            toggleSortState(sortCats, lcPage + grocSortKey);
+            updateSortStyle(sortCats, lcPage + grocSortKey);
         }
         const filterShow = document.querySelector(".filter-show");
         const showCats = checkLineage(event, filterShow);
         if(showCats) { 
-            toggleShowState(showCats, "Show:");
-            updateSortStyle(showCats, "Show:");
+            toggleShowState(showCats, lcPage + grocDispKey);
+            updateSortStyle(showCats, lcPage + grocDispKey);
         }
     });
 
     return listFilter
 }
 
-
-
-
 const renderGroceryListBlock = function(parentDiv){
+    let key = "groc"+grocDispKey;
+    let dispList = showSelectedCats(groceryListItems, key);
     const listUL = document.createElement("ul");
     listUL.classList.add("list");
     parentDiv.appendChild(listUL);
-    groceryListItems.forEach(function(item, index){
+    dispList.forEach(function(item){
         parentDiv.firstElementChild.appendChild(renderListItem(item));
     });
 
@@ -336,6 +300,6 @@ const renderGroceryListBlock = function(parentDiv){
 
 
 
-renderSearchSortBlock(listFilter);
+renderSearchSortBlock(listFilter, "groc");
 renderGroceryListBlock(groceryList);
 // searchSort(groceryList);
