@@ -427,5 +427,49 @@ describe("#toggleShowState", () => {
         assert.isTrue(result[arr[2]]);
         assert.isFalse(result[arr[0]]);
     })
-
 });
+
+describe("#showSelectedCats", () => {
+    const key = "showState";
+    const arr = ["All", "Dogs", "Cats"];
+    let listItems = [
+        { name: "Rex", dept: arr[1], },
+        { name: "Spot", dept: arr[1], },
+        { name: "Belle", dept: arr[2], },
+    ]
+    const target = {
+        parentNode: {
+            children: arr.reduce((acc, item) => {
+                acc.push({id: item})
+                return acc
+            }, [])
+        },
+    };
+    let storageMock;
+    beforeEach(function(){
+        storageMock = seshStorageMocker();
+        Object.defineProperty(window, 'sessionStorage', {value: storageMock});
+        createFilterStateSessionStorage(key, arr);
+    });
+    afterEach(function(){
+        window.sessionStorage.removeItem(key);
+    });
+
+    it("returns the same list if All is selected", () => {
+        const result = showSelectedCats(listItems, key);
+        expect(result.length).to.eql(listItems.length)
+    });
+    it("returns only items that are true", () => {
+        const dogsRule = JSON.stringify({All: false, Dogs: true, Cats: false})
+        window.sessionStorage.setItem(key, dogsRule);
+        const result = showSelectedCats(listItems, key);
+        expect(result.length).to.eql(2)
+        const retDepts = result.map(item => item.dept);
+        expect(retDepts.indexOf(arr[2])).to.eql(-1)
+    })
+});
+
+
+// describe("#listSortABC", () => {
+//     let
+// });

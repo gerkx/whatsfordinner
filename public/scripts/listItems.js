@@ -115,11 +115,7 @@ const checkLineage = (event, parent) => {
 }
 
 const foodObjCheckToggle = function(obj){
-    if(obj.checked){
-        obj.checked=false;
-    }else{
-        obj.checked=true;
-    }
+    obj.checked ? obj.checked= false : obj.checked = true;
     return obj
 }
 
@@ -147,7 +143,6 @@ const renderSearchBlock = () => {
     const div = document.createElement("div");
     div.classList.add("search-box");
     div.appendChild(renderSearchInput("new item"));
-    const searchIcon = document.createElement("div");
     div.insertAdjacentHTML("beforeend",svg.search());
     return div
 }
@@ -262,6 +257,13 @@ const toggleShowState = (target, storeKey) => {
     window.sessionStorage.setItem(storeKey, store)
 }
 
+const showSelectedCats = (list, key) => {
+    let store = JSON.parse(window.sessionStorage.getItem(key))
+    if(store.All){
+        return list
+    }
+    return list.filter(item => store[item.dept])
+}
 
 
 ///////////////////////
