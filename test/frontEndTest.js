@@ -96,10 +96,20 @@ describe("#resetPurchasedItems", () =>{
 });
 
 describe("#removedPurchasedItemsFromDisplay", () => {
-    let ul = document.createElement("ul");
-    ul.innerHTML = "<li class='not-done' /><li class='li-done' />";
+    let parent = {
+        list:  [".not-done", ".li-done"],
+        querySelectorAll: function(key){
+            return this.list.filter(item => item == key);
+
+        },
+        removeChild: function(item){
+            let idx = this.list.indexOf(item);
+            this.list.splice(idx, 1);
+        },
+    }
     it("should remove li's with the class 'li-done", () =>{
-        expect(removePurchasedItemsFromDisplay(ul).children.length).to.eql(1);
+        removePurchasedItemsFromDisplay(parent);
+        expect(parent.list.length).to.eql(1)
     });
 });
 
@@ -191,63 +201,50 @@ describe("#renderFilterSection", () => {
 
     it("should return a div", () =>{
         let arr = ["uno", "dos", "tres"];
-        let method = renderFilterSortSection(arr, key, "filter-sort");
+        let method = renderFilterSortSection(key, arr);
         const div = "DIV";
         const result = method.nodeName;
         expect(result).to.eql(div);
     })
     it("should contain class filter-bar in parent", () => {
         let arr = ["uno", "dos", "tres"];
-        let method = renderFilterSortSection(arr, key, "filter-section");
+        let method = renderFilterSortSection(key, arr);
         const sel = "filter-section";
         const result = method.classList.contains(sel);
         assert.isTrue(result);
     });
     it("1st child should be div", () => {
         let arr = ["uno", "dos", "tres"];
-        let method = renderFilterSortSection(arr, key, "filter-sort");
+        let method = renderFilterSortSection(key, arr);
         const div = "DIV";
         const result = method.lastElementChild.nodeName;
         expect(result).to.eql(div);
     });
     it("1st child should have class txt--ice", () => {
         let arr = ["uno", "dos", "tres"];
-        let method = renderFilterSortSection(arr, key, "filter-sort");
+        let method = renderFilterSortSection(key, arr);
         const sel = "txt--ice";
         const result = method.firstElementChild.classList.contains(sel);
         assert.isTrue(result);
     });
     it("1st child should have Sort by text", () => {
         let arr = ["uno", "dos", "tres"];
-        let method = renderFilterSortSection(arr, key, "filter-sort");
+        let method = renderFilterSortSection(key, arr);
         const result = method.firstElementChild.textContent;
-        expect(key).to.eql(result);
+        expect(result).to.eql("Sort By:");
     });
     it("should return a list of divs that match arr input", () => {
         let arr = ["uno", "dos", "tres"];
-        let method = renderFilterSortSection(arr, key, "filter-sort");
+        let method = renderFilterSortSection(key, arr);
         const result = Array.from(method.lastElementChild.children);
         expect(result[arr.length-1].textContent).to.eql(arr[arr.length-1]);
     });
     it("the array divs should have btn-sm m-l-5 classes", () => {
         let arr = ["uno", "dos", "tres"];
-        let method = renderFilterSortSection(arr, key, "filter-sort");
+        let method = renderFilterSortSection(key, arr);
         const result = method.lastElementChild.lastElementChild.classList.contains("btn-sm", "m-l-5");
         assert.isTrue(result);
     });
-    it("if 2nd argument passed the first child div will contain it", () => {
-        let arr = ["uno", "dos", "tres"];
-        const txt = "boop"
-        const result = renderFilterSortSection(arr, txt).firstElementChild.textContent;
-        expect(result).to.eql(txt)
-    })
-    it("if 3rd arg passed the block css will have it as sel", () => {
-        let arr = ["uno", "dos", "tres"];
-        const txt = "boop"
-        const sel = "tweedle"
-        const result = renderFilterSortSection(arr, txt, sel).lastElementChild.classList.contains(sel);
-        assert.isTrue(result);
-    })
 });
 
 describe("#renderFiltersBlock", ()=>{
@@ -309,7 +306,8 @@ describe("#toggleSortStyle", () => {
 });
 
 describe("#toggleSortState", () => {
-    const key = "sortState";
+    const page = "sortState"
+    const key = "sortStateSort";
     const arr = ["hip", "herp", "derp"];
     const target = {
         parentNode: {
@@ -331,13 +329,13 @@ describe("#toggleSortState", () => {
     });
 
     it("sets clicked state to true", () => {
-        toggleSortState(target, key);
+        toggleSortState(target, page);
         const result = JSON.parse(window.sessionStorage.getItem(key));
         assert.isTrue(result[arr[1]])
     })
 
     it("sets unclicked states to false", () => {     
-        toggleSortState(target, key);
+        toggleSortState(target, page);
         const result = JSON.parse(window.sessionStorage.getItem(key));
         assert.isFalse(result[arr[0]])  
     })
@@ -345,7 +343,8 @@ describe("#toggleSortState", () => {
 });
 
 describe("#updateSortStyle", () =>{
-    const key = "sortState";
+    const page = "sortState";
+    const key = "sortStateSort";
     const arr = ["uno", "dos", "tres"];
     let storageMock;
     beforeEach(function(){
@@ -359,7 +358,7 @@ describe("#updateSortStyle", () =>{
     it("adds btn--mint to states that are true", () => {
         let kids = arr.map(div => classListMocker(div))
         const div = { parentNode: { children: kids } };
-        updateSortStyle(div, key);
+        updateSortStyle(div, page);
         const result = div.parentNode.children[0].classList.contains("btn--mint");
         assert.isTrue(result)
     });
@@ -367,14 +366,15 @@ describe("#updateSortStyle", () =>{
         let kids = arr.map(div => classListMocker(div))
         kids.forEach(kid => kid.classList.add("btn--mint"))
         const div = { parentNode: { children: kids } };
-        updateSortStyle(div, key);
+        updateSortStyle(div, page);
         const result = div.parentNode.children[1].classList.contains("btn--mint");
         assert.isFalse(result)
     });
 })
 
 describe("#toggleShowState", () => {
-    const key = "showState";
+    const page = "showState";
+    const key = "showStateShow";
     const arr = ["All", "Dogs", "Cats"];
     const target = {
         parentNode: {
@@ -396,19 +396,19 @@ describe("#toggleShowState", () => {
         window.sessionStorage.removeItem(key);
     });
     it("sets other cats to false with All click", () => {
-        toggleShowState(target, key)
+        toggleShowState(target, page)
         const result = JSON.parse(window.sessionStorage.getItem(key))
         assert.isFalse(result[arr[1]]);
     });
     it("sets All to true when clicked", () => {
-        toggleShowState(target, key)
+        toggleShowState(target, page)
         const result = JSON.parse(window.sessionStorage.getItem(key))
         assert.isTrue(result[arr[0]]);
     });
     it("sets all other cats false other than target if all was prev", () => {
         let dogTarg = target;
         dogTarg.id = arr[1];
-        toggleShowState(dogTarg, key);
+        toggleShowState(dogTarg, page);
         const result = JSON.parse(window.sessionStorage.getItem(key));
         assert.isFalse(result[arr[0]]);
         assert.isFalse(result[arr[2]]);
@@ -421,7 +421,7 @@ describe("#toggleShowState", () => {
         window.sessionStorage.setItem(key, JSON.stringify(newStore));
         let catTarg = target;
         catTarg.id = arr[2];
-        toggleShowState(catTarg, key);
+        toggleShowState(catTarg, page);
         const result = JSON.parse(window.sessionStorage.getItem(key));
         assert.isTrue(result[arr[1]]);
         assert.isTrue(result[arr[2]]);

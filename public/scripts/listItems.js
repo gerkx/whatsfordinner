@@ -8,6 +8,9 @@ const showCats = [
 const grocSortKey = "Sort by:";
 const grocDispKey = "Show:";
 
+const grocSortStoreKey = "bleh";
+const grocShowStoreKey = "grocStore";
+const grocListKey = "groceryKey";
 
 //hooks
 let burgerSVG = document.querySelectorAll(".burger");
@@ -36,6 +39,9 @@ const listFilter = document.querySelector("#listFilter");
 /////////////////////
 // food list stuff //
 /////////////////////
+
+const sortKey = page => `${page}Sort`;
+const showKey = page => `${page}Show`;
 
 const renderListItem = function(item){
     const listLI = document.createElement("li");
@@ -147,7 +153,8 @@ const toggleSortStyle = function(div, key){
     }
 }
 
-const updateSortStyle = function(div, key){
+const updateSortStyle = function(div, page){
+    let key = sortKey(page);
     let store = JSON.parse(window.sessionStorage.getItem(key));
     let arr = Array.from(div.parentNode.children);
     arr.forEach(div => {
@@ -159,15 +166,50 @@ const updateSortStyle = function(div, key){
     return arr
 }
 
-const renderFilterSortSection = (arr, title, selector, page) => {
-    let key = page.toLowerCase() + title.charAt(0).toUpperCase() + title.substr(1);
+const updateShowStyle = function(div, page){
+    let key = showKey(page);
+    let store = JSON.parse(window.sessionStorage.getItem(key));
+    let arr = Array.from(div.parentNode.children);
+    arr.forEach(div => {
+        div.classList.remove("btn--mint");
+        if(store[div.id]){
+            div.classList.add("btn--mint")
+        }
+    });
+    return arr
+}
+
+const capFirstLetter = str => {
+    return str.charAt(0).toUpperCase + str.slice(1);
+}
+
+const renderFilterSortSection = (page, arr) => {
+    const key = sortKey(page);
     createFilterStateSessionStorage(key, arr);
     let list = document.createElement("div");
     list.classList.add("filter-section");
-    list.innerHTML = `<div class='txt--ice'>${title}</div>`;
+    list.innerHTML = "<div class='txt--ice'>Sort By:</div>";
     let sortCats = document.createElement("div");
     sortCats.classList.add("filter-cats");
-    sortCats.classList.add(selector);
+    sortCats.classList.add("filter-sort");
+    sortCats.insertAdjacentHTML("beforeend", arr
+        .map(item => `<div class="btn-sm m-l-5" id="${item}">${item}</div>`)
+        .join(""));
+    let kids = Array.from(sortCats.children);
+    kids.forEach(item => toggleSortStyle(item, key));
+    list.appendChild(sortCats);
+    return list
+}
+
+const renderFilterShowSection = (page, arr) => {
+    const key = showKey(page);
+    createFilterStateSessionStorage(key, arr);
+    let list = document.createElement("div");
+    list.classList.add("filter-section");
+    list.innerHTML = "<div class='txt--ice'>Show:</div>";
+    let sortCats = document.createElement("div");
+    sortCats.classList.add("filter-cats");
+    sortCats.classList.add("filter-show");
     sortCats.insertAdjacentHTML("beforeend", arr
         .map(item => `<div class="btn-sm m-l-5" id="${item}">${item}</div>`)
         .join(""));
@@ -178,8 +220,8 @@ const renderFilterSortSection = (arr, title, selector, page) => {
 }
 
 const renderFiltersBlock = (page) => {
-    let sort = renderFilterSortSection(sortCats, "Sort by:", "filter-sort", page);
-    let filter = renderFilterSortSection(showCats, "Show:", "filter-show", page);
+    let sort = renderFilterSortSection(page, sortCats);
+    let filter = renderFilterShowSection(page, showCats);
     let markup = document.createElement("div");
     markup.classList.add("filter-bar");
     markup.classList.add("hide");
@@ -188,7 +230,8 @@ const renderFiltersBlock = (page) => {
     return markup
 }
 
-const toggleSortState = (target, storeKey) => {
+const toggleSortState = (target, page) => {
+    let key = sortKey(page);
     let store = Array
         .from(target.parentNode.children)
         .map(div => div.id)
@@ -198,12 +241,13 @@ const toggleSortState = (target, storeKey) => {
         }, {});
     store[target.id] = true;
     store = JSON.stringify(store);
-    window.sessionStorage.setItem(storeKey, store)
+    window.sessionStorage.setItem(key, store)
 }
 
-const toggleShowState = (target, storeKey) => {
+const toggleShowState = (target, page) => {
+    let key = showKey(page);
     const prevState = JSON.parse(window.sessionStorage
-        .getItem(storeKey))
+        .getItem(key))
     let store = Array
         .from(target.parentNode.children)
         .map(div => div.id)
@@ -218,7 +262,7 @@ const toggleShowState = (target, storeKey) => {
             return acc
         }, {});
     store = JSON.stringify(store);
-    window.sessionStorage.setItem(storeKey, store)
+    window.sessionStorage.setItem(key, store)
 }
 
 const showSelectedCats = (list, key) => {
@@ -234,7 +278,6 @@ const showSelectedCats = (list, key) => {
 // section renderers //
 ///////////////////////
 const renderSearchSortBlock = (listFilter, page) =>{
-    let lcPage = page.toLowerCase();
     listFilter.innerHTML = '<div class="search-filter-bar m-b-5 m-t-5" />'
     listFilter.firstElementChild.appendChild(renderSearchBlock());
     listFilter.firstElementChild.insertAdjacentHTML("beforeend", svg.filter());
@@ -243,33 +286,33 @@ const renderSearchSortBlock = (listFilter, page) =>{
     listFilter.addEventListener("click", function(event){
         const filterBar = document.querySelector(".filter-bar");
         const filterIcon = document.querySelector(".filter-icon");
-            
         const filterDisp = checkLineage(event, filterIcon);
         if(filterDisp){
             filterIcon.classList.toggle("ico--ice");
             filterIcon.classList.toggle("ico--mint");
             filterBar.classList.toggle("hide");
         }
-        
         const filterSort = document.querySelector(".filter-sort");
         const sortCats = checkLineage(event, filterSort);
         if(sortCats) { 
-            toggleSortState(sortCats, lcPage + grocSortKey);
-            updateSortStyle(sortCats, lcPage + grocSortKey);
+            toggleSortState(sortCats, page);
+            updateSortStyle(sortCats, page);
         }
         const filterShow = document.querySelector(".filter-show");
         const showCats = checkLineage(event, filterShow);
         if(showCats) { 
-            toggleShowState(showCats, lcPage + grocDispKey);
-            updateSortStyle(showCats, lcPage + grocDispKey);
+            toggleShowState(showCats, page);
+            updateShowStyle(showCats, page);
+            groceryList.innerHTML = "";
+            renderGroceryListBlock(groceryList, page);
         }
     });
 
     return listFilter
 }
 
-const renderGroceryListBlock = function(parentDiv){
-    let key = "groc"+grocDispKey;
+const renderGroceryListBlock = function(parentDiv, page){
+    let key = showKey(page);
     let dispList = showSelectedCats(groceryListItems, key);
     const listUL = document.createElement("ul");
     listUL.classList.add("list");
@@ -288,18 +331,18 @@ const renderGroceryListBlock = function(parentDiv){
             listCheckClassToggles(target, foodObj);
             foodObjCheckToggle(foodObj);
         });
+}
 
+const renderCheckoutBtn = () =>  {
     const checkoutBtn = document.querySelector(".checkout");
+    const listUL = document.querySelector(".list")
     checkoutBtn.appendChild(renderCheckoutButton());
     checkoutBtn.addEventListener("click", function(){
         resetPurchasedItems(groceryListItems);
         removePurchasedItemsFromDisplay(listUL);
     });
-    
 }
 
-
-
-renderSearchSortBlock(listFilter, "groc");
-renderGroceryListBlock(groceryList);
-// searchSort(groceryList);
+renderSearchSortBlock(listFilter, "grocList");
+renderGroceryListBlock(groceryList, "grocList");
+renderCheckoutBtn();
