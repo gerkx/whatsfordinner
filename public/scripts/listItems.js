@@ -1,5 +1,9 @@
 let foods = foodItems;
-let groceryListItems = foods.filter(obj => obj.amt > 0);
+let groceryListItems = foods.filter(obj => obj.amt > 0).sort(function(a,b){
+    if(a.name < b.name) return -1;
+    if(a.name > b.name) return 1;
+    return 0;
+});
 const sortCats = ["ABC", "Cat", "Date", "Popularity"];
 const showCats = [
                     "All", "bakery", "dairy", "frozen", "meat", 

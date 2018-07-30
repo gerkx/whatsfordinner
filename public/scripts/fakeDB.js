@@ -50,7 +50,7 @@ let foodItems = [
     },
     {
         id: "08",
-        name: "Shampoo",
+        name: "shampoo",
         dept: "sundries",
         amt: 1,
         checked: false,
