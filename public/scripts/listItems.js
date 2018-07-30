@@ -5,30 +5,6 @@ const showCats = [
                     "All", "bakery", "dairy", "frozen", "meat", 
                     "packaged", "produce", "sundries"
                 ];
-const grocSortKey = "Sort by:";
-const grocDispKey = "Show:";
-
-const grocSortStoreKey = "bleh";
-const grocShowStoreKey = "grocStore";
-const grocListKey = "groceryKey";
-
-//hooks
-let burgerSVG = document.querySelectorAll(".burger");
-let logoSVG = document.querySelectorAll(".logoSVG");
-let menuCloseSVG = document.getElementById("menuClose");
-let trashSVG = document.querySelectorAll(".trashSVG");
-let foodCloseSVG = document.querySelectorAll(".foodCloseSVG");
-const navLogoSVG = document.getElementById("navLogoSVG");
-const navBurgerSVG = document.getElementById("navBurgerSVG");
-
-// menuCloseSVG.innerHTML = svg.remove("rmv-x stroke--ice");
-// logoSVG.forEach(logo => logo.innerHTML = svg.logo("fill--ice"));
-
-
-// trashSVG.forEach(trash => trash.innerHTML = svg.trash("ico--slate"));
-// foodCloseSVG.forEach(x => x.innerHTML = svg.remove("rmv-x stroke--slate"));
-// navLogoSVG.innerHTML = svg.logo("fill--cloud");
-// navBurgerSVG.innerHTML = svg.burger("mini-burger stroke--cloud");
 
 ///////////////
 // Page divs //
@@ -282,8 +258,37 @@ const renderSearchSortBlock = (listFilter, page) =>{
     listFilter.firstElementChild.appendChild(renderSearchBlock());
     listFilter.firstElementChild.insertAdjacentHTML("beforeend", svg.filter());
     listFilter.appendChild(renderFiltersBlock(page));
+    return listFilter
+}
 
-    listFilter.addEventListener("click", function(event){
+const renderGroceryListBlock = function(parentDiv){
+    let dispList = showSelectedCats(groceryListItems, showKey("grocList"));
+    const listUL = document.createElement("ul");
+    listUL.classList.add("list");
+    parentDiv.appendChild(listUL);
+    dispList.forEach(function(item){
+        parentDiv.firstElementChild.appendChild(renderListItem(item));
+    });
+    parentDiv.querySelectorAll(".btn-box")
+        .forEach(item => item.firstElementChild.appendChild(renderCheckBox()));
+}
+
+const renderCheckoutBtn = () =>  {
+    const checkoutBtn = document.querySelector(".checkout");
+    const listUL = document.querySelector(".list")
+    checkoutBtn.appendChild(renderCheckoutButton());
+    checkoutBtn.addEventListener("click", function(){
+        resetPurchasedItems(groceryListItems);
+        removePurchasedItemsFromDisplay(listUL);
+    });
+}
+
+////////////////////////
+// section listenters //
+////////////////////////
+
+const interactSearchSortBlock = (parentDiv, page) =>{
+    parentDiv.addEventListener("click", function(event){
         const filterBar = document.querySelector(".filter-bar");
         const filterIcon = document.querySelector(".filter-icon");
         const filterDisp = checkLineage(event, filterIcon);
@@ -307,23 +312,9 @@ const renderSearchSortBlock = (listFilter, page) =>{
             renderGroceryListBlock(groceryList, page);
         }
     });
-
-    return listFilter
 }
 
-const renderGroceryListBlock = function(parentDiv, page){
-    let key = showKey(page);
-    let dispList = showSelectedCats(groceryListItems, key);
-    const listUL = document.createElement("ul");
-    listUL.classList.add("list");
-    parentDiv.appendChild(listUL);
-    dispList.forEach(function(item){
-        parentDiv.firstElementChild.appendChild(renderListItem(item));
-    });
-
-    parentDiv.querySelectorAll(".btn-box")
-        .forEach(item => item.firstElementChild.appendChild(renderCheckBox()));
-
+const interactGroceryListBlock = function(parentDiv){
     parentDiv.querySelector(".list")
         .addEventListener("click", function(event){
             let target = checkLineage(event, this);
@@ -333,16 +324,9 @@ const renderGroceryListBlock = function(parentDiv, page){
         });
 }
 
-const renderCheckoutBtn = () =>  {
-    const checkoutBtn = document.querySelector(".checkout");
-    const listUL = document.querySelector(".list")
-    checkoutBtn.appendChild(renderCheckoutButton());
-    checkoutBtn.addEventListener("click", function(){
-        resetPurchasedItems(groceryListItems);
-        removePurchasedItemsFromDisplay(listUL);
-    });
-}
-
 renderSearchSortBlock(listFilter, "grocList");
-renderGroceryListBlock(groceryList, "grocList");
+renderGroceryListBlock(groceryList);
+interactSearchSortBlock(listFilter, "grocList");
+interactGroceryListBlock(groceryList);
 renderCheckoutBtn();
+
