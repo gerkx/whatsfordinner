@@ -265,9 +265,6 @@ describe("#renderFiltersBlock", ()=>{
 
 });
 
-
-
-
 describe("#createFilterStateSessionStorage", function(){
     let storageMock;
     beforeEach(function(){
@@ -437,14 +434,7 @@ describe("#showSelectedCats", () => {
         { name: "Spot", dept: arr[1], },
         { name: "Belle", dept: arr[2], },
     ]
-    const target = {
-        parentNode: {
-            children: arr.reduce((acc, item) => {
-                acc.push({id: item})
-                return acc
-            }, [])
-        },
-    };
+
     let storageMock;
     beforeEach(function(){
         storageMock = seshStorageMocker();
@@ -469,7 +459,59 @@ describe("#showSelectedCats", () => {
     })
 });
 
+describe("#listSortABC", () => {
+    it("sorts in alph order", () => {
+        let arr = [
+            {name: "Pat"},
+            {name: "Amanda"},
+            {name: "laszlo"},
+            {name: "Abby"},
+        ];
+        let result = arr.sort(listSortABC);
+        expect(result[0].name).to.eql("Abby");
+        expect(result[result.length-1].name).to.eql("Pat");
+    })
+});
 
-// describe("#listSortABC", () => {
-//     let
-// });
+describe("#listSortCat", () => {
+    it("sort by dept order", () => {
+        const arr = [
+            {name: "Amanda", dept: "Mom"},
+            {name: "laszlo", dept: "kid"},
+            {name: "Abby", dept: "kid"},
+            {name: "Pat", dept: "dad"},
+        ];
+        const result = arr.sort(listSortCat);
+        expect(result[0].name).to.eql("Pat");
+        expect(result[result.length-1].name).to.eql("Amanda");
+        expect(result[1].name).to.eql("Abby")
+    })
+})
+
+describe("#listSortPop", () => {
+    it("sorts by number of times added", () =>{
+        const arr = [
+            {name: "Pat",added: [1,1]},
+            {name: "Amanda", added: [1,1]},
+            {name: "Laszlo", added: [1,1,1,1]}
+        ];
+        const result = arr.sort(listSortPop);
+        expect(result[0].name).to.eql("Laszlo");
+        expect(result[1].name).to.eql("Amanda");
+        expect(result[2].name).to.eql("Pat");
+    });
+})
+
+describe("#listSortDate", () => {
+    it("sorts by date added", () => {
+        const arr = [
+            {name: "Pat",added: [new Date(2018, 04, 01)]},
+            {name: "Amanda", added: [new Date(2018, 05, 02)]},
+            {name: "Laszlo", added: [new Date(2018, 07, 08)]}
+        ];
+        const result = arr.sort(listSortDate);
+        expect(result[0].name).to.eql("Laszlo");
+        expect(result[1].name).to.eql("Amanda");
+        expect(result[2].name).to.eql("Pat");
+    })
+})

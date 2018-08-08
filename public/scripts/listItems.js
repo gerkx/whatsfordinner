@@ -1,9 +1,7 @@
 let foods = foodItems;
-let groceryListItems = foods.filter(obj => obj.amt > 0).sort(function(a,b){
-    if(a.name < b.name) return -1;
-    if(a.name > b.name) return 1;
-    return 0;
-});
+
+
+let groceryListItems = foods.filter(obj => obj.amt > 0).sort(listSortCat);
 const sortCats = ["ABC", "Cat", "Date", "Popularity"];
 const showCats = [
                     "All", "bakery", "dairy", "frozen", "meat", 
@@ -19,6 +17,43 @@ const listFilter = document.querySelector("#listFilter");
 /////////////////////
 // food list stuff //
 /////////////////////
+function listSortABC(a,b){
+    const valA = a.name.toLowerCase();
+    const valB = b.name.toLowerCase();
+    if(valA < valB) return -1;
+    if(valA > valB) return 1;
+    return 0
+}
+
+function listSortCat(a,b){
+    const valA = a.dept.toLowerCase();
+    const valB = b.dept.toLowerCase();
+    if(valA < valB) return -1;
+    if(valA > valB) return 1;
+    if(valA == valB && a.name.toLowerCase() < b.name.toLowerCase()) return -1;
+    if(valA == valB && a.name.toLowerCase() > b.name.toLowerCase()) return 1;
+    return 0
+}
+
+function listSortPop(a,b){
+    const popA = a.added.length;
+    const popB = b.added.length;
+    const nameA = a.name.toLowerCase();
+    const nameB = b.name.toLowerCase();
+    if(popA !== popB) return popB - popA;
+    if(popA == popB && nameA < nameB) return -1;
+    if(popA == popB && nameA > nameB) return 1;
+    return 0
+}
+
+function listSortDate(a,b){
+    const dateA = a.added[0];
+    const dateB = b.added[0];
+    const nameA = a.name.toLowerCase();
+    const nameB = b.name.toLowerCase();
+    if(dateA !== dateB) return dateB - dateA;
+    return 0
+}
 
 const sortKey = page => `${page}Sort`;
 const showKey = page => `${page}Show`;
@@ -54,7 +89,7 @@ const renderCheckoutButton = function(){
 const resetPurchasedItems = function(list){
     list.filter(obj => obj.checked == true)
         .forEach(obj => {
-            obj.amt = 0; 
+            obj.amt = 0;
             obj.checked = false;
         });
     return list
@@ -257,12 +292,12 @@ const showSelectedCats = (list, key) => {
 ///////////////////////
 // section renderers //
 ///////////////////////
-const renderSearchSortBlock = (listFilter, page) =>{
-    listFilter.innerHTML = '<div class="search-filter-bar m-b-5 m-t-5" />'
-    listFilter.firstElementChild.appendChild(renderSearchBlock());
-    listFilter.firstElementChild.insertAdjacentHTML("beforeend", svg.filter());
-    listFilter.appendChild(renderFiltersBlock(page));
-    return listFilter
+const renderSearchSortBlock = (parentDiv, page) =>{
+    parentDiv.innerHTML = '<div class="search-filter-bar m-b-5 m-t-5" />'
+    parentDiv.firstElementChild.appendChild(renderSearchBlock());
+    parentDiv.firstElementChild.insertAdjacentHTML("beforeend", svg.filter());
+    parentDiv.appendChild(renderFiltersBlock(page));
+    return parentDiv
 }
 
 const renderGroceryListBlock = function(parentDiv){
@@ -279,9 +314,10 @@ const renderGroceryListBlock = function(parentDiv){
 
 const renderCheckoutBtn = () =>  {
     const checkoutBtn = document.querySelector(".checkout");
-    const listUL = document.querySelector(".list")
+
     checkoutBtn.appendChild(renderCheckoutButton());
     checkoutBtn.addEventListener("click", function(){
+        const listUL = document.querySelector(".list")
         resetPurchasedItems(groceryListItems);
         removePurchasedItemsFromDisplay(listUL);
     });
@@ -291,7 +327,7 @@ const renderCheckoutBtn = () =>  {
 // section listenters //
 ////////////////////////
 
-const interactSearchSortBlock = (parentDiv, page) =>{
+function interactSearchSortBlock(parentDiv, page){
     parentDiv.addEventListener("click", function(event){
         const filterBar = document.querySelector(".filter-bar");
         const filterIcon = document.querySelector(".filter-icon");
@@ -318,14 +354,14 @@ const interactSearchSortBlock = (parentDiv, page) =>{
     });
 }
 
-const interactGroceryListBlock = function(parentDiv){
-    parentDiv.querySelector(".list")
-        .addEventListener("click", function(event){
-            let target = checkLineage(event, this);
+function interactGroceryListBlock(parentDiv){
+    parentDiv.addEventListener("click", function(event){
+        const list = parentDiv.querySelector(".list");
+        let target = checkLineage(event, list);
             const foodObj = groceryListItems.find(obj => obj.id === target.id);
             listCheckClassToggles(target, foodObj);
             foodObjCheckToggle(foodObj);
-        });
+    })
 }
 
 renderSearchSortBlock(listFilter, "grocList");
@@ -333,4 +369,3 @@ renderGroceryListBlock(groceryList);
 interactSearchSortBlock(listFilter, "grocList");
 interactGroceryListBlock(groceryList);
 renderCheckoutBtn();
-
