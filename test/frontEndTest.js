@@ -467,7 +467,7 @@ describe("#listSortABC", () => {
             {name: "laszlo"},
             {name: "Abby"},
         ];
-        let result = arr.sort(listSort.ABC);
+        let result = arr.sort(listSortFunc.ABC);
         expect(result[0].name).to.eql("Abby");
         expect(result[result.length-1].name).to.eql("Pat");
     })
@@ -481,7 +481,7 @@ describe("#listSortCat", () => {
             {name: "Abby", dept: "kid"},
             {name: "Pat", dept: "dad"},
         ];
-        const result = arr.sort(listSort.Cat);
+        const result = arr.sort(listSortFunc.Cat);
         expect(result[0].name).to.eql("Pat");
         expect(result[result.length-1].name).to.eql("Amanda");
         expect(result[1].name).to.eql("Abby")
@@ -495,7 +495,7 @@ describe("#listSortPop", () => {
             {name: "Amanda", added: [1,1]},
             {name: "Laszlo", added: [1,1,1,1]}
         ];
-        const result = arr.sort(listSort.Popularity);
+        const result = arr.sort(listSortFunc.Popularity);
         expect(result[0].name).to.eql("Laszlo");
         expect(result[1].name).to.eql("Amanda");
         expect(result[2].name).to.eql("Pat");
@@ -509,7 +509,7 @@ describe("#listSortDate", () => {
             {name: "Amanda", added: [new Date(2018, 05, 02)]},
             {name: "Laszlo", added: [new Date(2018, 07, 08)]}
         ];
-        const result = arr.sort(listSort.Date);
+        const result = arr.sort(listSortFunc.Date);
         expect(result[0].name).to.eql("Laszlo");
         expect(result[1].name).to.eql("Amanda");
         expect(result[2].name).to.eql("Pat");

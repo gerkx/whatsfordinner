@@ -1,4 +1,4 @@
-let foods = foodItems;
+
 
 const sortCats = ["ABC", "Cat", "Date", "Popularity"];
 const showCats = [
@@ -15,43 +15,8 @@ const listFilter = document.querySelector("#listFilter");
 /////////////////////
 // food list stuff //
 /////////////////////
-const listSort = {
-    ABC: function(a,b){
-        const valA = a.name.toLowerCase();
-        const valB = b.name.toLowerCase();
-        if(valA < valB) return -1;
-        if(valA > valB) return 1;
-        return 0
-    },
-    Cat: function(a,b){
-        const valA = a.dept.toLowerCase();
-        const valB = b.dept.toLowerCase();
-        const nameA = a.name.toLowerCase();
-        const nameB = b.name.toLowerCase();
-        if(valA < valB) return -1;
-        if(valA > valB) return 1;
-        if(valA == valB && nameA < nameB) return -1;
-        if(valA == valB && nameA > nameB) return 1;
-        return 0
-    },
-    Popularity: function(a,b){
-        const popA = a.added.length;
-        const popB = b.added.length;
-        const nameA = a.name.toLowerCase();
-        const nameB = b.name.toLowerCase();
-        if(popA !== popB) return popB - popA;
-        if(popA == popB && nameA < nameB) return -1;
-        if(popA == popB && nameA > nameB) return 1;
-        return 0
-    },
-    Date: function(a,b){
-        const dateA = a.added[0];
-        const dateB = b.added[0];
-        if(dateA !== dateB) return dateB - dateA;
-        return 0
-    }
-};
-let groceryListItems = foods.filter(obj => obj.amt > 0).sort(listSort.Popularity);
+
+
 
 const sortKey = page => `${page}Sort`;
 const showKey = page => `${page}Show`;
@@ -286,6 +251,56 @@ const showSelectedCats = (list, key) => {
     return list.filter(item => store[item.dept])
 }
 
+const listSort = key => {
+    let store = JSON.parse(window.sessionStorage.getItem(key));
+    let sort;
+    for (const cat in store){
+        if(store[cat]) sort = cat;
+    }
+    return sort 
+}
+
+const listSortFunc = {
+    ABC: function(a,b){
+        const valA = a.name.toLowerCase();
+        const valB = b.name.toLowerCase();
+        if(valA < valB) return -1;
+        if(valA > valB) return 1;
+        return 0
+    },
+    Cat: function(a,b){
+        const valA = a.dept.toLowerCase();
+        const valB = b.dept.toLowerCase();
+        const nameA = a.name.toLowerCase();
+        const nameB = b.name.toLowerCase();
+        if(valA < valB) return -1;
+        if(valA > valB) return 1;
+        if(valA == valB && nameA < nameB) return -1;
+        if(valA == valB && nameA > nameB) return 1;
+        return 0
+    },
+    Popularity: function(a,b){
+        const popA = a.added.length;
+        const popB = b.added.length;
+        const nameA = a.name.toLowerCase();
+        const nameB = b.name.toLowerCase();
+        if(popA !== popB) return popB - popA;
+        if(popA == popB && nameA < nameB) return -1;
+        if(popA == popB && nameA > nameB) return 1;
+        return 0
+    },
+    Date: function(a,b){
+        const dateA = a.added[0];
+        const dateB = b.added[0];
+        if(dateA !== dateB) return dateB - dateA;
+        return 0
+    }
+};
+
+
+let foods = foodItems.filter(obj => obj.amt > 0);
+let groceryListItems = foods.sort(listSortFunc.ABC);
+
 
 ///////////////////////
 // section renderers //
@@ -299,7 +314,8 @@ const renderSearchSortBlock = (parentDiv, page) =>{
 }
 
 const renderGroceryListBlock = function(parentDiv){
-    let dispList = showSelectedCats(groceryListItems, showKey("grocList"));
+    let dispList = showSelectedCats(groceryListItems, showKey("grocList"))
+        .sort(listSortFunc[listSort(sortKey("grocList"))]);
     const listUL = document.createElement("ul");
     listUL.classList.add("list");
     parentDiv.appendChild(listUL);
@@ -340,6 +356,8 @@ function interactSearchSortBlock(parentDiv, page){
         if(sortCats) { 
             toggleSortState(sortCats, page);
             updateSortStyle(sortCats, page);
+            groceryList.innerHTML = "";
+            renderGroceryListBlock(groceryList, page);
         }
         const filterShow = document.querySelector(".filter-show");
         const showCats = checkLineage(event, filterShow);
