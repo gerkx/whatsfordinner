@@ -1,7 +1,5 @@
 let foods = foodItems;
 
-
-let groceryListItems = foods.filter(obj => obj.amt > 0).sort(listSortCat);
 const sortCats = ["ABC", "Cat", "Date", "Popularity"];
 const showCats = [
                     "All", "bakery", "dairy", "frozen", "meat", 
@@ -17,43 +15,43 @@ const listFilter = document.querySelector("#listFilter");
 /////////////////////
 // food list stuff //
 /////////////////////
-function listSortABC(a,b){
-    const valA = a.name.toLowerCase();
-    const valB = b.name.toLowerCase();
-    if(valA < valB) return -1;
-    if(valA > valB) return 1;
-    return 0
-}
-
-function listSortCat(a,b){
-    const valA = a.dept.toLowerCase();
-    const valB = b.dept.toLowerCase();
-    if(valA < valB) return -1;
-    if(valA > valB) return 1;
-    if(valA == valB && a.name.toLowerCase() < b.name.toLowerCase()) return -1;
-    if(valA == valB && a.name.toLowerCase() > b.name.toLowerCase()) return 1;
-    return 0
-}
-
-function listSortPop(a,b){
-    const popA = a.added.length;
-    const popB = b.added.length;
-    const nameA = a.name.toLowerCase();
-    const nameB = b.name.toLowerCase();
-    if(popA !== popB) return popB - popA;
-    if(popA == popB && nameA < nameB) return -1;
-    if(popA == popB && nameA > nameB) return 1;
-    return 0
-}
-
-function listSortDate(a,b){
-    const dateA = a.added[0];
-    const dateB = b.added[0];
-    const nameA = a.name.toLowerCase();
-    const nameB = b.name.toLowerCase();
-    if(dateA !== dateB) return dateB - dateA;
-    return 0
-}
+const listSort = {
+    ABC: function(a,b){
+        const valA = a.name.toLowerCase();
+        const valB = b.name.toLowerCase();
+        if(valA < valB) return -1;
+        if(valA > valB) return 1;
+        return 0
+    },
+    Cat: function(a,b){
+        const valA = a.dept.toLowerCase();
+        const valB = b.dept.toLowerCase();
+        const nameA = a.name.toLowerCase();
+        const nameB = b.name.toLowerCase();
+        if(valA < valB) return -1;
+        if(valA > valB) return 1;
+        if(valA == valB && nameA < nameB) return -1;
+        if(valA == valB && nameA > nameB) return 1;
+        return 0
+    },
+    Popularity: function(a,b){
+        const popA = a.added.length;
+        const popB = b.added.length;
+        const nameA = a.name.toLowerCase();
+        const nameB = b.name.toLowerCase();
+        if(popA !== popB) return popB - popA;
+        if(popA == popB && nameA < nameB) return -1;
+        if(popA == popB && nameA > nameB) return 1;
+        return 0
+    },
+    Date: function(a,b){
+        const dateA = a.added[0];
+        const dateB = b.added[0];
+        if(dateA !== dateB) return dateB - dateA;
+        return 0
+    }
+};
+let groceryListItems = foods.filter(obj => obj.amt > 0).sort(listSort.Popularity);
 
 const sortKey = page => `${page}Sort`;
 const showKey = page => `${page}Show`;

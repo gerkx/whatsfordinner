@@ -5,7 +5,7 @@ let foodItems = [
         dept: "produce",
         amt: 1,
         checked: false,
-        added: [new Date(2018, 07, 03), Date(2018-08-02), Date(2018-08-01)],
+        added: [new Date(2018, 07, 03), new Date(2018, 08, 02), new Date(2018, 08, 01)],
     },
     {
         id: "02",
@@ -13,7 +13,7 @@ let foodItems = [
         dept: "bakery",
         amt: 1,
         checked: false,
-        added: [Date(2018-08-02), Date(2018-08-01)],
+        added: [new Date(2018, 08, 02), new Date(2018, 08, 01)],
     },
     {
         id: "03",
@@ -21,7 +21,7 @@ let foodItems = [
         dept: "dairy",
         amt: 1,
         checked: false,
-        added: [Date(2018-08-06), Date(2018-08-05), Date(2018-08-04), Date(2018-08-01)],
+        added: [new Date(2018, 08, 06), new Date(2018, 08, 05), new Date(2018, 08, 04), new Date(2018, 08, 01)],
     },
     {
         id: "04",
@@ -29,7 +29,7 @@ let foodItems = [
         dept: "meat",
         amt: 1,
         checked: false,
-        added: [Date(2018-08-01)],
+        added: [new Date(2018, 08, 01)],
     },
     {
         id: "05",
@@ -37,7 +37,7 @@ let foodItems = [
         dept: "sundries",
         amt: 1,
         checked: false,
-        added: [Date(2018-08-06), Date(2018-08-05), Date(2018-08-01)],
+        added: [new Date(2018, 08, 06), new Date(2018, 08, 05), new Date(2018, 08, 01)],
     },
     {
         id: "06",
@@ -45,7 +45,7 @@ let foodItems = [
         dept: "produce",
         amt: 1,
         checked: false,
-        added: [Date(2018-08-01)],
+        added: [new Date(2018, 08, 01)],
     },
     {
         id: "07",
@@ -53,7 +53,7 @@ let foodItems = [
         dept: "junk",
         amt: 1,
         checked: false,
-        added: [Date(2018-08-08), Date(2018-08-01)],
+        added: [new Date(2018, 08, 08), new Date(2018, 08, 01)],
     },
     {
         id: "08",
@@ -61,7 +61,7 @@ let foodItems = [
         dept: "sundries",
         amt: 1,
         checked: false,
-        added: [Date(2018-08-01)],
+        added: [new Date(2018, 08, 01)],
     },
     {
         id: "09",
@@ -69,7 +69,7 @@ let foodItems = [
         dept: "canned",
         amt: 1,
         checked: false,
-        added: [Date(2018-08-03), Date(2018-08-01)],
+        added: [new Date(2018, 08, 03), new Date(2018, 08, 01)],
     },
     {
         id: "10",
@@ -77,7 +77,7 @@ let foodItems = [
         dept: "dairy",
         amt: 1,
         checked: false,
-        added: [Date(2018-08-04), Date(2018-08-01)],
+        added: [new Date(2018, 08, 04), new Date(2018, 08, 01)],
     },
     {
         id: "11",
@@ -85,7 +85,7 @@ let foodItems = [
         dept: "meat",
         amt: 1,
         checked: false,
-        added: [Date(2018-08-07), Date(2018-08-01)],
+        added: [new Date(2018, 08, 07), new Date(2018, 08, 01)],
     },
     {
         id: "12",
@@ -93,11 +93,6 @@ let foodItems = [
         dept: "frozen",
         amt: 1,
         checked: false,
-        added: [Date(2018-08-01)],
+        added: [new Date(2018, 08, 01)],
     },
-
-
-
 ];
-
-console.log(foodItems[0].added[0])
