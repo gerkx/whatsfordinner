@@ -9,8 +9,7 @@ const showCats = [
 ///////////////
 // Page divs //
 ///////////////
-const groceryList = document.getElementById("groceryList");
-const listFilter = document.querySelector("#listFilter");
+
 
 /////////////////////
 // food list stuff //
@@ -380,8 +379,17 @@ function interactGroceryListBlock(parentDiv){
     })
 }
 
-renderSearchSortBlock(listFilter, "grocList");
-renderGroceryListBlock(groceryList);
-interactSearchSortBlock(listFilter, "grocList");
-interactGroceryListBlock(groceryList);
-renderCheckoutBtn();
+////////////////
+// full pages //
+////////////////
+const shoppingList = () => {
+    const groceryList = document.getElementById("groceryList");
+    const listFilter = document.querySelector("#listFilter");
+    renderSearchSortBlock(listFilter, "grocList");
+    renderGroceryListBlock(groceryList);
+    interactSearchSortBlock(listFilter, "grocList");
+    interactGroceryListBlock(groceryList);
+    renderCheckoutBtn();
+}
+
+shoppingList();
