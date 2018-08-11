@@ -5,6 +5,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
+const cors = require("cors");
 ///////////////////////////
 // internal dependencies //
 ///////////////////////////
@@ -19,6 +20,7 @@ const PORT = process.env.PORT || 3000;
 ////////////////
 // middleware //
 ////////////////
+app.use(cors());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
 app.use(express.static(__dirname + '/views'));
@@ -28,6 +30,9 @@ app.use(express.static(__dirname + '/public'));
 // routes //
 ////////////
 app.use("/api/food", foodRoutes);
+
+
+
 
 
 ///////////////

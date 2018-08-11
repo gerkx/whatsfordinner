@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>POST Test</title>
+</head>
+<body>
+
+
+    <label for="name">Name</label>
+    <input type="text" name="name" id="name">
+    <label for="dept">Department</label>
+    <input type="text" name="dept" id="dept">
+    <button type="submit" id="submit">Submit</button>
+
+
+<script>
+    const btn = document.querySelector("#submit");
+
+    btn.addEventListener("click", () => {
+        let name = document.querySelector("#name").value;
+        let dept = document.querySelector("#dept").value;
+        const url = 'http://localhost:3001/api/food';
+        let formBody = JSON.stringify({
+            name: name,
+            dept: dept
+        });
+        let data = new FormData();
+        
+        data.append("json", formBody);
+        fetch(url, {
+            method: 'POST',
+            body: formBody,
+            headers: { "Content-Type": "application/json" }
+        })
+        .then(res => alert(`boop ${res.body}`))
+        .catch(err => alert(err))
+    })
+       
+
+</script>
+
+
+</body>
+</html>

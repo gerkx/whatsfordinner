@@ -1,6 +1,9 @@
 const db = require('../models')
 
+
+
 exports.createFoodItem = (req, res) => {
+    console.log(req.body)
     db.FoodModel.create(req.body)
         .then(newItem => res.json(newItem))
         .catch(err => res.send(err))
