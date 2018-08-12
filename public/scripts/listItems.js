@@ -24,21 +24,32 @@ const showKey = page => `${page}Show`;
 const renderListItem = function(item){
     const listLI = document.createElement("li");
     listLI.classList.add("li");
-    listLI.classList.add(`li--${item.dept}`);
+    let store = JSON.parse(window.sessionStorage.getItem("bleep"));
+    let done;
+    if(store[item._id]) {
+        listLI.classList.add("li-done")
+        done = "txtbox--done";
+    }
+    else listLI.classList.add(`li--${item.dept}`);
+
+    
     listLI.id = item._id;
     listLI.innerHTML = `
     <div class="btn-box">
         <div class="ico ico--xs p-l-5"></div>
     </div>
-    <input type="text" name="uniqueID" disabled value="${item.name}" class="txtbox txtbox__title">
+    <input type="text" name="uniqueID" disabled value="${item.name}" class="txtbox txtbox__title ${done}">
     `
     return listLI;
 }
 
-const renderCheckBox = function(){
+const renderCheckBox = function(item){
     const checkBox = document.createElement("div");
     checkBox.classList.add("check-box");
     checkBox.classList.add("check-box--border-ice");
+    let store = JSON.parse(window.sessionStorage.getItem("bleep"));
+    console.log(item)
+    if(store[item._id]) checkBox.classList.add("check-box--chk-ice");
     return checkBox
 }
 
@@ -123,6 +134,8 @@ const createFilterStateSessionStorage = (key, arr) => {
         window.sessionStorage.setItem(key, JSON.stringify(obj));
     }
 }
+
+
 
 const toggleSortStyle = function(div, key){
     const seshStore = JSON.parse(window.sessionStorage.getItem(key));
@@ -326,7 +339,8 @@ const renderGroceryListBlock = function(parentDiv){
     const listUL = document.createElement("ul");
     listUL.classList.add("list");
     parentDiv.appendChild(listUL);
-
+    shopping.then(arr => arr.map(obj => obj._id))
+    .then(arr => createFilterStateSessionStorage("bleep", arr));
     shopping.then(data => {
         return showSelectedCats(data, showKey("grocList"))
         .sort(listSortFunc[listSort(sortKey("grocList"))])
@@ -334,7 +348,7 @@ const renderGroceryListBlock = function(parentDiv){
         parentDiv.firstElementChild.appendChild(renderListItem(item))
     })).then(() => {
         parentDiv.querySelectorAll(".btn-box")
-        .forEach(item => item.firstElementChild.appendChild(renderCheckBox()));
+        .forEach(item => item.firstElementChild.appendChild(renderCheckBox(item)));
     })
 
     
