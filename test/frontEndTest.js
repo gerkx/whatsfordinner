@@ -491,9 +491,9 @@ describe("#listSortCat", () => {
 describe("#listSortPop", () => {
     it("sorts by number of times added", () =>{
         const arr = [
-            {name: "Pat", added: [1,1]},
-            {name: "Amanda", added: [1,1]},
-            {name: "Laszlo", added: [1,1,1,1]}
+            {name: "Pat", addedDates: [1,1]},
+            {name: "Amanda", addedDates: [1,1]},
+            {name: "Laszlo", addedDates: [1,1,1,1]}
         ];
         const result = arr.sort(listSortFunc.Popularity);
         expect(result[0].name).to.eql("Laszlo");
@@ -505,9 +505,9 @@ describe("#listSortPop", () => {
 describe("#listSortDate", () => {
     it("sorts by date added", () => {
         const arr = [
-            {name: "Pat",added: [new Date(2018, 04, 01)]},
-            {name: "Amanda", added: [new Date(2018, 05, 02)]},
-            {name: "Laszlo", added: [new Date(2018, 07, 08)]}
+            {name: "Pat",addedDates: [new Date(2018, 04, 01)]},
+            {name: "Amanda", addedDates: [new Date(2018, 05, 02)]},
+            {name: "Laszlo", addedDates: [new Date(2018, 07, 08)]}
         ];
         const result = arr.sort(listSortFunc.Date);
         expect(result[0].name).to.eql("Laszlo");

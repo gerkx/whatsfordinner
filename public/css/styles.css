@@ -409,11 +409,17 @@
 .txt--sundries {
   color: #BFBD62; }
 
-.txt--canned {
+.txt--packaged {
   color: #1B699E; }
 
 .txt--junk {
   color: #5A427F; }
+
+.txt--beverages {
+  color: #5ba4d4; }
+
+.txt--baking {
+  color: #c7ab2c; }
 
 .txt--mint-hover {
   color: #10977C; }
@@ -466,11 +472,17 @@
 .fill--sundries {
   fill: #BFBD62; }
 
-.fill--canned {
+.fill--packaged {
   fill: #1B699E; }
 
 .fill--junk {
   fill: #5A427F; }
+
+.fill--beverages {
+  fill: #5ba4d4; }
+
+.fill--baking {
+  fill: #c7ab2c; }
 
 .fill--mint-hover {
   fill: #10977C; }
@@ -523,11 +535,17 @@
 .bg--sundries {
   background: #BFBD62; }
 
-.bg--canned {
+.bg--packaged {
   background: #1B699E; }
 
 .bg--junk {
   background: #5A427F; }
+
+.bg--beverages {
+  background: #5ba4d4; }
+
+.bg--baking {
+  background: #c7ab2c; }
 
 .bg--mint-hover {
   background: #10977C; }
@@ -614,11 +632,17 @@
 .li--sundries {
   background: #BFBD62; }
 
-.li--canned {
+.li--packaged {
   background: #1B699E; }
 
 .li--junk {
   background: #5A427F; }
+
+.li--beverages {
+  background: #5ba4d4; }
+
+.li--baking {
+  background: #c7ab2c; }
 
 .li--mint-hover {
   background: #10977C; }
@@ -819,12 +843,20 @@
   background: #BFBD62;
   color: #f7f7f7; }
 
-.btn--canned {
+.btn--packaged {
   background: #1B699E;
   color: #f7f7f7; }
 
 .btn--junk {
   background: #5A427F;
+  color: #f7f7f7; }
+
+.btn--beverages {
+  background: #5ba4d4;
+  color: #f7f7f7; }
+
+.btn--baking {
+  background: #c7ab2c;
   color: #f7f7f7; }
 
 .btn--mint-hover {
@@ -947,11 +979,17 @@
 .ico--sundries {
   fill: #BFBD62; }
 
-.ico--canned {
+.ico--packaged {
   fill: #1B699E; }
 
 .ico--junk {
   fill: #5A427F; }
+
+.ico--beverages {
+  fill: #5ba4d4; }
+
+.ico--baking {
+  fill: #c7ab2c; }
 
 .ico--mint-hover {
   fill: #10977C; }
@@ -1542,10 +1580,10 @@
 .check-box--chk-sundries {
   background: #BFBD62; }
 
-.check-box--border-canned {
+.check-box--border-packaged {
   border: 2px solid #1B699E; }
 
-.check-box--chk-canned {
+.check-box--chk-packaged {
   background: #1B699E; }
 
 .check-box--border-junk {
@@ -1553,6 +1591,18 @@
 
 .check-box--chk-junk {
   background: #5A427F; }
+
+.check-box--border-beverages {
+  border: 2px solid #5ba4d4; }
+
+.check-box--chk-beverages {
+  background: #5ba4d4; }
+
+.check-box--border-baking {
+  border: 2px solid #c7ab2c; }
+
+.check-box--chk-baking {
+  background: #c7ab2c; }
 
 .check-box--border-mint-hover {
   border: 2px solid #10977C; }

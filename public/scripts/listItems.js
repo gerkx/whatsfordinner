@@ -3,7 +3,8 @@
 const sortCats = ["ABC", "Cat", "Date", "Popularity"];
 const showCats = [
                     "All", "bakery", "dairy", "frozen", "meat", 
-                    "packaged", "produce", "sundries"
+                    "packaged", "produce", "sundries", "baking",
+                    "beverages"
                 ];
 
 ///////////////
@@ -24,7 +25,7 @@ const renderListItem = function(item){
     const listLI = document.createElement("li");
     listLI.classList.add("li");
     listLI.classList.add(`li--${item.dept}`);
-    listLI.id = item.id;
+    listLI.id = item._id;
     listLI.innerHTML = `
     <div class="btn-box">
         <div class="ico ico--xs p-l-5"></div>
@@ -83,7 +84,7 @@ function listCheckClassToggles(target, obj){
         .classList.toggle("check-box--chk-ice");
     target.querySelector(".txtbox")
         .classList.toggle("txtbox--done");
-    target.classList.toggle(`li--${obj.dept}`);
+    obj.then(data => target.classList.toggle(`li--${data.dept}`));
     target.classList.toggle("li-done");
     return target
 }
@@ -279,8 +280,8 @@ const listSortFunc = {
         return 0
     },
     Popularity: function(a,b){
-        const popA = a.added.length;
-        const popB = b.added.length;
+        const popA = a.addedDates.length;
+        const popB = b.addedDates.length;
         const nameA = a.name.toLowerCase();
         const nameB = b.name.toLowerCase();
         if(popA !== popB) return popB - popA;
@@ -289,12 +290,21 @@ const listSortFunc = {
         return 0
     },
     Date: function(a,b){
-        const dateA = a.added[0];
-        const dateB = b.added[0];
+        const dateA = a.addedDates[0];
+        const dateB = b.addedDates[0];
         if(dateA !== dateB) return dateB - dateA;
         return 0
     }
 };
+
+function fetchQuery(url) {
+    const res = fetch(url)
+        .then(res => res.json())
+    return res
+}
+
+const shopping = fetchQuery('http://localhost:3000/api/food');
+
 
 
 let foods = foodItems.filter(obj => obj.amt > 0);
@@ -313,16 +323,21 @@ const renderSearchSortBlock = (parentDiv, page) =>{
 }
 
 const renderGroceryListBlock = function(parentDiv){
-    let dispList = showSelectedCats(groceryListItems, showKey("grocList"))
-        .sort(listSortFunc[listSort(sortKey("grocList"))]);
     const listUL = document.createElement("ul");
     listUL.classList.add("list");
     parentDiv.appendChild(listUL);
-    dispList.forEach(function(item){
-        parentDiv.firstElementChild.appendChild(renderListItem(item));
-    });
-    parentDiv.querySelectorAll(".btn-box")
+
+    shopping.then(data => {
+        return showSelectedCats(data, showKey("grocList"))
+        .sort(listSortFunc[listSort(sortKey("grocList"))])
+    }).then(list => list.forEach(item => {
+        parentDiv.firstElementChild.appendChild(renderListItem(item))
+    })).then(() => {
+        parentDiv.querySelectorAll(".btn-box")
         .forEach(item => item.firstElementChild.appendChild(renderCheckBox()));
+    })
+
+    
 }
 
 const renderCheckoutBtn = () =>  {
@@ -373,9 +388,17 @@ function interactGroceryListBlock(parentDiv){
     parentDiv.addEventListener("click", function(event){
         const list = parentDiv.querySelector(".list");
         let target = checkLineage(event, list);
-            const foodObj = groceryListItems.find(obj => obj.id === target.id);
+
+        const foodObj = shopping.then(arr => arr.find(obj => obj._id === target.id ))
+
+            // const foodObj = groceryListItems.find(obj => obj.id === target.id);
             listCheckClassToggles(target, foodObj);
             foodObjCheckToggle(foodObj);
+
+        // shopping.then(arr => arr.find(obj => obj.id === target.id))
+        //     .then(obj => listCheckClassToggles(target, obj));
+
+        // foodObjCheckToggle(foodObj);
     })
 }
 

@@ -66,7 +66,7 @@ let foodItems = [
     {
         id: "09",
         name: "pasta",
-        dept: "canned",
+        dept: "packaged",
         amt: 1,
         checked: false,
         added: [new Date(2018, 08, 03), new Date(2018, 08, 01)],
