@@ -5,6 +5,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
+const compression = require('compression');
 const cors = require("cors");
 ///////////////////////////
 // internal dependencies //
@@ -21,6 +22,7 @@ const PORT = process.env.PORT || 3000;
 // middleware //
 ////////////////
 app.use(cors());
+app.use(compression());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
 app.use(express.static(__dirname + '/views'));
