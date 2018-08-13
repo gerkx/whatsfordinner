@@ -33,6 +33,8 @@ app.use(express.static(__dirname + '/public'));
 ////////////
 app.use("/api/food", foodRoutes);
 
+app.get("/", (req, res) => res.sendFile("/public/html/shoppingList.html", {"root": __dirname}));
+
 
 
 

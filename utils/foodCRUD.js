@@ -15,6 +15,12 @@ exports.getAllFoodItems = (req, res) => {
         .catch(err => res.send(err))
 }
 
+exports.getGroceryList = (req, res) => {
+    db.FoodModel.find( { "amt": { $gt: 0 } } )
+        .then(foundItems => res.status(201).json(foundItems))
+        .catch(err => res.send(err))
+}
+
 exports.getOneFoodItem = (req, res) => {
     db.FoodModel.findById(req.params.id)
         .then(foundItem => res.json(foundItem))

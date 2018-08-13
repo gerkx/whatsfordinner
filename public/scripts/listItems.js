@@ -1,4 +1,4 @@
-
+const baseURL = 'http://localhost:3000';
 
 const sortCats = ["ABC", "Cat", "Date", "Popularity"];
 const showCats = [
@@ -24,7 +24,7 @@ const showKey = page => `${page}Show`;
 const renderListItem = function(item){
     const listLI = document.createElement("li");
     listLI.classList.add("li");
-    let store = JSON.parse(window.sessionStorage.getItem("bleep"));
+    let store = JSON.parse(window.sessionStorage.getItem("grocListCart"));
     let done;
     if(store[item._id]) {
         listLI.classList.add("li-done")
@@ -47,9 +47,9 @@ const renderCheckBox = function(item){
     const checkBox = document.createElement("div");
     checkBox.classList.add("check-box");
     checkBox.classList.add("check-box--border-ice");
-    let store = JSON.parse(window.sessionStorage.getItem("bleep"));
-    console.log(item)
-    if(store[item._id]) checkBox.classList.add("check-box--chk-ice");
+    let store = JSON.parse(window.sessionStorage.getItem("grocListCart"));
+    const parent = item.parentElement.id;
+    if(store[parent]) checkBox.classList.add("check-box--chk-ice")
     return checkBox
 }
 
@@ -60,12 +60,22 @@ const renderCheckoutButton = function(){
     return btn;
 }
 
-const resetPurchasedItems = function(list){
-    list.filter(obj => obj.checked == true)
-        .forEach(obj => {
-            obj.amt = 0;
-            obj.checked = false;
-        });
+const resetPurchasedItemsAmt = function(list){
+    const store = JSON.parse(window.sessionStorage.getItem("grocListCart"));
+    for(const id in store){
+        if(store[id]){
+            const idx = list.map(item => item._id).indexOf(id);
+            list.splice(idx, 1)
+            fetch(`${baseURL}/api/food/${id}`, {
+                method: 'PUT',
+                body: JSON.stringify({amt: 0}),
+                headers: { "Content-Type": "application/json" }
+            }).catch(err => console.log(err));
+            delete store[id]
+            const newStore = JSON.stringify(store);
+            window.sessionStorage.setItem("grocListCart", newStore)
+        }
+    }
     return list
 }
 
@@ -235,6 +245,14 @@ const toggleSortState = (target, page) => {
     window.sessionStorage.setItem(key, store)
 }
 
+const toggleCartState = target => {
+    const id = target.id;
+    const state = JSON.parse(window.sessionStorage.getItem("grocListCart"));
+    state[id] ? state[id] = false : state[id] = true;
+    const newState = JSON.stringify(state)
+    window.sessionStorage.setItem("grocListCart", newState)
+}
+
 const toggleShowState = (target, page) => {
     let key = showKey(page);
     const prevState = JSON.parse(window.sessionStorage
@@ -316,7 +334,7 @@ function fetchQuery(url) {
     return res
 }
 
-const shopping = fetchQuery('http://localhost:3000/api/food');
+const shopping = fetchQuery(`${baseURL}/api/food/grocerylist`);
 
 
 
@@ -340,7 +358,7 @@ const renderGroceryListBlock = function(parentDiv){
     listUL.classList.add("list");
     parentDiv.appendChild(listUL);
     shopping.then(arr => arr.map(obj => obj._id))
-    .then(arr => createFilterStateSessionStorage("bleep", arr));
+    .then(arr => createFilterStateSessionStorage("grocListCart", arr));
     shopping.then(data => {
         return showSelectedCats(data, showKey("grocList"))
         .sort(listSortFunc[listSort(sortKey("grocList"))])
@@ -349,18 +367,15 @@ const renderGroceryListBlock = function(parentDiv){
     })).then(() => {
         parentDiv.querySelectorAll(".btn-box")
         .forEach(item => item.firstElementChild.appendChild(renderCheckBox(item)));
-    })
-
-    
+    }) 
 }
 
 const renderCheckoutBtn = () =>  {
     const checkoutBtn = document.querySelector(".checkout");
-
     checkoutBtn.appendChild(renderCheckoutButton());
     checkoutBtn.addEventListener("click", function(){
         const listUL = document.querySelector(".list")
-        resetPurchasedItems(groceryListItems);
+        shopping.then(arr => resetPurchasedItemsAmt(arr));
         removePurchasedItemsFromDisplay(listUL);
     });
 }
@@ -401,18 +416,10 @@ function interactSearchSortBlock(parentDiv, page){
 function interactGroceryListBlock(parentDiv){
     parentDiv.addEventListener("click", function(event){
         const list = parentDiv.querySelector(".list");
-        let target = checkLineage(event, list);
-
+        const target = checkLineage(event, list);
         const foodObj = shopping.then(arr => arr.find(obj => obj._id === target.id ))
-
-            // const foodObj = groceryListItems.find(obj => obj.id === target.id);
-            listCheckClassToggles(target, foodObj);
-            foodObjCheckToggle(foodObj);
-
-        // shopping.then(arr => arr.find(obj => obj.id === target.id))
-        //     .then(obj => listCheckClassToggles(target, obj));
-
-        // foodObjCheckToggle(foodObj);
+        listCheckClassToggles(target, foodObj);
+        toggleCartState(target);
     })
 }
 
