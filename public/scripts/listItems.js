@@ -2,21 +2,15 @@ const baseURL = 'http://localhost:3000';
 
 const sortCats = ["ABC", "Cat", "Date", "Popularity"];
 const showCats = [
-                    "All", "bakery", "dairy", "frozen", "meat", 
-                    "packaged", "produce", "sundries", "baking",
-                    "beverages"
+                    "All", "bakery", "baking",
+                    "beverages", "dairy", "frozen", "junk", "meat", 
+                    "packaged", "produce", "sundries"
                 ];
-
-///////////////
-// Page divs //
-///////////////
 
 
 /////////////////////
 // food list stuff //
 /////////////////////
-
-
 
 const sortKey = page => `${page}Sort`;
 const showKey = page => `${page}Show`;
@@ -65,10 +59,11 @@ const resetPurchasedItemsAmt = function(list){
     for(const id in store){
         if(store[id]){
             const idx = list.map(item => item._id).indexOf(id);
+            const purchasedDates = list[idx].purchasedDates;
             list.splice(idx, 1)
             fetch(`${baseURL}/api/food/${id}`, {
                 method: 'PUT',
-                body: JSON.stringify({amt: 0}),
+                body: JSON.stringify({amt: 0,  }),
                 headers: { "Content-Type": "application/json" }
             }).catch(err => console.log(err));
             delete store[id]
@@ -127,13 +122,6 @@ const renderSearchBlock = () => {
     return div
 }
 
-const groceryItemStatus =  function(event){
-    let target = checkLineage(event, this);
-    const foodObj = groceryListItems.find(obj => obj.id === target.id);
-    listCheckClassToggles(target, foodObj);
-    foodObjCheckToggle(foodObj);
-}
-
 const createFilterStateSessionStorage = (key, arr) => {
     if(!window.sessionStorage[key]){
         let obj = arr.reduce((acc, item) => {
@@ -144,8 +132,6 @@ const createFilterStateSessionStorage = (key, arr) => {
         window.sessionStorage.setItem(key, JSON.stringify(obj));
     }
 }
-
-
 
 const toggleSortStyle = function(div, key){
     const seshStore = JSON.parse(window.sessionStorage.getItem(key));
@@ -334,14 +320,6 @@ function fetchQuery(url) {
     return res
 }
 
-const shopping = fetchQuery(`${baseURL}/api/food/grocerylist`);
-
-
-
-let foods = foodItems.filter(obj => obj.amt > 0);
-let groceryListItems = foods.sort(listSortFunc.ABC);
-
-
 ///////////////////////
 // section renderers //
 ///////////////////////
@@ -426,7 +404,10 @@ function interactGroceryListBlock(parentDiv){
 ////////////////
 // full pages //
 ////////////////
+let shopping;
+
 const shoppingList = () => {
+    shopping = fetchQuery(`${baseURL}/api/food/grocerylist`);
     const groceryList = document.getElementById("groceryList");
     const listFilter = document.querySelector("#listFilter");
     renderSearchSortBlock(listFilter, "grocList");
