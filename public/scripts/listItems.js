@@ -111,13 +111,16 @@ const renderSearchInput = placeholder => {
     search.classList.add("txtbox--search");
     search.classList.add("p-l-20");
     search.placeholder = placeholder;
+    search.list = "searchList";
     return search
 }
 
 const renderSearchBlock = () => {
     const div = document.createElement("div");
     div.classList.add("search-box");
-    div.appendChild(renderSearchInput("new item"));
+    // div.appendChild(renderSearchInput("new item"));
+    div.innerHTML = '<input class="txtbox txtbox--search p-l-20" placeholder="new item" list="searchlist">'
+    div.insertAdjacentHTML("beforeend", '<datalist id="searchlist"/>')
     div.insertAdjacentHTML("beforeend",svg.search());
     return div
 }
@@ -320,6 +323,22 @@ function fetchQuery(url) {
     return res
 }
 
+function escapeHtml(string){
+    let div = document.createElement('div');
+    div.appendChild(document.createTextNode(string));
+    return clean = div.innerHTML;
+}
+
+function createSuggestions(datalist, arr){
+    const list = document.querySelector(datalist);
+    list.innerHTML = "";
+    console.log(arr)
+    arr.forEach(item => {
+        list.insertAdjacentHTML("beforeend", `<option value = "${item}">`)
+    })
+    return list
+}
+
 ///////////////////////
 // section renderers //
 ///////////////////////
@@ -335,9 +354,9 @@ const renderGroceryListBlock = function(parentDiv){
     const listUL = document.createElement("ul");
     listUL.classList.add("list");
     parentDiv.appendChild(listUL);
-    shopping.then(arr => arr.map(obj => obj._id))
+    onList.then(arr => arr.map(obj => obj._id))
     .then(arr => createFilterStateSessionStorage("grocListCart", arr));
-    shopping.then(data => {
+    onList.then(data => {
         return showSelectedCats(data, showKey("grocList"))
         .sort(listSortFunc[listSort(sortKey("grocList"))])
     }).then(list => list.forEach(item => {
@@ -353,7 +372,7 @@ const renderCheckoutBtn = () =>  {
     checkoutBtn.appendChild(renderCheckoutButton());
     checkoutBtn.addEventListener("click", function(){
         const listUL = document.querySelector(".list")
-        shopping.then(arr => resetPurchasedItemsAmt(arr));
+        onList.then(arr => resetPurchasedItemsAmt(arr));
         removePurchasedItemsFromDisplay(listUL);
     });
 }
@@ -388,6 +407,18 @@ function interactSearchSortBlock(parentDiv, page){
             groceryList.innerHTML = "";
             renderGroceryListBlock(groceryList, page);
         }
+        const searchBox = document.querySelector(".search-box");
+        const inputTxt = checkLineage(event, searchBox);
+        if(inputTxt) inputTxt.addEventListener("keyup", () => {
+            let txt = inputTxt.value;
+            txt = escapeHtml(txt)
+            console.log(txt)
+            notOnList.then(data => data
+                .filter(obj => obj.name.includes(txt)))
+                .then(matches => matches.map(match => match.name))
+                .then(map => createSuggestions("#searchlist", map))
+            
+        })
     });
 }
 
@@ -395,7 +426,7 @@ function interactGroceryListBlock(parentDiv){
     parentDiv.addEventListener("click", function(event){
         const list = parentDiv.querySelector(".list");
         const target = checkLineage(event, list);
-        const foodObj = shopping.then(arr => arr.find(obj => obj._id === target.id ))
+        const foodObj = onList.then(arr => arr.find(obj => obj._id === target.id ))
         listCheckClassToggles(target, foodObj);
         toggleCartState(target);
     })
@@ -404,10 +435,12 @@ function interactGroceryListBlock(parentDiv){
 ////////////////
 // full pages //
 ////////////////
-let shopping;
+let onList;
+let notOnList;
 
 const shoppingList = () => {
-    shopping = fetchQuery(`${baseURL}/api/food/grocerylist`);
+    onList = fetchQuery(`${baseURL}/api/food/?amt=>0`);
+    notOnList = fetchQuery(`${baseURL}/api/food?amt=<1`);
     const groceryList = document.getElementById("groceryList");
     const listFilter = document.querySelector("#listFilter");
     renderSearchSortBlock(listFilter, "grocList");

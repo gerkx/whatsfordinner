@@ -1169,6 +1169,18 @@
   .txtbox-rec--edit:focus {
     border: 1px solid #05D0A8; }
 
+#searchlist {
+  color: purple; }
+
+option {
+  background: orange; }
+
+input::-webkit-calendar-picker-indicator {
+  display: none; }
+
+input:-webkit-list {
+  -webkit-text-fill-color: red; }
+
 .search {
   display: flex;
   display: -webkit-box;

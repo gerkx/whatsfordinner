@@ -1,5 +1,5 @@
 const db = require('../models')
-
+const MongoQS = require('mongo-querystring');
 
 
 exports.createFoodItem = (req, res) => {
@@ -10,7 +10,9 @@ exports.createFoodItem = (req, res) => {
 }
 
 exports.getAllFoodItems = (req, res) => {
-    db.FoodModel.find()
+    const qs = new MongoQS
+    const parms = qs.parse(req.query);
+    db.FoodModel.find(parms)
         .then(foundItems => res.status(201).json(foundItems))
         .catch(err => res.send(err))
 }
