@@ -332,7 +332,6 @@ function escapeHtml(string){
 function createSuggestions(datalist, arr){
     const list = document.querySelector(datalist);
     list.innerHTML = "";
-    console.log(arr)
     arr.forEach(item => {
         list.insertAdjacentHTML("beforeend", `<option value = "${item}">`)
     })
@@ -411,8 +410,7 @@ function interactSearchSortBlock(parentDiv, page){
         const inputTxt = checkLineage(event, searchBox);
         if(inputTxt) inputTxt.addEventListener("keyup", () => {
             let txt = inputTxt.value;
-            txt = escapeHtml(txt)
-            console.log(txt)
+            txt = escapeHtml(txt);
             notOnList.then(data => data
                 .filter(obj => obj.name.includes(txt)))
                 .then(matches => matches.map(match => match.name))
