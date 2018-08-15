@@ -421,28 +421,32 @@ function interactSearchSortBlock(parentDiv, page){
         const addItem = checkLineage(event, plusIco);
         if(addItem){
             let input = searchBox.firstElementChild.value.toLowerCase();
-            const notListIndex = promListIndex(notOnList, input);
-            const listIndex = promListIndex(onList, input);
-            if(input.length > 0) {
-                listIndex.then(listIdx => {
-                    if(listIdx == -1){
-                        notListIndex.then(notListIdx => {
-                            if(notListIdx != -1){
-                                console.log("add", input)
-                                addToList(notOnList, notListIdx);
-                                groceryList.innerHTML = "";
-                                renderGroceryListBlock(groceryList, page);
-                            }else{
-                                console.log("create", input)
-                            }
-                        })
-                    }else{
-                        alert(`${capFirstLetter(input)} is already on the list!`)
-                    }
-            })
-            }
+            textEntry(input, groceryList, page)
         }
     });
+}
+
+function textEntry(str, div, pg){
+    lcStr = str.toLowerCase()
+    const notListIndex = promListIndex(notOnList, lcStr);
+    const listIndex = promListIndex(onList, lcStr);
+    if(lcStr.length > 0) {
+        listIndex.then(listIdx => {
+            if(listIdx == -1){
+                notListIndex.then(notListIdx => {
+                    if(notListIdx != -1){
+                        addToList(notOnList, notListIdx);
+                        div.innerHTML = "";
+                        renderGroceryListBlock(div, pg);
+                    }else{
+                        console.log("create", lcStr)
+                    }
+                })
+            }else{
+                alert(`${capFirstLetter(str)} is already on the list!`)
+            }
+        })
+    }
 }
 
 function promListIndex(prom, str){
@@ -470,7 +474,6 @@ function addToList(notListProm, index){
             headers: { "Content-Type": "application/json" }
         })
     })
-    
 }
 
 function interactGroceryListBlock(parentDiv){
