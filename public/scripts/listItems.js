@@ -60,6 +60,11 @@ const resetPurchasedItemsAmt = function(list){
         if(store[id]){
             const idx = list.map(item => item._id).indexOf(id);
             const purchasedDates = list[idx].purchasedDates;
+            const item = list[idx]
+            notOnList.then(newList => {
+                // console.log(item)
+                newList.unshift(item);
+            });
             list.splice(idx, 1)
             fetch(`${baseURL}/api/food/${id}`, {
                 method: 'PUT',
@@ -310,8 +315,8 @@ const listSortFunc = {
         return 0
     },
     Date: function(a,b){
-        const dateA = a.addedDates[0];
-        const dateB = b.addedDates[0];
+        const dateA = new Date(a.addedDates[0]).getTime();
+        const dateB = new Date(b.addedDates[0]).getTime();
         if(dateA !== dateB) return dateB - dateA;
         return 0
     }
@@ -408,29 +413,39 @@ function interactSearchSortBlock(parentDiv, page){
         }
         const searchBox = document.querySelector(".search-box");
         const inputTxt = checkLineage(event, searchBox);
-        if(inputTxt) inputTxt.addEventListener("keyup", () => {
-            let txt = inputTxt.value;
-            txt = escapeHtml(txt);
-            notOnList.then(data => data
-                .filter(obj => obj.name.includes(txt)))
-                .then(matches => matches.map(match => match.name))
-                .then(map => createSuggestions("#searchlist", map))
-            
-        });
+        if(inputTxt) {
+            inputTxt.addEventListener("keyup", (e) => {
+                let txt = inputTxt.value.toLowerCase();
+                txt = escapeHtml(txt);
+                notOnList.then(data => data
+                    .filter(obj => obj.name.includes(txt)))
+                    .then(matches => matches.map(match => match.name))
+                    .then(map => createSuggestions("#searchlist", map))
+                if(!e.keyCode || e.keyCode === 13){
+                    let txt = inputTxt.value;
+                    txt = escapeHtml(txt);
+                    textEntry(txt, groceryList, page)
+                    inputTxt.value = ""
+                }
+            });
+        }
         const plusIco = document.querySelector("#add");
         const addItem = checkLineage(event, plusIco);
         if(addItem){
-            let input = searchBox.firstElementChild.value.toLowerCase();
-            textEntry(input, groceryList, page)
+            let input = searchBox.firstElementChild;
+            let str = input.value.toLowerCase();
+            input.value = "";
+            textEntry(str, groceryList, page)
         }
     });
 }
 
 function textEntry(str, div, pg){
-    lcStr = str.toLowerCase()
-    const notListIndex = promListIndex(notOnList, lcStr);
-    const listIndex = promListIndex(onList, lcStr);
-    if(lcStr.length > 0) {
+    let txt = str.toLowerCase();
+    txt = escapeHtml(txt);
+    const notListIndex = promListIndex(notOnList, txt);
+    const listIndex = promListIndex(onList, txt);
+    if(txt.length > 0) {
         listIndex.then(listIdx => {
             if(listIdx == -1){
                 notListIndex.then(notListIdx => {
@@ -439,7 +454,7 @@ function textEntry(str, div, pg){
                         div.innerHTML = "";
                         renderGroceryListBlock(div, pg);
                     }else{
-                        console.log("create", lcStr)
+                        console.log("create", txt)
                     }
                 })
             }else{
