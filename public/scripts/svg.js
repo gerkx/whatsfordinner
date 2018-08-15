@@ -71,5 +71,14 @@ let svg = {
             </svg>
         </div>
         `
+    },
+    plus: () => {
+        return `
+        <div class="ico ico--med ico--ice m-l-10 m-r-10 p-t-5" id="add">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50">               
+                <path d="M41.9 21H29V8.1c0-1.7-1.4-3-3-3h-2c-1.6 0-3 1.4-3 3V21H8.1c-1.7 0-3 1.4-3 3v2c0 1.6 1.4 3 3 3H21v12.9c0 1.7 1.4 3 3 3h2c1.7 0 3-1.4 3-3V29H42c1.7 0 3-1.4 3-3v-2C45 22.4 43.6 21 41.9 21z"/>
+            </svg>
+        </div>
+        `
     }
 }

@@ -121,7 +121,7 @@ const renderSearchBlock = () => {
     // div.appendChild(renderSearchInput("new item"));
     div.innerHTML = '<input class="txtbox txtbox--search p-l-20" placeholder="new item" list="searchlist">'
     div.insertAdjacentHTML("beforeend", '<datalist id="searchlist"/>')
-    div.insertAdjacentHTML("beforeend",svg.search());
+    div.insertAdjacentHTML("beforeend",svg.plus());
     return div
 }
 
@@ -169,8 +169,8 @@ const updateShowStyle = function(div, page){
     return arr
 }
 
-const capFirstLetter = str => {
-    return str.charAt(0).toUpperCase + str.slice(1);
+function capFirstLetter(str){
+    return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
 const renderFilterSortSection = (page, arr) => {
@@ -416,8 +416,61 @@ function interactSearchSortBlock(parentDiv, page){
                 .then(matches => matches.map(match => match.name))
                 .then(map => createSuggestions("#searchlist", map))
             
-        })
+        });
+        const plusIco = document.querySelector("#add");
+        const addItem = checkLineage(event, plusIco);
+        if(addItem){
+            let input = searchBox.firstElementChild.value.toLowerCase();
+            const notListIndex = promListIndex(notOnList, input);
+            const listIndex = promListIndex(onList, input);
+            if(input.length > 0) {
+                listIndex.then(listIdx => {
+                    if(listIdx == -1){
+                        notListIndex.then(notListIdx => {
+                            if(notListIdx != -1){
+                                console.log("add", input)
+                                addToList(notOnList, notListIdx);
+                                groceryList.innerHTML = "";
+                                renderGroceryListBlock(groceryList, page);
+                            }else{
+                                console.log("create", input)
+                            }
+                        })
+                    }else{
+                        alert(`${capFirstLetter(input)} is already on the list!`)
+                    }
+            })
+            }
+        }
     });
+}
+
+function promListIndex(prom, str){
+    return prom.then(arr => arr.map(obj => obj.name))
+    .then(arr => arr.indexOf(str))
+}
+
+function addToList(notListProm, index){
+    notListProm.then(arr => {
+        const item = arr[index];
+        const id = item._id;
+        item.amt += 1;
+        item.addedDates.unshift((new Date()).toJSON());
+        arr.splice(index, 1);
+        onList.then(newList => {
+            newList.unshift(item);
+        });
+        const store = JSON.parse(window.sessionStorage.getItem("grocListCart"));
+        store[id] = false;
+        const newStore = JSON.stringify(store)
+        window.sessionStorage.setItem("grocListCart", newStore);
+        fetch(`${baseURL}/api/food/${id}`, {
+            method: 'PUT',
+            body: JSON.stringify({amt: item.amt, addedDates: item.addedDates}),
+            headers: { "Content-Type": "application/json" }
+        })
+    })
+    
 }
 
 function interactGroceryListBlock(parentDiv){
