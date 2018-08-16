@@ -25,8 +25,6 @@ const renderListItem = function(item){
         done = "txtbox--done";
     }
     else listLI.classList.add(`li--${item.dept}`);
-
-    
     listLI.id = item._id;
     listLI.innerHTML = `
     <div class="btn-box">
@@ -37,6 +35,47 @@ const renderListItem = function(item){
     return listLI;
 }
 
+const renderNewItem = function(name){
+    const root = document.querySelector("#root");
+    const markup = `
+    <div class="rec-overlays">
+    <div class="lock"></div>
+    <div class="rec-groc-pop-alt rec-groc-pop--ice" id="newItemPop">
+        <div class="li-banner bg--mint popup-header">
+
+            <input type="text" name="newItemName" value="${name}" id="newTextInput" class="txtbox p-l-10 p-t-5 p-b-5">
+        </div>
+        <div class="food-details">
+            <span class="detail m-t-5">Category:</span>
+            <div class="detail">
+                <select class="btn btn--mint btn--drop">
+                    <option value = "produce">Produce</option>
+                    <option value = "meat"/>Meat</option>
+                </select>
+
+            </div>
+        </div>
+        <div class="button-row ">
+            <div class="btn btn--mint m-20">Save</div>
+            ${svg.trash("ico ico--slate ico--sm list-trash")}
+        </div>
+    </div>
+    </div>
+    `
+    root.insertAdjacentHTML("afterbegin", markup)
+}
+
+const interactNewItem = () => {
+    const overlay = document.querySelector(".rec-overlays");
+    const popup = document.querySelector("#newItemPop");
+    popup.addEventListener("click", e => {
+        const cat = document.querySelector(".btn--drop")
+        if(e.target == cat)console.log(cat.value);
+
+    })
+
+
+}
 const renderCheckBox = function(item){
     const checkBox = document.createElement("div");
     checkBox.classList.add("check-box");
@@ -368,7 +407,9 @@ const renderGroceryListBlock = function(parentDiv){
     })).then(() => {
         parentDiv.querySelectorAll(".btn-box")
         .forEach(item => item.firstElementChild.appendChild(renderCheckBox(item)));
-    }) 
+    })
+    renderNewItem("boop");
+    interactNewItem();
 }
 
 const renderCheckoutBtn = () =>  {

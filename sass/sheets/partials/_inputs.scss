@@ -151,13 +151,27 @@
 }
 
 option{
-    background: orange;
+    background: map-get($colors, ice);
+    color: map-get($colors, slate);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: .9em;
+    border: none;
+    outline: none;
+    &:checked{
+        display: none;
+    }
+    &:focus{
+        outline: none;
+        border: none;
+    }
 }
-
 input::-webkit-calendar-picker-indicator {
     display: none;
   }
 
-input:-webkit-list {
-    -webkit-text-fill-color:red;
+
+select{
+    border: 0px solid map-get($colors, mint);
+    &:focus{ outline: none;}
 }
