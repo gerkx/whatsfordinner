@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 mongoose.set('debug', true);
 
-const dbURL = process.env.DATABASEURL || 'mongodb://localhost:27017/wfd_v01';
+const dbURL = process.env.DATABASEURL || 'mongodb://gerkx:iloveamanda23@ds125352.mlab.com:25352/wfdbeta';
 mongoose.connect(dbURL, { useNewUrlParser: true })
 
 mongoose.Promise = Promise;

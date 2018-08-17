@@ -3,6 +3,8 @@ const foodFile = './foodItemSeed.csv';
 const mongoose = require('mongoose');
 const db = require('../models');
 
+// module.exports = 
+
 const seedDB = (model, file) => {
     db[model].remove({}, err => {
         if(err) console.log(err);

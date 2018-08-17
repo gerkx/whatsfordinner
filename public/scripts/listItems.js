@@ -426,6 +426,7 @@ const listSortFunc = {
 function fetchQuery(url) {
     const res = fetch(url)
         .then(res => res.json())
+        .catch(err => console.log(err))
     return res
 }
 
@@ -629,3 +630,10 @@ const shoppingList = () => {
 }
 
 shoppingList();
+
+function seeder(){
+    let btn = document.querySelector("#seed");
+    btn.addEventListener("click", () =>{
+        fetchQuery(`${baseURL}/seed`);
+    })
+}
