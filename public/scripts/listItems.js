@@ -7,7 +7,7 @@
 //     })
 // }
 
-const baseURL = '';
+const baseURL = 'https://wfd-beta.herokuapp.com';
 
 const sortCats = ["ABC", "Cat", "Date", "Popularity"];
 const showCats = [
@@ -631,9 +631,3 @@ const shoppingList = () => {
 
 shoppingList();
 
-function seeder(){
-    let btn = document.querySelector("#seed");
-    btn.addEventListener("click", () =>{
-        fetchQuery(`${baseURL}/seed`);
-    })
-}
