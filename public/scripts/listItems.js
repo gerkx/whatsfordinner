@@ -45,8 +45,9 @@ const renderListItem = function(item){
 }
 
 const genCatOption = arr => {
-    let cats = arr.splice(0,1);
+    // let cats = arr.splice(0,1);
     arr.shift()
+    console.log(arr)
     return arr.map(item => `<option value = "${item}">${capFirstLetter(item)}</option>`)
 }
 
