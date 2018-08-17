@@ -11,7 +11,6 @@ const cors = require("cors");
 // internal dependencies //
 ///////////////////////////
 const foodRoutes = require('./routes/food');
-const seedRoutes = require('./seed/seed')
 // const serviceWorker = require('./sw/service-worker');
 
 /////////////////

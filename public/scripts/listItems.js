@@ -7,7 +7,7 @@
 //     })
 // }
 
-const baseURL = 'https://wfd-beta.herokuapp.com';
+const baseURL = '';
 
 const sortCats = ["ABC", "Cat", "Date", "Popularity"];
 const showCats = [
