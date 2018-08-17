@@ -159,9 +159,9 @@ option{
     text-align: center;
     border: none;
     outline: none;
-    &:checked{
-        display: none;
-    }
+    // &:checked{
+    //     display: none;
+    // }
     &:focus{
         outline: none;
         border: none;

@@ -1,74 +1,80 @@
-name,dept,amt
-steak,meat,0
-apples,produce,0
-chicken breasts,meat,0
-whole chicken,meat,0
-half chicken,meat,0
-chicken fillet,meat,0
-ground beef,meat,0
-ground turkey,meat,0
-oranges,produce,0
-pears,produce,1
-bananas,produce,0
-tomatoes,produce,0
-cucumber,produce,0
-broccoli,produce,0
-zucchini,produce,0
-caulifour,produce,0
-romaine lettuce,produce,0
-cherry tomotoes,produce,0
-eggplant,produce,0
-lactose free milk,dairy,1
-yorurt,dairy,0
-unsalted butter,dairy,0
-condensed milk,dairy,0
-shredded cheese,dairy,0
-sheep cheese,dairy,0
-goat cheese,dairy,0
-cream cheese,dairy,0
-low-fat milk,dairy,0
-whole milk,dairy,0
-gluten-free beer,beverages,0
-beer,beverages,0
-iced tea,beverages,0
-black tea,beverages,0
-green tea,beverages,0
-coffee,beverages,0
-aquarius,beverages,0
-cola zero,beverages,0
-cola,beverages,0
-toro wine,beverages,0
-rioja wine,beverages,0
-mixed veggies,frozen,0
-green beans,frozen,0
-mango,frozen,0
-pizza,frozen,0
-red berries,frozen,0
-shampoo,sundries,0
-conditioner,sundries,0
-whitening toothpaste,sundries,0
-sensitivity toothpaste,sundries,0
-deodorant,sundries,0
-gluten-free flour,baking,0
-gluten-free bread crumbs,baking,0
-baking powder,baking,0
-yeast,baking,0
-sugar,baking,0
-brown sugar,baking,0
-tuna,packaged,0
-garbanzos,packaged,0
-frito,packaged,0
-cookies,junk,0
-chips,junk,0
-ice cream,junk,0
-chocolate bar,junk,0
-tortilla chips,junk,0
-hand soap,sundries,0
-kh7,sundries,0
-toilet paper,sundries,0
-paper towels,sundries,0
-dish soap,sundries,0
-dust spray,sundries,0
-gluten-free bread,bakery,0
-barra,bakery,0
-gluten-free crackers,bakery,0
+name,dept
+steak,meat
+apples,produce
+chicken breasts,meat
+whole chicken,meat
+half chicken,meat
+chicken fillet,meat
+ground beef,meat
+ground turkey,meat
+lomo,meat
+oranges,produce
+pears,produce
+bananas,produce
+tomatoes,produce
+cucumber,produce
+broccoli,produce
+zucchini,produce
+cauliflower,produce
+romaine lettuce,produce
+cherry tomatoes,produce
+eggplant,produce
+lactose free milk,dairy
+yogurt,dairy
+unsalted butter,dairy
+condensed milk,dairy
+shredded cheese,dairy
+sheep cheese,dairy
+goat cheese,dairy
+cream cheese,dairy
+low-fat milk,dairy
+whole milk,dairy
+gluten-free beer,beverages
+beer,beverages
+iced tea,beverages
+black tea,beverages
+green tea,beverages
+coffee,beverages
+aquarius,beverages
+cola zero,beverages
+cola,beverages
+toro wine,beverages
+rioja wine,beverages
+mixed veggies,frozen
+green beans,frozen
+mangos,frozen
+pizza,frozen
+red berries,frozen
+shampoo,sundries
+conditioner,sundries
+whitening toothpaste,sundries
+sensitive toothpaste,sundries
+dandruff shampoo,sundries
+shower loofa,sundries
+deodorant,sundries
+aluminum foil,sundries
+gluten-free flour,baking
+gluten-free bread crumbs,baking
+baking powder,baking
+yeast,baking
+sugar,baking
+brown sugar,baking
+tuna,packaged
+garbanzos,packaged
+frito,packaged
+cookies,junk
+chips,junk
+ice cream,junk
+chocolate bar,junk
+tortilla chips,junk
+hand soap,sundries
+kh7,sundries
+toilet paper,sundries
+paper towels,sundries
+dish soap,sundries
+dust spray,sundries
+gluten-free bread,bakery
+baguete,bakery
+gluten-free crackers,bakery
+nuts,packaged
+almonds,packaged

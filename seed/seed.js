@@ -14,7 +14,6 @@ const seedDB = (model, file) => {
                 .then(jsonObj=>jsonObj.shuffle())
                 .then(arr => arr.forEach(
                     item => {
-                        item.addedDates = Date.now();
                         db[model].create(item), (err, food) =>{
                             if(err) console.log(err);
                             else console.log(`${food} saved!`);
