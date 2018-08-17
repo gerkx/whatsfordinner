@@ -1,0 +1,22 @@
+{
+    "short_name": "wfd",
+    "name": "What's for dinner?",
+    "description": "A simple grocery list PWA", 
+    "icons": [
+      {
+        "src": "../gfx/icons-192.png",
+        "sizes": "192x192",
+        "type": "image/png"
+      },
+      {
+        "src": "../gfx/icons-512.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      }
+    ],
+    "start_url": "../html/shoppingList.html",
+    "display": "standalone",
+    "theme_color": "#05d0a8",
+    "background_color": "#3A3A3A",
+    "orientation": "portrait-primary"
+  }
