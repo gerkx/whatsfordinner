@@ -243,6 +243,16 @@ const createFilterStateSessionStorage = (key, arr) => {
     }
 }
 
+const createCartStateSessionStorage = (key, arr) => {
+    if(!window.sessionStorage[key]){
+        let obj = arr.reduce((acc, item) => {
+            acc[item] = false;
+            return acc
+        }, {});
+        window.sessionStorage.setItem(key, JSON.stringify(obj));
+    }
+}
+
 const toggleSortStyle = function(div, key){
     const seshStore = JSON.parse(window.sessionStorage.getItem(key));
     if(seshStore[div.id]){
@@ -462,7 +472,7 @@ const renderGroceryListBlock = function(parentDiv){
     listUL.classList.add("list");
     parentDiv.appendChild(listUL);
     onList.then(arr => arr.map(obj => obj._id))
-    .then(arr => createFilterStateSessionStorage("grocListCart", arr));
+    .then(arr => createCartStateSessionStorage("grocListCart", arr));
     onList.then(data => {
         return showSelectedCats(data, showKey("grocList"))
         .sort(listSortFunc[listSort(sortKey("grocList"))])
