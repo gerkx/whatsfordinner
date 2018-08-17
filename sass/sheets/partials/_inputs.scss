@@ -156,6 +156,7 @@ option{
     font-family: 'Montserrat', sans-serif;
     font-weight: 500;
     font-size: .9em;
+    text-align: center;
     border: none;
     outline: none;
     &:checked{
@@ -172,6 +173,9 @@ input::-webkit-calendar-picker-indicator {
 
 
 select{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
     border: 0px solid map-get($colors, mint);
     &:focus{ outline: none;}
 }

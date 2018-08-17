@@ -34,7 +34,7 @@
 
 .lock{
     position: fixed;
-    z-index: $z-lock-layer;
+    z-index: $lock-overlay;
     background: map-get($colors, slate);
     opacity:0.5;
     width: 100%;

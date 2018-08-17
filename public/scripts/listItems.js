@@ -35,6 +35,12 @@ const renderListItem = function(item){
     return listLI;
 }
 
+const genCatOption = arr => {
+    let cats = arr.splice(0,1);
+    arr.shift()
+    return arr.map(item => `<option value = "${item}">${capFirstLetter(item)}</option>`)
+}
+
 const renderNewItem = function(name){
     const root = document.querySelector("#root");
     const markup = `
@@ -42,21 +48,19 @@ const renderNewItem = function(name){
     <div class="lock"></div>
     <div class="rec-groc-pop-alt rec-groc-pop--ice" id="newItemPop">
         <div class="li-banner bg--mint popup-header">
-
             <input type="text" name="newItemName" value="${name}" id="newTextInput" class="txtbox p-l-10 p-t-5 p-b-5">
         </div>
         <div class="food-details">
             <span class="detail m-t-5">Category:</span>
             <div class="detail">
                 <select class="btn btn--mint btn--drop">
-                    <option value = "produce">Produce</option>
-                    <option value = "meat"/>Meat</option>
+                   ${genCatOption(showCats)}
                 </select>
 
             </div>
         </div>
         <div class="button-row ">
-            <div class="btn btn--mint m-20">Save</div>
+            <div class="btn btn--mint m-20" id="newSave">Save</div>
             ${svg.trash("ico ico--slate ico--sm list-trash")}
         </div>
     </div>
@@ -68,10 +72,36 @@ const renderNewItem = function(name){
 const interactNewItem = () => {
     const overlay = document.querySelector(".rec-overlays");
     const popup = document.querySelector("#newItemPop");
+    const parent = overlay.parentElement;
     popup.addEventListener("click", e => {
-        const cat = document.querySelector(".btn--drop")
-        if(e.target == cat)console.log(cat.value);
-
+        const cat = document.querySelector(".btn--drop");
+        const input = document.querySelector("#newTextInput");
+        const trashIcon = document.querySelector(".list-trash");
+        const trashItem = checkLineage(e, trashIcon);
+        if(trashItem){
+            onList.then(newList => newList.unshift(obj));
+            parent.removeChild(overlay).removeChild(popup);
+        }
+        const save = document.querySelector("#newSave");
+        const cleanTxt = escapeHtml(input.value);
+        const addedDates = [(new Date()).toJSON()]
+        const body = JSON.stringify({ name: cleanTxt, dept: cat.value, amt: 1, addedDates: addedDates });
+        if(e.target == save){
+            fetch(`${baseURL}/api/food`, {
+                method: 'POST',
+                body: body,
+                headers: { "Content-Type": "application/json" }
+            }).then( res => res.json())
+            .then(obj => {
+                let store = JSON.parse(window.sessionStorage.getItem("grocListCart"));
+                store[obj._id] = false;
+                window.sessionStorage.setItem("grocListCart", JSON.stringify(store));
+                onList.then(newList => newList.unshift(obj));
+                parent.removeChild(overlay).removeChild(popup);
+                groceryList.innerHTML = "";
+                renderGroceryListBlock(groceryList, "grocList");
+            })
+        }
     })
 
 
@@ -408,8 +438,7 @@ const renderGroceryListBlock = function(parentDiv){
         parentDiv.querySelectorAll(".btn-box")
         .forEach(item => item.firstElementChild.appendChild(renderCheckBox(item)));
     })
-    renderNewItem("boop");
-    interactNewItem();
+
 }
 
 const renderCheckoutBtn = () =>  {
@@ -495,7 +524,8 @@ function textEntry(str, div, pg){
                         div.innerHTML = "";
                         renderGroceryListBlock(div, pg);
                     }else{
-                        console.log("create", txt)
+                        renderNewItem(txt);
+                        interactNewItem();
                     }
                 })
             }else{
