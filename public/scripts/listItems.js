@@ -556,8 +556,7 @@ function textEntry(str, div, pg){
                 notListIndex.then(notListIdx => {
                     if(notListIdx != -1){
                         addToList(notOnList, notListIdx);
-                        div.innerHTML = "";
-                        renderGroceryListBlock(div, pg);
+                        
                     }else{
                         renderNewItem(txt);
                         interactNewItem();
@@ -587,7 +586,6 @@ function addToList(notListProm, index){
             headers: { "Content-Type": "application/json" }
         })
         .then( () => {
-            console.log("whoop")
             arr.splice(index, 1);
             onList.then(newList => {
                 newList.unshift(item);
@@ -596,8 +594,10 @@ function addToList(notListProm, index){
             store[id] = false;
             const newStore = JSON.stringify(store)
             window.sessionStorage.setItem("grocListCart", newStore);
+            groceryList.innerHTML = "";
+            renderGroceryListBlock(groceryList, "grocList");
         })
-        .catch(() => alert(" dayum Unable to connect to the server, please try again later"));
+        .catch(() => alert("Unable to connect to the server, please try again later"));
     })
 }
 
