@@ -11,6 +11,7 @@ const cors = require("cors");
 // internal dependencies //
 ///////////////////////////
 const foodRoutes = require('./routes/food');
+// const serviceWorker = require('./sw/service-worker');
 
 /////////////////
 // global vars //
@@ -27,6 +28,7 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
 app.use(express.static(__dirname + '/views'));
 app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/sw'));
 
 ////////////
 // routes //

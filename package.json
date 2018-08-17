@@ -4,7 +4,8 @@
   "description": "a simple meal planning app",
   "main": "app.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",

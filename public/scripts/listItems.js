@@ -1,4 +1,13 @@
-const baseURL = 'http://localhost:3000';
+// if('serviceWorker' in navigator) {
+//     window.addEventListener("load", () => {
+//         navigator.serviceWorker
+//             .register("/service-worker.js")
+//             .then(reg => console.log("Service Worker: Registered"))
+//             .catch(err => console.log(err))
+//     })
+// }
+
+const baseURL = '';
 
 const sortCats = ["ABC", "Cat", "Date", "Popularity"];
 const showCats = [
@@ -91,16 +100,25 @@ const interactNewItem = () => {
                 method: 'POST',
                 body: body,
                 headers: { "Content-Type": "application/json" }
-            }).then( res => res.json())
-            .then(obj => {
-                let store = JSON.parse(window.sessionStorage.getItem("grocListCart"));
-                store[obj._id] = false;
-                window.sessionStorage.setItem("grocListCart", JSON.stringify(store));
-                onList.then(newList => newList.unshift(obj));
-                parent.removeChild(overlay).removeChild(popup);
-                groceryList.innerHTML = "";
-                renderGroceryListBlock(groceryList, "grocList");
             })
+                .then( res => res.json())
+                .then(obj => {
+                    let store = JSON.parse(window.sessionStorage.getItem("grocListCart"));
+                    store[obj._id] = false;
+                    window.sessionStorage.setItem("grocListCart", JSON.stringify(store));
+                    onList.then(newList => newList.unshift(obj));
+                    parent.removeChild(overlay).removeChild(popup);
+                    groceryList.innerHTML = "";
+                    renderGroceryListBlock(groceryList, "grocList");
+                })
+                .catch(err => {
+                    const row = document.querySelector(".button-row");
+                    row.insertAdjacentHTML("beforeend", `
+                        <span class="p-r-5" style="color:red; text-align: right; font-size: .85em;">Please try again later</span>
+                    `)
+                })
+                
+            
         }
     })
 
@@ -125,26 +143,40 @@ const renderCheckoutButton = function(){
 
 const resetPurchasedItemsAmt = function(list){
     const store = JSON.parse(window.sessionStorage.getItem("grocListCart"));
+    let trip = "booga";
+    
     for(const id in store){
         if(store[id]){
             const idx = list.map(item => item._id).indexOf(id);
-            const purchasedDates = list[idx].purchasedDates;
+            // const purchasedDates = list[idx].purchasedDates;
             const item = list[idx]
-            notOnList.then(newList => {
-                // console.log(item)
-                newList.unshift(item);
-            });
+            
             list.splice(idx, 1)
             fetch(`${baseURL}/api/food/${id}`, {
                 method: 'PUT',
                 body: JSON.stringify({amt: 0,  }),
                 headers: { "Content-Type": "application/json" }
-            }).catch(err => console.log(err));
-            delete store[id]
-            const newStore = JSON.stringify(store);
-            window.sessionStorage.setItem("grocListCart", newStore)
+            })
+            .then(res =>{
+                notOnList.then(newList => {
+                    // console.log(item)
+                    newList.unshift(item);
+                })
+                delete store[id]
+                const newStore = JSON.stringify(store);
+                window.sessionStorage.setItem("grocListCart", newStore);
+                const listUL = document.querySelector(".list")
+                removePurchasedItemsFromDisplay(listUL)
+            })
+            .catch((err) => {
+                alert("Unable to connect to server, please try again later")
+                    // break;
+                
+            });
+
         }
     }
+
     return list
 }
 
@@ -445,9 +477,11 @@ const renderCheckoutBtn = () =>  {
     const checkoutBtn = document.querySelector(".checkout");
     checkoutBtn.appendChild(renderCheckoutButton());
     checkoutBtn.addEventListener("click", function(){
-        const listUL = document.querySelector(".list")
-        onList.then(arr => resetPurchasedItemsAmt(arr));
-        removePurchasedItemsFromDisplay(listUL);
+        
+        onList
+            .then(arr => resetPurchasedItemsAmt(arr))
+            ;
+        
     });
 }
 
@@ -546,19 +580,23 @@ function addToList(notListProm, index){
         const id = item._id;
         item.amt += 1;
         item.addedDates.unshift((new Date()).toJSON());
-        arr.splice(index, 1);
-        onList.then(newList => {
-            newList.unshift(item);
-        });
-        const store = JSON.parse(window.sessionStorage.getItem("grocListCart"));
-        store[id] = false;
-        const newStore = JSON.stringify(store)
-        window.sessionStorage.setItem("grocListCart", newStore);
         fetch(`${baseURL}/api/food/${id}`, {
             method: 'PUT',
             body: JSON.stringify({amt: item.amt, addedDates: item.addedDates}),
             headers: { "Content-Type": "application/json" }
         })
+        .then( () => {
+            console.log("whoop")
+            arr.splice(index, 1);
+            onList.then(newList => {
+                newList.unshift(item);
+            });
+            const store = JSON.parse(window.sessionStorage.getItem("grocListCart"));
+            store[id] = false;
+            const newStore = JSON.stringify(store)
+            window.sessionStorage.setItem("grocListCart", newStore);
+        })
+        .catch(() => alert(" dayum Unable to connect to the server, please try again later"));
     })
 }
 
